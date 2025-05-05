@@ -80,13 +80,13 @@ ValueType GetValue(Map m, KeyType k) {
 
 /* Menampilkan seluruh isi map */
 void PrintMap(Map m) {
-    printf("{\n")
+    printf("{\n");
     for (int i = 0; i < m.count; i++) {
         printf("{""%s"", %d}", m.elements[i].key, m.elements[i].value);
         if(i != m.count - 1) printf(",");
         printf("\n");
     }
-    printf("}")
+    printf("}");
 }
 
 /*Format output:
