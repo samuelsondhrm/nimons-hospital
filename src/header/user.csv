@@ -1,0 +1,6 @@
+id;username;password;role;riwayat_penyakit;suhu_tubuh;tekanan_darah_sistolik;tekanan_darah_diastolik;detak_jantung;saturasi_oksigen;kadar_gula_darah;berat_badan;tinggi_badan;kadar_kolesterol;kadar_kolesterol_ldl;trombosit
+1;alexa;alexaSecure1;pasien;demam;38.2;120;80;75;97.5;110;55.0;165;190;120;240
+2;budi;budikeren21;pasien;tipes;39.0;110;70;90;95.0;140;50.5;160;220;150;180
+3;citra;citralove;pasien;migraine;36.9;115;75;65;98.0;95;48.3;158;180;110;230
+4;dian;dianDokter;dokter;asma;37.2;125;85;70;96.5;100;62.0;170;200;130;210
+5;elvin;elvman123;manager;;36.5;0;0;0;0.0;0;0.0;0;0;0;0
