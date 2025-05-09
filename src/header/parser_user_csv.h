@@ -184,5 +184,5 @@ void tampilkan_pasien(User ListUser[], int jumlah) {
     }
 }
 
-// ListUser nantinya harus ada file header sendiri yang menggunakan listdin.h dengan ElType user.
+
 #endif
