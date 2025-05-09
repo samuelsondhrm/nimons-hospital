@@ -133,6 +133,35 @@ void parse_user_csv(const char *filename, User ListUser[], int *jumlah) {
     fclose(file);
 }
 
+void tulis_user_csv(const char *filename, User ListUser[], int jumlah) {
+    FILE *file = fopen(filename, "w");
+    if (!file) {
+        printf("Gagal membuka file untuk ditulis: %s\n", filename);
+        return;
+    }
+
+    // Header CSV
+    fprintf(file,
+        "id;username;password;role;riwayat_penyakit;suhu_tubuh;"
+        "tekanan_darah_sistolik;tekanan_darah_diastolik;detak_jantung;"
+        "saturasi_oksigen;kadar_gula_darah;berat_badan;tinggi_badan;"
+        "kadar_kolesterol;kadar_kolesterol_ldl;trombosit\n");
+
+    for (int i = 0; i < jumlah; i++) {
+        User u = ListUser[i];
+        fprintf(file,
+            "%d;%s;%s;%s;%s;%.1f;%d;%d;%d;%.1f;%d;%.1f;%d;%d;%d;%d\n",
+            u.id, u.username, u.password, u.role, u.riwayat_penyakit,
+            u.suhu_tubuh, u.tekanan_darah_sistolik, u.tekanan_darah_diastolik,
+            u.detak_jantung, u.saturasi_oksigen, u.kadar_gula_darah,
+            u.berat_badan, u.tinggi_badan, u.kadar_kolesterol,
+            u.kadar_kolesterol_ldl, u.trombosit
+        );
+    }
+
+    fclose(file);
+}
+
 void tampilkan_pasien(User ListUser[], int jumlah) {
     for (int i = 0; i < jumlah; i++) {
         User p = ListUser[i];
@@ -155,5 +184,5 @@ void tampilkan_pasien(User ListUser[], int jumlah) {
     }
 }
 
-// ListUser nantinya harus ada file header sendiri yang menggunakan listdin.h dengan ElType user.
+
 #endif
