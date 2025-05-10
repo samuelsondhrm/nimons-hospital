@@ -1,10 +1,27 @@
-#include "set.h"
+#include "register.h"
+#include <stdio.h>
+#include <string.h>
 #include <stdbool.h>
-#include <user.h>
+#include "user.h"
+
+// Fungsi ctype versi manual
+char to_lower(char c) {
+    if (c >= 'A' && c <= 'Z') {
+        return c + ('a' - 'A');
+    }
+    return c;
+}
 
 bool is_username_valid(const char* username) {
+    // Username yang di input tidak boleh kosong
+    if (strlen(username) == 0) {
+        return false;
+    }
+    
+    // melakukan Cek karena setiap karakter harus huruf
     for (int i = 0; username[i]; i++) {
-        if (!isalpha(username[i])) {
+        char c = username[i];
+        if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))) {
             return false;
         }
     }
@@ -14,16 +31,16 @@ bool is_username_valid(const char* username) {
 bool write_users_to_csv(const char* filename, User users[], int count) {
     FILE* file = fopen(filename, "w");
     if (!file) {
-        printf("Gagal membuka file untuk ditulis!\n");
         return false;
     }
     
-    // Tulis header
-    fprintf(file, "id;username;password;role;riwayat_penyakit;suhu_tubuh;tekanan_darah_sistolik;");
-    fprintf(file, "tekanan_darah_diastolik;detak_jantung;saturasi_oksigen;kadar_gula_darah;");
-    fprintf(file, "berat_badan;tinggi_badan;kadar_kolesterol;kadar_kolesterol_ldl;trombosit\n");
+    // Header CSV
+    fprintf(file, "id;username;password;role;riwayat_penyakit;suhu_tubuh;");
+    fprintf(file, "tekanan_darah_sistolik;tekanan_darah_diastolik;detak_jantung;");
+    fprintf(file, "saturasi_oksigen;kadar_gula_darah;berat_badan;tinggi_badan;");
+    fprintf(file, "kadar_kolesterol;kadar_kolesterol_ldl;trombosit\n");
     
-    // Tulis data user
+    // Data user
     for (int i = 0; i < count; i++) {
         fprintf(file, "%d;%s;%s;%s;%s;%.1f;%d;%d;%d;%.1f;%d;%.1f;%d;%d;%d;%d\n",
                 users[i].id,
@@ -56,24 +73,26 @@ void register_pasien(User users[], int* user_count, const char* filename) {
     printf("Username: ");
     if (scanf("%127s", username) != 1) {
         printf("Input username tidak valid!\n");
+        while (getchar() != '\n');
         return;
     }
     
     if (!is_username_valid(username)) {
         printf("Username hanya boleh berisi huruf!\n");
+        while (getchar() != '\n');
         return;
     }
     
     printf("Password: ");
     if (scanf("%127s", password) != 1) {
         printf("Input password tidak valid!\n");
+        while (getchar() != '\n');
         return;
     }
     
-    // Membersihkan buffer
     while (getchar() != '\n');
     
-    // Validasi username unik
+    // Validasi username unik (case-insensitive)
     Set username_set;
     CreateEmptySet(&username_set);
     
@@ -81,7 +100,7 @@ void register_pasien(User users[], int* user_count, const char* filename) {
         char lower[MAX_FIELD];
         strcpy(lower, users[i].username);
         for (int j = 0; lower[j]; j++) {
-            lower[j] = tolower(lower[j]);
+            lower[j] = to_lower(lower[j]);
         }
         InsertSet(&username_set, (ElType)lower);
     }
@@ -89,7 +108,7 @@ void register_pasien(User users[], int* user_count, const char* filename) {
     char new_lower[MAX_FIELD];
     strcpy(new_lower, username);
     for (int j = 0; new_lower[j]; j++) {
-        new_lower[j] = tolower(new_lower[j]);
+        new_lower[j] = to_lower(new_lower[j]);
     }
     
     if (IsMember(username_set, (ElType)new_lower)) {
@@ -108,10 +127,9 @@ void register_pasien(User users[], int* user_count, const char* filename) {
     users[*user_count] = new_user;
     (*user_count)++;
     
-    // Update file CSV
     if (write_users_to_csv(filename, users, *user_count)) {
         printf("\nPasien %s berhasil ditambahkan!\n", username);
     } else {
-        printf("\nPasien %s berhasil ditambahkan, tetapi gagal menyimpan ke file!\n", username);
+        printf("\nGagal menyimpan data ke file!\n");
     }
-}
+} 
