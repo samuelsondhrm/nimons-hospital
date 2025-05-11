@@ -1,10 +1,9 @@
 #ifndef USER_H
 #define USER_H
+
 #define MAX_FIELD 128
 
-#include <string.h>
-
-// ADT User
+// Struktur data untuk menyimpan informasi pasien
 typedef struct {
     int id;
     char username[MAX_FIELD];
@@ -25,6 +24,7 @@ typedef struct {
 } User;
 
 /* ********** SELEKTOR ********** */
+// Makro untuk mempermudah akses elemen User
 #define ID(u) (u).id
 #define USERNAME(u) (u).username
 #define PASSWORD(u) (u).password
@@ -42,25 +42,8 @@ typedef struct {
 #define KOLESTEROL_LDL(u) (u).kadar_kolesterol_ldl
 #define TROMBOSIT(u) (u).trombosit
 
-
 /* ********** KONSTRUKTOR ********** */
-/* Konstruktor : create user kosong  */
-void CreateUser(User *u) {
-    u->id = 0;
-    strcpy(u->username, "");
-    strcpy(u->password, "");
-    strcpy(u->role, "");
-    strcpy(u->riwayat_penyakit, "");
-    u->suhu_tubuh = 0.0;
-    u->tekanan_darah_sistolik = 0;
-    u->tekanan_darah_diastolik = 0;
-    u->detak_jantung = 0;
-    u->saturasi_oksigen = 0.0;
-    u->kadar_gula_darah = 0;
-    u->berat_badan = 0.0;
-    u->tinggi_badan = 0;
-    u->kadar_kolesterol = 0;
-    u->kadar_kolesterol_ldl = 0;
-    u->trombosit = 0;
-}
+// Membuat user kosong (default value)
+void CreateUser(User *u);
+
 #endif
