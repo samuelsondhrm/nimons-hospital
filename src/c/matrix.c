@@ -1,42 +1,22 @@
-#ifndef MATRIX_H
-#define MATRIX_H
+#include "../header/matrix.h"
 
-#include <stdio.h>
-#include "Boolean.h"
-
-#define ROW_CAP 100
-#define COL_CAP 100
-#define IDX_MIN 0
-#define IDX_UNDEF -1
-
-typedef int ElType;
-typedef struct {
-    ElType mem[ROW_CAP][COL_CAP];
-    int rowEff;  // Banyak baris efektif
-    int colEff;  // Banyak kolom efektif
-} Matrix;
-
-/* *** SELEKTOR *** */
-#define ROW_EFF(m) (m).rowEff
-#define COL_EFF(m) (m).colEff
-#define ELMT(m, i, j) (m).mem[(i)][(j)]
-
-/* Konstruktor */
+// Membuat matrix dengan ukuran nRows x nCols
 void createMatrix(int nRows, int nCols, Matrix *m) {
     ROW_EFF(*m) = nRows;
     COL_EFF(*m) = nCols;
 }
 
-/* Validasi indeks */
+// Memastikan indeks berada dalam kapasitas maksimum
 boolean isIdxValidMatrix(int i, int j) {
     return (i >= IDX_MIN && i < ROW_CAP && j >= IDX_MIN && j < COL_CAP);
 }
 
+// Memastikan indeks berada dalam ukuran efektif
 boolean isMatrixIdxEff(Matrix m, int i, int j) {
     return (i >= 0 && i < ROW_EFF(m) && j >= 0 && j < COL_EFF(m));
 }
 
-/* Baca dan tulis matrix */
+// Membaca matrix dari input
 void readMatrix(Matrix *m, int nRows, int nCols) {
     createMatrix(nRows, nCols, m);
     for (int i = 0; i < nRows; i++) {
@@ -46,6 +26,7 @@ void readMatrix(Matrix *m, int nRows, int nCols) {
     }
 }
 
+// Menampilkan matrix ke layar
 void displayMatrix(Matrix m) {
     for (int i = 0; i < ROW_EFF(m); i++) {
         for (int j = 0; j < COL_EFF(m); j++) {
@@ -56,7 +37,7 @@ void displayMatrix(Matrix m) {
     }
 }
 
-/* Operasi Aritmatika */
+// Penjumlahan dua matrix
 Matrix addMatrix(Matrix m1, Matrix m2) {
     Matrix mRes;
     createMatrix(ROW_EFF(m1), COL_EFF(m1), &mRes);
@@ -68,6 +49,7 @@ Matrix addMatrix(Matrix m1, Matrix m2) {
     return mRes;
 }
 
+// Pengurangan dua matrix
 Matrix subtractMatrix(Matrix m1, Matrix m2) {
     Matrix mRes;
     createMatrix(ROW_EFF(m1), COL_EFF(m1), &mRes);
@@ -79,6 +61,7 @@ Matrix subtractMatrix(Matrix m1, Matrix m2) {
     return mRes;
 }
 
+// Perkalian dua matrix
 Matrix multiplyMatrix(Matrix m1, Matrix m2) {
     Matrix mRes;
     createMatrix(ROW_EFF(m1), COL_EFF(m2), &mRes);
@@ -93,6 +76,7 @@ Matrix multiplyMatrix(Matrix m1, Matrix m2) {
     return mRes;
 }
 
+// Mengalikan matrix dengan konstanta
 Matrix multiplyByConst(Matrix m, ElType x) {
     Matrix mRes;
     createMatrix(ROW_EFF(m), COL_EFF(m), &mRes);
@@ -104,11 +88,12 @@ Matrix multiplyByConst(Matrix m, ElType x) {
     return mRes;
 }
 
-/* Operasi lainnya */
+// Mengecek apakah matrix berbentuk persegi
 boolean isSquare(Matrix m) {
     return (ROW_EFF(m) == COL_EFF(m));
 }
 
+// Transpos dari matrix
 Matrix transpose(Matrix m) {
     Matrix mT;
     createMatrix(COL_EFF(m), ROW_EFF(m), &mT);
@@ -120,12 +105,11 @@ Matrix transpose(Matrix m) {
     return mT;
 }
 
+// Determinan untuk matrix 2x2
 ElType determinant2x2(Matrix m) {
     if (ROW_EFF(m) == 2 && COL_EFF(m) == 2) {
         return ELMT(m, 0, 0) * ELMT(m, 1, 1) - ELMT(m, 0, 1) * ELMT(m, 1, 0);
     } else {
-        return 0; // Bukan matriks 2x2
+        return 0; // Bukan matrix 2x2
     }
 }
-
-#endif
