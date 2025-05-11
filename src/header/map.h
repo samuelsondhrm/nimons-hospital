@@ -43,7 +43,15 @@ void DeleteMap(Map *m, KeyType k);
 // Fungsi untuk mendapatkan value dari suatu key, diasumsikan bahwa key yang dicari pasti ada dalam map.
 ValueType GetValue(Map m, KeyType k);
 
-// Fungsi untuk mencetak seluruh isi map ke layar.
-void PrintMap(Map m);
+/* Menampilkan seluruh isi map */
+void PrintMap(Map m) {
+    printf("{\n");
+    for (int i = 0; i < m.count; i++) {
+        printf("{""%s"", %d}", m.elements[i].key, m.elements[i].value);
+        if(i != m.count - 1) printf(",");
+        printf("\n");
+    }
+    printf("}");
+}
 
 #endif
