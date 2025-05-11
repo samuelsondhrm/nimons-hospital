@@ -1,8 +1,8 @@
 #ifndef REGISTER_H
 #define REGISTER_H
 
-#include "user.h"
-#include "set.h"
+#include "../header/user.h"
+#include "../header/set.h"
 
 #define MAX_FIELD 128
 
