@@ -1,7 +1,7 @@
 #ifndef LISTSTATIK_H
 #define LISTSTATIK_H
 
-#include <stdbool.h>
+#include "Boolean.h"
 #include <stdio.h>
 
 /* Kamus Umum */
