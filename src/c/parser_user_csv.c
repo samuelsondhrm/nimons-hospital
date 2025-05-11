@@ -47,7 +47,8 @@ float string_to_float(const char *str) {
 }
 
 // Membaca data user dari CSV
-void parse_user_csv(const char *filename, User ListUser[], int *jumlah) {
+void parse_user_csv(const char *filename, ListUser *ListUser) {
+    InitializeListUser(ListUser);
     FILE *file = fopen(filename, "r");
     if (!file) {
         printf("Gagal membuka user.csv, cek ulang line (x)");
@@ -65,26 +66,26 @@ void parse_user_csv(const char *filename, User ListUser[], int *jumlah) {
         ch = fgetc(file);
     }
 
-    while ((ch = fgetc(file)) != EOF && row < MAX_ROWS) {
+    while ((ch = fgetc(file)) != EOF && row < MAX_FIELD) {
         if (ch == ';' || ch == '\n') {
             field[field_pos] = '\0';
             switch (col) {
-                case 0: ListUser[row].id = string_to_int(field); break;
-                case 1: strcpy(ListUser[row].username, field); break;
-                case 2: strcpy(ListUser[row].password, field); break;
-                case 3: strcpy(ListUser[row].role, field); break;
-                case 4: strcpy(ListUser[row].riwayat_penyakit, field); break;
-                case 5: ListUser[row].suhu_tubuh = string_to_float(field); break;
-                case 6: ListUser[row].tekanan_darah_sistolik = string_to_int(field); break;
-                case 7: ListUser[row].tekanan_darah_diastolik = string_to_int(field); break;
-                case 8: ListUser[row].detak_jantung = string_to_int(field); break;
-                case 9: ListUser[row].saturasi_oksigen = string_to_float(field); break;
-                case 10: ListUser[row].kadar_gula_darah = string_to_int(field); break;
-                case 11: ListUser[row].berat_badan = string_to_float(field); break;
-                case 12: ListUser[row].tinggi_badan = string_to_int(field); break;
-                case 13: ListUser[row].kadar_kolesterol = string_to_int(field); break;
-                case 14: ListUser[row].kadar_kolesterol_ldl = string_to_int(field); break;
-                case 15: ListUser[row].trombosit = string_to_int(field); break;
+                case 0: ListUser->users[row].id = string_to_int(field); break;
+                case 1: strcpy(ListUser->users[row].username, field); break;
+                case 2: strcpy(ListUser->users[row].password, field); break;
+                case 3: strcpy(ListUser->users[row].role, field); break;
+                case 4: strcpy(ListUser->users[row].riwayat_penyakit, field); break;
+                case 5: ListUser->users[row].suhu_tubuh = string_to_float(field); break;
+                case 6: ListUser->users[row].tekanan_darah_sistolik = string_to_int(field); break;
+                case 7: ListUser->users[row].tekanan_darah_diastolik = string_to_int(field); break;
+                case 8: ListUser->users[row].detak_jantung = string_to_int(field); break;
+                case 9: ListUser->users[row].saturasi_oksigen = string_to_float(field); break;
+                case 10: ListUser->users[row].kadar_gula_darah = string_to_int(field); break;
+                case 11: ListUser->users[row].berat_badan = string_to_float(field); break;
+                case 12: ListUser->users[row].tinggi_badan = string_to_int(field); break;
+                case 13: ListUser->users[row].kadar_kolesterol = string_to_int(field); break;
+                case 14: ListUser->users[row].kadar_kolesterol_ldl = string_to_int(field); break;
+                case 15: ListUser->users[row].trombosit = string_to_int(field); break;
             }
 
             field_pos = 0;
@@ -105,32 +106,32 @@ void parse_user_csv(const char *filename, User ListUser[], int *jumlah) {
     if (field_pos > 0 && col > 0) {
         field[field_pos] = '\0';
         switch (col) {
-            case 0: ListUser[row].id = string_to_int(field); break;
-            case 1: strcpy(ListUser[row].username, field); break;
-            case 2: strcpy(ListUser[row].password, field); break;
-            case 3: strcpy(ListUser[row].role, field); break;
-            case 4: strcpy(ListUser[row].riwayat_penyakit, field); break;
-            case 5: ListUser[row].suhu_tubuh = string_to_float(field); break;
-            case 6: ListUser[row].tekanan_darah_sistolik = string_to_int(field); break;
-            case 7: ListUser[row].tekanan_darah_diastolik = string_to_int(field); break;
-            case 8: ListUser[row].detak_jantung = string_to_int(field); break;
-            case 9: ListUser[row].saturasi_oksigen = string_to_float(field); break;
-            case 10: ListUser[row].kadar_gula_darah = string_to_int(field); break;
-            case 11: ListUser[row].berat_badan = string_to_float(field); break;
-            case 12: ListUser[row].tinggi_badan = string_to_int(field); break;
-            case 13: ListUser[row].kadar_kolesterol = string_to_int(field); break;
-            case 14: ListUser[row].kadar_kolesterol_ldl = string_to_int(field); break;
-            case 15: ListUser[row].trombosit = string_to_int(field); break;
+            case 0: ListUser->users[row].id = string_to_int(field); break;
+            case 1: strcpy(ListUser->users[row].username, field); break;
+            case 2: strcpy(ListUser->users[row].password, field); break;
+            case 3: strcpy(ListUser->users[row].role, field); break;
+            case 4: strcpy(ListUser->users[row].riwayat_penyakit, field); break;
+            case 5: ListUser->users[row].suhu_tubuh = string_to_float(field); break;
+            case 6: ListUser->users[row].tekanan_darah_sistolik = string_to_int(field); break;
+            case 7: ListUser->users[row].tekanan_darah_diastolik = string_to_int(field); break;
+            case 8: ListUser->users[row].detak_jantung = string_to_int(field); break;
+            case 9: ListUser->users[row].saturasi_oksigen = string_to_float(field); break;
+            case 10: ListUser->users[row].kadar_gula_darah = string_to_int(field); break;
+            case 11: ListUser->users[row].berat_badan = string_to_float(field); break;
+            case 12: ListUser->users[row].tinggi_badan = string_to_int(field); break;
+            case 13: ListUser->users[row].kadar_kolesterol = string_to_int(field); break;
+            case 14: ListUser->users[row].kadar_kolesterol_ldl = string_to_int(field); break;
+            case 15: ListUser->users[row].trombosit = string_to_int(field); break;
         }
         row++;
     }
 
-    *jumlah = row;
+    ListUser->jumlahuser = row;
     fclose(file);
 }
 
 // Menulis data user ke file CSV
-void tulis_user_csv(const char *filename, User ListUser[], int jumlah) {
+void tulis_user_csv(const char *filename, ListUser ListUser) {
     FILE *file = fopen(filename, "w");
     if (!file) {
         printf("Gagal membuka file untuk ditulis: %s\n", filename);
@@ -143,8 +144,8 @@ void tulis_user_csv(const char *filename, User ListUser[], int jumlah) {
         "saturasi_oksigen;kadar_gula_darah;berat_badan;tinggi_badan;"
         "kadar_kolesterol;kadar_kolesterol_ldl;trombosit\n");
 
-    for (int i = 0; i < jumlah; i++) {
-        User u = ListUser[i];
+    for (int i = 0; i < ListUser.jumlahuser; i++) {
+        User u = ListUser.users[i];
         fprintf(file,
             "%d;%s;%s;%s;%s;%.1f;%d;%d;%d;%.1f;%d;%.1f;%d;%d;%d;%d\n",
             u.id, u.username, u.password, u.role, u.riwayat_penyakit,
@@ -159,9 +160,9 @@ void tulis_user_csv(const char *filename, User ListUser[], int jumlah) {
 }
 
 // Menampilkan seluruh data pasien
-void tampilkan_pasien(User ListUser[], int jumlah) {
-    for (int i = 0; i < jumlah; i++) {
-        User p = ListUser[i];
+void tampilkan_pasien(ListUser ListUser) {
+    for (int i = 0; i < ListUser.jumlahuser; i++) {
+        User p = ListUser.users[i];
         printf("Pasien %d:\n", i + 1);
         printf("  ID: %d\n", p.id);
         printf("  Username: %s\n", p.username);
