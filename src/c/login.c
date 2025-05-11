@@ -61,7 +61,7 @@ bool login(User users[], int user_count) {
         return false;
     }
 
-    while (getchar() != '\n'); // Clear buffer
+    while (getchar() != '\n'); // hapus memori temporer
 
     User* user = find_user_by_username(users, user_count, username);
 
