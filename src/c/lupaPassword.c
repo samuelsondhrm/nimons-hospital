@@ -1,5 +1,4 @@
-#include "../header/parser_user_csv.h"
-#include "../header/Boolean.h"
+#include "lupaPassword.h"  
 
 boolean usernameFound(const char *username, const char *filename) 
 {
@@ -125,4 +124,38 @@ void updatePassword(const char *username_dicari, const char *password_baru, cons
     remove(filename);
     rename("temp.csv", filename);
 
+}
+
+void lupaPassword() {
+    char username[MAX_FIELD];
+    char kode[MAX_FIELD];
+    char passwordBaru[MAX_FIELD];
+    char role[MAX_FIELD];
+
+    printf("Username: ");
+    scanf("%s", username);
+
+    printf("Kode Unik: ");
+    scanf("%s", kode);
+
+    if (usernameFound(username, "user.csv") && kodeUnik(username, kode)) {
+        getRole(username, "user.csv", role);
+        printf("Halo %s %s, silahkan daftarkan ulang password anda!\n", role, username);
+        printf("Password Baru: ");
+        scanf("%s", passwordBaru);
+
+        updatePassword(username, passwordBaru, "user.csv");
+        printf("Password berhasil diubah!\n");
+    } 
+
+    else {
+            
+        if (!usernameFound(username, "user.csv")) {
+            printf("Username tidak terdaftar!\n");
+        } 
+            
+        else if (!kodeUnik(username, kode)) {
+                ("Kode unik salah!\n");
+        }
+    }
 }
