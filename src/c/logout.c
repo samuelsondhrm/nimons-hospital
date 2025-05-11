@@ -10,6 +10,7 @@ int main() {
     if (strcmp(instruksi, "LOGOUT") == 0) { 
         if (SudahLogin) {
             printf("Sampai jumpa!\n");
+            SudahLogin = false;
         }
         else {
             printf("Logout gagal!\n");
