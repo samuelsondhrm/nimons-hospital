@@ -20,3 +20,7 @@ void CreateUser(User *u) {
     u->kadar_kolesterol_ldl = 0;
     u->trombosit = 0;
 }
+
+void InitializeListUser(ListUser *l){
+    l->jumlahuser = 0;
+}
