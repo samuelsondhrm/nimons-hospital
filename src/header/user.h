@@ -23,6 +23,11 @@ typedef struct {
     int trombosit;
 } User;
 
+typedef struct {
+    User users[MAX_FIELD];
+    int jumlahuser;
+} ListUser;
+
 /* ********** SELEKTOR ********** */
 // Makro untuk mempermudah akses elemen User
 #define ID(u) (u).id
@@ -45,5 +50,6 @@ typedef struct {
 /* ********** KONSTRUKTOR ********** */
 // Membuat user kosong (default value)
 void CreateUser(User *u);
+void InitializeListUser(ListUser *l);
 
 #endif
