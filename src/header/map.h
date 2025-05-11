@@ -1,82 +1,47 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include <stdbool.h>
+#include "Boolean.h"
 #include <stdio.h>
-#include <string.h> // Jika KeyType atau ValueType berupa string (Masih kurang tahu implementasinya gimana, komunikasikan aja)
+#include <string.h> // If KeyType or ValueType are strings, this will be necessary for string operations.
 
 /* ------------- TIPE DATA MAP ------------- */
-typedef char KeyType[50];     
-typedef int ValueType;        
+typedef char KeyType[50];
+typedef int ValueType;
 typedef struct {
-    KeyType key;
-    ValueType value;
+    KeyType key;     // key untuk map
+    ValueType value; // value terkait dengan key
 } MapElType;
 
-#define CAPACITY 100
+#define CAPACITY 100 
 typedef struct {
-    MapElType elements[CAPACITY];
-    int count;
+    MapElType elements[CAPACITY]; // Array untuk menyimpan elemen map
+    int count;                    // Jumlah elemen dalam map
 } Map;
 
 /* ------------- KONSTRUKTOR ------------- */
-/* Membuat map kosong */
-void CreateEmptyMap(Map *m) {
-    m->count = 0;
-}
+// Fungsi ini untuk membuat map kosong (mengatur count ke 0). */
+void CreateEmptyMap(Map *m);
 
 /* ------------- PREDIKAT ------------- */
-/* Mengembalikan true jika m kosong */
-bool IsMapEmpty(Map m) {
-    return m.count == 0;
-}
-/* Mengembalikan true jika m full */
-bool IsMapFull(Map m) {
-    return m.count == CAPACITY;
-}
+// Fungsi ini mengembalikan true jika map kosong (count == 0), false jika tidak. 
+boolean IsMapEmpty(Map m);
 
-/* Mengembalikan true jika k ada sebagai key di Map */
-bool IsKeyMember(Map m, KeyType k) {
-    for (int i = 0; i < m.count; i++) {
-        if (strcmp(m.elements[i].key, k) == 0) {
-            return true;
-        }
-    }
-    return false;
-}
+// Fungsi ini mengembalikan true jika map penuh (count == CAPACITY), false jika tidak.
+boolean IsMapFull(Map m);
+
+// Fungsi mencari key dalam array elemen map, jika ditemukan, mengembalikan true.
+boolean IsKeyMember(Map m, KeyType k);
 
 /* ------------- OPERASI DASAR ------------- */
-/* Menambahkan key dan value ke Map, jika key belum ada */
-void InsertMap(Map *m, KeyType k, ValueType v) {
-    if (!IsMapFull(*m) && !IsKeyMember(*m, k)) {
-        strcpy(m->elements[m->count].key, k);
-        m->elements[m->count].value = v;
-        m->count++;
-    }
-}
+// Fungsi untuk menambahkan pasangan key dan value ke dalam map.
+void InsertMap(Map *m, KeyType k, ValueType v);
 
-/* Menghapus elemen dengan key k (jika ada) */
-void DeleteMap(Map *m, KeyType k) {
-    for (int i = 0; i < m->count; i++) {
-        if (strcmp(m->elements[i].key, k) == 0) {
-            for (int j = i; j < m->count - 1; j++) {
-                m->elements[j] = m->elements[j + 1];
-            }
-            m->count--;
-            break;
-        }
-    }
-}
+// Fungsi akan mencari elemen dengan key yang sesuai, lalu menggeser elemen setelahnya untuk menghapusnya.
+void DeleteMap(Map *m, KeyType k);
 
-/* Mengambil value dari key (asumsikan key pasti ada) */
-ValueType GetValue(Map m, KeyType k) {
-    for (int i = 0; i < m.count; i++) {
-        if (strcmp(m.elements[i].key, k) == 0) {
-            return m.elements[i].value;
-        }
-    }
-    return -1; // default, asumsi key pasti ada
-}
+// Fungsi untuk mendapatkan value dari suatu key, diasumsikan bahwa key yang dicari pasti ada dalam map.
+ValueType GetValue(Map m, KeyType k);
 
 /* Menampilkan seluruh isi map */
 void PrintMap(Map m) {
@@ -89,11 +54,4 @@ void PrintMap(Map m) {
     printf("}");
 }
 
-/*Format output:
-{
-    {"Sarah", 50},
-    {"Joe", 20},
-    {"Kevin", 10}
-}  
-    (Tidak ada newline atau spasi setelah)                     */
 #endif
