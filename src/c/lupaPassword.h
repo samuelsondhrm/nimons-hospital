@@ -1,10 +1,9 @@
-#include "parse_user_csv.h"
-#include "boolean.h"
+#include "parser_user_csv.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
-
-boolean usernameFound(const char *username, const char *filename) 
+bool usernameFound(const char *username, const char *filename) 
 {
     User ListUser[MAX_ROWS];
     int jumlah_user;
@@ -50,7 +49,7 @@ void runLengthEncoding(const char *username, char *username_encoded) {
 
 }
 
-boolean kodeUnik(const char *username_dicari, const char *kode) {
+bool kodeUnik(const char *username_dicari, const char *kode) {
     char encoded[MAX_FIELD];
     runLengthEncoding(username_dicari, encoded);
 
