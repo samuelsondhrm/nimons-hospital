@@ -67,7 +67,7 @@ void parse_user_csv(const char *filename, ListUser *ListUser) {
     }
 
     while ((ch = fgetc(file)) != EOF && row < MAX_FIELD) {
-        if (ch == ';' || ch == '\n') {
+        if (ch == ',' || ch == '\n') {
             field[field_pos] = '\0';
             switch (col) {
                 case 0: ListUser->users[row].id = string_to_int(field); break;
@@ -139,15 +139,15 @@ void tulis_user_csv(const char *filename, ListUser ListUser) {
     }
 
     fprintf(file,
-        "id;username;password;role;riwayat_penyakit;suhu_tubuh;"
-        "tekanan_darah_sistolik;tekanan_darah_diastolik;detak_jantung;"
-        "saturasi_oksigen;kadar_gula_darah;berat_badan;tinggi_badan;"
-        "kadar_kolesterol;kadar_kolesterol_ldl;trombosit\n");
+        "id,username,password,role,riwayat_penyakit,suhu_tubuh,"
+        "tekanan_darah_sistolik,tekanan_darah_diastolik,detak_jantung,"
+        "saturasi_oksigen,kadar_gula_darah,berat_badan,tinggi_badan,"
+        "kadar_kolesterol,kadar_kolesterol_ldl,trombosit\n");
 
     for (int i = 0; i < ListUser.jumlahuser; i++) {
         User u = ListUser.users[i];
         fprintf(file,
-            "%d;%s;%s;%s;%s;%.1f;%d;%d;%d;%.1f;%d;%.1f;%d;%d;%d;%d\n",
+            "%d,%s,%s,%s,%s,%.1f,%d,%d,%d,%.1f,%d,%.1f,%d,%d,%d,%d\n",
             u.id, u.username, u.password, u.role, u.riwayat_penyakit,
             u.suhu_tubuh, u.tekanan_darah_sistolik, u.tekanan_darah_diastolik,
             u.detak_jantung, u.saturasi_oksigen, u.kadar_gula_darah,

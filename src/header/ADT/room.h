@@ -1,3 +1,6 @@
+/* File: room.h */
+/* Deklarasi ADT Ruangan sebagai container config.txt */
+
 #define MAX_PASIEN 100
 #define MAX_KOLOM_RUANGAN 26
 #define MAX_BARIS_RUANGAN 26
