@@ -1,11 +1,11 @@
 /* File: listdin.h */
 /* Deklarasi ADT List Dinamis */
 
-ifndef MATRIX_H
+#ifndef MATRIX_H
 #define MATRIX_H
 
 #include <stdio.h>
-#include "Boolean.h"
+#include "../Boolean.h"
 
 #define ROW_CAP 100
 #define COL_CAP 100

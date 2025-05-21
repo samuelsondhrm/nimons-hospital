@@ -4,7 +4,7 @@
 #ifndef LISTDIN_H
 #define LISTDIN_H
 
-#include "Boolean.h"
+#include "../Boolean.h"
 
 #define IDX_MIN 0
 #define IDX_UNDEF -1

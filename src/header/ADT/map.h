@@ -4,7 +4,7 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include "Boolean.h"
+#include "../Boolean.h"
 #include <stdio.h>
 #include <string.h> // If KeyType or ValueType are strings, this will be necessary for string operations.
 

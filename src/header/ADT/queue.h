@@ -4,7 +4,7 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include "Boolean.h"
+#include "../Boolean.h"
 #include <stdio.h>
 #include <math.h>
 

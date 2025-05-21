@@ -4,7 +4,7 @@
 #ifndef SET_H
 #define SET_H
 
-#include "Boolean.h"
+#include "../Boolean.h"
 #include <stdio.h>
 
 #define MAX_SET_SIZE 100 // Maksimal jumlah elemen dalam set
