@@ -1,4 +1,4 @@
-#include "../header/matrix.h"
+#include "../../header/ADT/matrix.h"
 
 // Membuat matrix dengan ukuran nRows x nCols
 void createMatrix(int nRows, int nCols, Matrix *m) {
@@ -21,7 +21,7 @@ void readMatrix(Matrix *m, int nRows, int nCols) {
     createMatrix(nRows, nCols, m);
     for (int i = 0; i < nRows; i++) {
         for (int j = 0; j < nCols; j++) {
-            scanf("%d", &ELMT(*m, i, j));
+            scanf("%d", &ELMT_MTRX(*m, i, j));
         }
     }
 }
@@ -30,7 +30,7 @@ void readMatrix(Matrix *m, int nRows, int nCols) {
 void displayMatrix(Matrix m) {
     for (int i = 0; i < ROW_EFF(m); i++) {
         for (int j = 0; j < COL_EFF(m); j++) {
-            printf("%d", ELMT(m, i, j));
+            printf("%d", ELMT_MTRX(m, i, j));
             if (j < COL_EFF(m) - 1) printf(" ");
         }
         printf("\n");
@@ -43,7 +43,7 @@ Matrix addMatrix(Matrix m1, Matrix m2) {
     createMatrix(ROW_EFF(m1), COL_EFF(m1), &mRes);
     for (int i = 0; i < ROW_EFF(m1); i++) {
         for (int j = 0; j < COL_EFF(m1); j++) {
-            ELMT(mRes, i, j) = ELMT(m1, i, j) + ELMT(m2, i, j);
+            ELMT_MTRX(mRes, i, j) = ELMT_MTRX(m1, i, j) + ELMT_MTRX(m2, i, j);
         }
     }
     return mRes;
@@ -55,7 +55,7 @@ Matrix subtractMatrix(Matrix m1, Matrix m2) {
     createMatrix(ROW_EFF(m1), COL_EFF(m1), &mRes);
     for (int i = 0; i < ROW_EFF(m1); i++) {
         for (int j = 0; j < COL_EFF(m1); j++) {
-            ELMT(mRes, i, j) = ELMT(m1, i, j) - ELMT(m2, i, j);
+            ELMT_MTRX(mRes, i, j) = ELMT_MTRX(m1, i, j) - ELMT_MTRX(m2, i, j);
         }
     }
     return mRes;
@@ -67,9 +67,9 @@ Matrix multiplyMatrix(Matrix m1, Matrix m2) {
     createMatrix(ROW_EFF(m1), COL_EFF(m2), &mRes);
     for (int i = 0; i < ROW_EFF(m1); i++) {
         for (int j = 0; j < COL_EFF(m2); j++) {
-            ELMT(mRes, i, j) = 0;
+            ELMT_MTRX(mRes, i, j) = 0;
             for (int k = 0; k < COL_EFF(m1); k++) {
-                ELMT(mRes, i, j) += ELMT(m1, i, k) * ELMT(m2, k, j);
+                ELMT_MTRX(mRes, i, j) += ELMT_MTRX(m1, i, k) * ELMT_MTRX(m2, k, j);
             }
         }
     }
@@ -82,7 +82,7 @@ Matrix multiplyByConst(Matrix m, ElType x) {
     createMatrix(ROW_EFF(m), COL_EFF(m), &mRes);
     for (int i = 0; i < ROW_EFF(m); i++) {
         for (int j = 0; j < COL_EFF(m); j++) {
-            ELMT(mRes, i, j) = ELMT(m, i, j) * x;
+            ELMT_MTRX(mRes, i, j) = ELMT_MTRX(m, i, j) * x;
         }
     }
     return mRes;
@@ -99,7 +99,7 @@ Matrix transpose(Matrix m) {
     createMatrix(COL_EFF(m), ROW_EFF(m), &mT);
     for (int i = 0; i < ROW_EFF(m); i++) {
         for (int j = 0; j < COL_EFF(m); j++) {
-            ELMT(mT, j, i) = ELMT(m, i, j);
+            ELMT_MTRX(mT, j, i) = ELMT_MTRX(m, i, j);
         }
     }
     return mT;
@@ -108,7 +108,7 @@ Matrix transpose(Matrix m) {
 // Determinan untuk matrix 2x2
 ElType determinant2x2(Matrix m) {
     if (ROW_EFF(m) == 2 && COL_EFF(m) == 2) {
-        return ELMT(m, 0, 0) * ELMT(m, 1, 1) - ELMT(m, 0, 1) * ELMT(m, 1, 0);
+        return ELMT_MTRX(m, 0, 0) * ELMT_MTRX(m, 1, 1) - ELMT_MTRX(m, 0, 1) * ELMT_MTRX(m, 1, 0);
     } else {
         return 0; // Bukan matrix 2x2
     }

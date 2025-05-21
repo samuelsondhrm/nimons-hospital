@@ -6,7 +6,7 @@
 
 #include "../Boolean.h"
 #include <stdio.h>
-#include <string.h> // If KeyType or ValueType are strings, this will be necessary for string operations.
+#include <string.h> 
 
 /* ------------- TIPE DATA MAP ------------- */
 typedef char KeyType[50];
@@ -16,9 +16,9 @@ typedef struct {
     ValueType value; // value terkait dengan key
 } MapElType;
 
-#define CAPACITY 100 
+#define CAPACITY_MAP 100 
 typedef struct {
-    MapElType elements[CAPACITY]; // Array untuk menyimpan elemen map
+    MapElType elements[CAPACITY_MAP]; // Array untuk menyimpan elemen map
     int count;                    // Jumlah elemen dalam map
 } Map;
 
@@ -30,7 +30,7 @@ void CreateEmptyMap(Map *m);
 // Fungsi ini mengembalikan true jika map kosong (count == 0), false jika tidak. 
 boolean IsMapEmpty(Map m);
 
-// Fungsi ini mengembalikan true jika map penuh (count == CAPACITY), false jika tidak.
+// Fungsi ini mengembalikan true jika map penuh (count == CAPACITY_MAP), false jika tidak.
 boolean IsMapFull(Map m);
 
 // Fungsi mencari key dalam array elemen map, jika ditemukan, mengembalikan true.
@@ -47,14 +47,6 @@ void DeleteMap(Map *m, KeyType k);
 ValueType GetValue(Map m, KeyType k);
 
 /* Menampilkan seluruh isi map */
-void PrintMap(Map m) {
-    printf("{\n");
-    for (int i = 0; i < m.count; i++) {
-        printf("{""%s"", %d}", m.elements[i].key, m.elements[i].value);
-        if(i != m.count - 1) printf(",");
-        printf("\n");
-    }
-    printf("}");
-}
+void PrintMap(Map m);
 
 #endif

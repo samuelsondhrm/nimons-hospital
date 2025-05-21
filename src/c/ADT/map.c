@@ -1,4 +1,4 @@
-#include "../header/map.h"
+#include "../../header/ADT/map.h"
 
 /* ------------- KONSTRUKTOR ------------- */
 void CreateEmptyMap(Map *m) {
@@ -11,7 +11,7 @@ boolean IsMapEmpty(Map m) {
 }
 
 boolean IsMapFull(Map m) {
-    return m.count == CAPACITY;
+    return m.count == CAPACITY_MAP;
 }
 
 boolean IsKeyMember(Map m, KeyType k) {

@@ -9,13 +9,13 @@
 #include <math.h>
 
 #define IDX_UNDEF -1
-#define CAPACITY 100
+#define CAPACITY_QUEUE 100
 
 /* Definisi elemen dan address */
 typedef int ElType;
 typedef struct
 {
-    ElType buffer[CAPACITY];
+    ElType buffer[CAPACITY_QUEUE];
     int idxHead;
     int idxTail;
 } Queue;
@@ -36,9 +36,9 @@ void CreateQueue(Queue *q);
 /* Proses : Melakukan alokasi, membuat sebuah q kosong */
 
 /* ********* Prototype ********* */
-boolean isEmpty(Queue q);
+boolean isEmptyQueue(Queue q);
 /* Mengirim true jika q kosong: lihat definisi di atas */
-boolean isFull(Queue q);
+boolean isFullQueue(Queue q);
 /* Mengirim true jika tabel penampung elemen q sudah penuh */
 /* yaitu IDX_TAIL akan selalu di belakang IDX_HEAD dalam buffer melingkar*/
 

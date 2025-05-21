@@ -1,4 +1,4 @@
-#include "../header/stack.h"
+#include "../../header/ADT/stack.h"
 
 /* *** Konstruktor/Kreator *** */
 void CreateEmpty(Stack *S){
@@ -12,7 +12,7 @@ boolean IsEmpty(Stack S){
 }
 
 boolean IsFull(Stack S){
-    if(Top(S) == MaxEl-1) return true;
+    if(Top(S) == CAPACITY_STCK-1) return true;
     else return false;
 }
 

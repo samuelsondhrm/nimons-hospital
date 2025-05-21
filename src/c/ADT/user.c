@@ -1,5 +1,5 @@
 #include <string.h>
-#include "../header/user.h"
+#include "../../header/ADT/user.h"
 
 // Konstruktor: inisialisasi User dengan nilai default
 void CreateUser(User *u) {

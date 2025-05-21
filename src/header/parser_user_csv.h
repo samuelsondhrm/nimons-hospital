@@ -1,7 +1,7 @@
 #ifndef PARSER_USER_CSV_H
 #define PARSER_USER_CSV_H
 
-#include "user.h"
+#include "ADT/user.h"
 
 // Mengubah string menjadi integer (alternatif dari atoi)
 int string_to_int(const char *str);

@@ -7,12 +7,12 @@
 #include "../Boolean.h"
 #include <stdio.h>
 
-#define MAX_SET_SIZE 100 // Maksimal jumlah elemen dalam set
+#define CAPACITY_SET 100 // Maksimal jumlah elemen dalam set
 
 /* *** TIPE DATA SET *** */
 typedef int ElType;
 typedef struct {
-    ElType elements[MAX_SET_SIZE]; // Array untuk menyimpan elemen-elemen set
+    ElType elements[CAPACITY_SET]; // Array untuk menyimpan elemen-elemen set
     int count;                     // Jumlah elemen dalam set
 } Set;
 
@@ -28,7 +28,7 @@ void CreateEmptySet(Set *s);
 // Mengembalikan true jika val ada dalam set s, false jika tidak.
 boolean IsMember(Set s, ElType val);
 
-// Mengembalikan true jika jumlah elemen dalam set mencapai MAX_SET_SIZE.
+// Mengembalikan true jika jumlah elemen dalam set mencapai CAPACITY_SET.
 boolean IsSetFull(Set s);
 
 // Mengembalikan true jika set tidak memiliki elemen (count == 0).

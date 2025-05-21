@@ -1,4 +1,4 @@
-#include "../header/set.h"
+#include "../../header/ADT/set.h"
 
 /* *** KONSTRUKTOR *** */
 void CreateEmptySet(Set *s) {
@@ -14,7 +14,7 @@ boolean IsMember(Set s, ElType val) {
 }
 
 boolean IsSetFull(Set s) {
-    return s.count == MAX_SET_SIZE;
+    return s.count == CAPACITY_SET;
 }
 
 boolean IsSetEmpty(Set s) {

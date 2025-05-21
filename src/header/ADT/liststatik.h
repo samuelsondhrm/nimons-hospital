@@ -1,5 +1,5 @@
 /* File: liststatik.h */
-/* Deklarasi ADT List statik */
+/* Deklarasi ADT List statik dengan MARK*/
 
 #ifndef LISTSTATIK_H
 #define LISTSTATIK_H
@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 /* Kamus Umum */
-#define CAPACITY 100
+#define CAPACITY_LIST 100
 #define IDX_MIN 0
 #define IDX_UNDEF -1
 #define MARK -9999
@@ -17,11 +17,11 @@
 typedef int ElType;  /* type elemen List */
 typedef int IdxType;
 typedef struct {
-   ElType contents[CAPACITY]; /* memori tempat penyimpan elemen (container) */
+   ElType contents[CAPACITY_LIST]; /* memori tempat penyimpan elemen (container) */
 } ListStatik;
 
 /* ********** SELEKTOR ********** */
-#define ELMT(l, i) (l).contents[(i)]
+#define ELMT_LIST(l, i) (l).contents[(i)]
 
 
 /* ********** KONSTRUKTOR ********** */
@@ -32,7 +32,7 @@ void CreateListStatik(ListStatik *l);
 int listLength(ListStatik l);
 /* Mengirimkan banyaknya elemen efektif List l */
 
-/* Indeks yang digunakan [0..CAPACITY-1] */
+/* Indeks yang digunakan [0..CAPACITY_LIST-1] */
 IdxType getFirstIdx(ListStatik l);
 /* Mengirimkan indeks elemen pertama */
 

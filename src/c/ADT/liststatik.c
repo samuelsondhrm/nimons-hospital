@@ -1,17 +1,17 @@
-#include "../header/liststatik.h"
+#include "../../header/ADT/liststatik.h"
 
 /* ********** KONSTRUKTOR ********** */
 void CreateListStatik(ListStatik *l) {
-    for (int i = 0; i < CAPACITY; i++) {
-        ELMT(*l, i) = MARK;
+    for (int i = 0; i < CAPACITY_LIST; i++) {
+        ELMT_LIST(*l, i) = MARK;
     }
 }
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 int listLength(ListStatik l) {
     int res = 0;
-    for (int i = 0; i < CAPACITY; i++) {
-        if (ELMT(l, i) != MARK) {
+    for (int i = 0; i < CAPACITY_LIST; i++) {
+        if (ELMT_LIST(l, i) != MARK) {
             res += 1;
         }
     }
@@ -20,8 +20,8 @@ int listLength(ListStatik l) {
 
 /* *** Selektor INDEKS *** */
 IdxType getFirstIdx(ListStatik l) {
-    for (int i = 0; i < CAPACITY; i++) {
-        if (ELMT(l, i) != MARK) {
+    for (int i = 0; i < CAPACITY_LIST; i++) {
+        if (ELMT_LIST(l, i) != MARK) {
             return i;
         }
     }
@@ -30,8 +30,8 @@ IdxType getFirstIdx(ListStatik l) {
 
 IdxType getLastIdx(ListStatik l) {
     IdxType first = getFirstIdx(l);
-    for (int i = first; i < CAPACITY; i++) {
-        if (ELMT(l, i) == MARK) {
+    for (int i = first; i < CAPACITY_LIST; i++) {
+        if (ELMT_LIST(l, i) == MARK) {
             return i - 1;
         }
     }
@@ -40,7 +40,7 @@ IdxType getLastIdx(ListStatik l) {
 
 /* ********** TEST INDEKS YANG VALID ********** */
 boolean isIdxValid(ListStatik l, IdxType i) {
-    return (i >= IDX_MIN && i < CAPACITY);
+    return (i >= IDX_MIN && i < CAPACITY_LIST);
 }
 
 boolean isIdxEff(ListStatik l, IdxType i) {
@@ -49,8 +49,8 @@ boolean isIdxEff(ListStatik l, IdxType i) {
 
 /* ********** TEST KOSONG/PENUH ********** */
 boolean isEmpty(ListStatik l) {
-    for (int i = 0; i < CAPACITY; i++) {
-        if (ELMT(l, i) != MARK) {
+    for (int i = 0; i < CAPACITY_LIST; i++) {
+        if (ELMT_LIST(l, i) != MARK) {
             return false;
         }
     }
@@ -58,8 +58,8 @@ boolean isEmpty(ListStatik l) {
 }
 
 boolean isFull(ListStatik l) {
-    for (int i = 0; i < CAPACITY; i++) {
-        if (ELMT(l, i) == MARK) {
+    for (int i = 0; i < CAPACITY_LIST; i++) {
+        if (ELMT_LIST(l, i) == MARK) {
             return false;
         }
     }
@@ -71,18 +71,18 @@ void readList(ListStatik *l) {
     int n;
     CreateListStatik(l);
     scanf("%d", &n);
-    while (n < 0 || n > CAPACITY) {
+    while (n < 0 || n > CAPACITY_LIST) {
         scanf("%d", &n);
     }
     for (int i = 0; i < n; i++) {
-        scanf("%d", &ELMT(*l, i));
+        scanf("%d", &ELMT_LIST(*l, i));
     }
 }
 
 void printList(ListStatik l) {
     printf("[");
     for (int i = 0; i < listLength(l); i++) {
-        printf("%d", ELMT(l, i));
+        printf("%d", ELMT_LIST(l, i));
         if (i < listLength(l) - 1) {
             printf(",");
         }
@@ -97,9 +97,9 @@ ListStatik plusMinusList(ListStatik l1, ListStatik l2, boolean plus) {
     int len = listLength(l1);
     for (int i = 0; i < len; i++) {
         if (plus) {
-            ELMT(result, i) = ELMT(l1, i) + ELMT(l2, i);
+            ELMT_LIST(result, i) = ELMT_LIST(l1, i) + ELMT_LIST(l2, i);
         } else {
-            ELMT(result, i) = ELMT(l1, i) - ELMT(l2, i);
+            ELMT_LIST(result, i) = ELMT_LIST(l1, i) - ELMT_LIST(l2, i);
         }
     }
     return result;
@@ -111,7 +111,7 @@ boolean isListEqual(ListStatik l1, ListStatik l2) {
         return false;
     }
     for (int i = 0; i < listLength(l1); i++) {
-        if (ELMT(l1, i) != ELMT(l2, i)) {
+        if (ELMT_LIST(l1, i) != ELMT_LIST(l2, i)) {
             return false;
         }
     }
@@ -121,7 +121,7 @@ boolean isListEqual(ListStatik l1, ListStatik l2) {
 /* ********** SEARCHING ********** */
 int indexOf(ListStatik l, ElType val) {
     for (int i = 0; i < listLength(l); i++) {
-        if (ELMT(l, i) == val) {
+        if (ELMT_LIST(l, i) == val) {
             return i;
         }
     }
@@ -130,14 +130,14 @@ int indexOf(ListStatik l, ElType val) {
 
 /* ********** NILAI EKSTREM ********** */
 void extremeValues(ListStatik l, ElType *max, ElType *min) {
-    *max = ELMT(l, 0);
-    *min = ELMT(l, 0);
+    *max = ELMT_LIST(l, 0);
+    *min = ELMT_LIST(l, 0);
     for (int i = 1; i < listLength(l); i++) {
-        if (ELMT(l, i) > *max) {
-            *max = ELMT(l, i);
+        if (ELMT_LIST(l, i) > *max) {
+            *max = ELMT_LIST(l, i);
         }
-        if (ELMT(l, i) < *min) {
-            *min = ELMT(l, i);
+        if (ELMT_LIST(l, i) < *min) {
+            *min = ELMT_LIST(l, i);
         }
     }
 }
@@ -145,42 +145,42 @@ void extremeValues(ListStatik l, ElType *max, ElType *min) {
 /* ********** MENAMBAH ELEMEN ********** */
 void insertFirst(ListStatik *l, ElType val) {
     for (int i = listLength(*l); i > 0; i--) {
-        ELMT(*l, i) = ELMT(*l, i - 1);
+        ELMT_LIST(*l, i) = ELMT_LIST(*l, i - 1);
     }
-    ELMT(*l, 0) = val;
+    ELMT_LIST(*l, 0) = val;
 }
 
 void insertAt(ListStatik *l, ElType val, IdxType idx) {
     for (int i = listLength(*l); i > idx; i--) {
-        ELMT(*l, i) = ELMT(*l, i - 1);
+        ELMT_LIST(*l, i) = ELMT_LIST(*l, i - 1);
     }
-    ELMT(*l, idx) = val;
+    ELMT_LIST(*l, idx) = val;
 }
 
 void insertLast(ListStatik *l, ElType val) {
-    ELMT(*l, listLength(*l)) = val;
+    ELMT_LIST(*l, listLength(*l)) = val;
 }
 
 /* ********** MENGHAPUS ELEMEN ********** */
 void deleteFirst(ListStatik *l, ElType *val) {
-    *val = ELMT(*l, 0);
+    *val = ELMT_LIST(*l, 0);
     for (int i = 0; i < listLength(*l) - 1; i++) {
-        ELMT(*l, i) = ELMT(*l, i + 1);
+        ELMT_LIST(*l, i) = ELMT_LIST(*l, i + 1);
     }
-    ELMT(*l, listLength(*l) - 1) = MARK;
+    ELMT_LIST(*l, listLength(*l) - 1) = MARK;
 }
 
 void deleteAt(ListStatik *l, ElType *val, IdxType idx) {
-    *val = ELMT(*l, idx);
+    *val = ELMT_LIST(*l, idx);
     for (int i = idx; i < listLength(*l) - 1; i++) {
-        ELMT(*l, i) = ELMT(*l, i + 1);
+        ELMT_LIST(*l, i) = ELMT_LIST(*l, i + 1);
     }
-    ELMT(*l, listLength(*l) - 1) = MARK;
+    ELMT_LIST(*l, listLength(*l) - 1) = MARK;
 }
 
 void deleteLast(ListStatik *l, ElType *val) {
-    *val = ELMT(*l, listLength(*l) - 1);
-    ELMT(*l, listLength(*l) - 1) = MARK;
+    *val = ELMT_LIST(*l, listLength(*l) - 1);
+    ELMT_LIST(*l, listLength(*l) - 1) = MARK;
 }
 
 /* ********** SORTING ********** */
@@ -190,20 +190,20 @@ void sortList(ListStatik *l, boolean asc) {
     if (asc) {
         for (int i = 0; i < len - 1; i++) {
             for (int j = i + 1; j < len; j++) {
-                if (ELMT(*l, i) > ELMT(*l, j)) {
-                    temp = ELMT(*l, i);
-                    ELMT(*l, i) = ELMT(*l, j);
-                    ELMT(*l, j) = temp;
+                if (ELMT_LIST(*l, i) > ELMT_LIST(*l, j)) {
+                    temp = ELMT_LIST(*l, i);
+                    ELMT_LIST(*l, i) = ELMT_LIST(*l, j);
+                    ELMT_LIST(*l, j) = temp;
                 }
             }
         }
     } else {
         for (int i = 0; i < len - 1; i++) {
             for (int j = i + 1; j < len; j++) {
-                if (ELMT(*l, i) < ELMT(*l, j)) {
-                    temp = ELMT(*l, i);
-                    ELMT(*l, i) = ELMT(*l, j);
-                    ELMT(*l, j) = temp;
+                if (ELMT_LIST(*l, i) < ELMT_LIST(*l, j)) {
+                    temp = ELMT_LIST(*l, i);
+                    ELMT_LIST(*l, i) = ELMT_LIST(*l, j);
+                    ELMT_LIST(*l, j) = temp;
                 }
             }
         }

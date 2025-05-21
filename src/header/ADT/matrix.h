@@ -24,7 +24,7 @@ typedef struct {
 /* *** SELEKTOR *** */
 #define ROW_EFF(m) (m).rowEff
 #define COL_EFF(m) (m).colEff
-#define ELMT(m, i, j) (m).mem[(i)][(j)]
+#define ELMT_MTRX(m, i, j) (m).mem[(i)][(j)]
 
 /* *** FUNGSI & PROSEDUR *** */
 // Konstruktor
