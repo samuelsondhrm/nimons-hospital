@@ -1,20 +1,17 @@
 #ifndef LOAD_H
 #define LOAD_H
-#include <stdio.h>
-#include <string.h>
+
+#include "ADT/user.h"
+#include "../header/parser_user_csv.h"
+#include "../header/parser_config_txt.h"
 #include <dirent.h>
+#include <sys/stat.h>
 
-#define MAX_PATH_LEN 256
+// Fungsi utama untuk load data
+void load_data(const char *folder_name, ListUser *listUser, RumahSakit *rs, Pasien pasienData[]);
 
+// Validasi folder dan file
+int validate_folder(const char *path);
+void check_manager_account(ListUser *listUser);
 
-int folder_exists(const char *path);
-// Fungsi cek keberadaan folder
-
-void load(int argc, char *argv[]);
-// mengecek kasus di fitur load
-// [Kasus 1] Tidak ada argumen folder   
-// [Kasus 3] Folder valid
-// Asumsi:
-// 1. File user.csv ada di folder tersebut
-// 2. Sudah ada minimal 1 akun manajer (tidak perlu validasi)
 #endif
