@@ -1,3 +1,10 @@
+/*
+
+PROSEDUR PEMANGGILAN:
+lihatRuangan(&rs, input + 14, users, 3);
+
+*/
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
