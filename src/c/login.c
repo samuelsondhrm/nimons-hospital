@@ -30,48 +30,38 @@ int str_case_cmp(const char *s1, const char *s2) {
     return to_lower(*s1) - to_lower(*s2);
 }
 
-User* find_user_by_username(User users[], int count, const char* username) {
-    for (int i = 0; i < count; i++) {
-        if (str_case_cmp(users[i].username, username) == 0) {
-            return &users[i];
-        }
-    }
-    return NULL;
+static User* find_user_by_username(const ListUser* list, const char* username) {
+    for (int i = 0; i < list->jumlahuser; i++) {
+        if (strcmp(list->users[i].username, username) == 0) {
+            return &list->users[i];
 }
 
-bool login(User users[], int user_count) {
+bool login(User users[], int user_count);
     char username[MAX_FIELD];
     char password[MAX_FIELD];
 
     PasswordSalah = false;
     SudahLogin = false;
 
-    printf("\n>>> LOGIN\n");
-    printf("Username: ");
-    if (scanf("%127s", username) != 1) {
-        printf("Input username tidak valid!\n");
+    if (scanf("%127s", username) != 1) { // username tidak valid
         while (getchar() != '\n'); // hapus memori temporer
         return false;
     }
 
-    printf("Password: ");
-    if (scanf("%127s", password) != 1) {
-        printf("Input password tidak valid!\n");
+    if (scanf("%127s", password) != 1) { // password tidak valid
         while (getchar() != '\n'); // hapus memori temporer
         return false;
     }
 
     while (getchar() != '\n'); // hapus memori temporer
 
-    User* user = find_user_by_username(users, user_count, username);
+    User* user = find_user_by_username(users, username);
 
-    if (user == NULL) {
-        printf("\nTidak ada Manager, Dokter, atau Pasien yang bernama %s!\n", username);
+    if (user == NULL) { // nama salah
         return false;
     }
 
-    if (strcmp(user->password, password) != 0) {
-        printf("\nUsername atau password salah untuk pengguna yang bernama %s!\n", username);
+    if (strcmp(user->password, password) != 0) { // username atau password salah
         PasswordSalah = true;
         return false;
     }
@@ -79,13 +69,6 @@ bool login(User users[], int user_count) {
     current_user = user;
     SudahLogin = true;
 
-    if (strcmp(user->role, "manager") == 0) {
-        printf("\nSelamat pagi Manager %s!\n", user->username);
-    } else if (strcmp(user->role, "dokter") == 0) {
-        printf("\nSelamat pagi Dokter %s!\n", user->username);
-    } else if (strcmp(user->role, "pasien") == 0) {
-        printf("\nSelamat pagi %s! Ada keluhan apa ?\n", user->username);
-    }
 
     return true;
 }
