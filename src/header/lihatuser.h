@@ -1,10 +1,10 @@
-#ifndef LISTDIN_H
-#define LISTDIN_H
+#ifndef LIHATUSER_H
+#define LIHATUSER_H
 
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include "user.h"
+#include "ADT/user.h"
 
 // Convert string to lowercase for case-insensitive compare
 void toLowerCase(char *dest, const char *src);

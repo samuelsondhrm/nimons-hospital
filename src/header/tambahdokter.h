@@ -1,8 +1,10 @@
 #ifndef TAMBAHDOKTER_H
 #define TAMBAHDOKTER_H
 
-#include "../header/room.h"
-#include "../header/user.h"
+#include "ADT/room.h"
+#include "ADT/user.h"
+#include <stdio.h>
+#include <string.h>
 
 void tambahDokter(ListUser *lUser);
 /**

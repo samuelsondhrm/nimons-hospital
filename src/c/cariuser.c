@@ -7,10 +7,7 @@
 
 */
 
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-#include "cariuser.h"
+#include "../header/cariuser.h"
 
 void toLowerCase(char *dest, const char *src) {
     int i;
@@ -89,6 +86,10 @@ void displayUser(const User *u, int mode) {
 void cariUser(ListUser *lu) {
     int choice;
     printf("Cari berdasarkan?\n1. ID\n2. Nama\n>>> Pilihan: "); scanf("%d", &choice);
+    while(choice != 1 && choice != 2){
+        printf("\nMasukan salah, pilih antara 1/2!\nCari berdasarkan?\n1. ID\n2. Nama\n>> Pilihan: ");
+        scanf("%d", &choice);
+    }
     if (choice == 1) {
         int id;
         printf("\n>>> Masukkan nomor ID user: "); scanf("%d", &id);
@@ -115,6 +116,10 @@ void cariUser(ListUser *lu) {
 void cariPasien(ListUser *lu) {
     int choice;
     printf("Cari berdasarkan?\n1. ID\n2. Nama\n3. Penyakit\n>>> Pilihan: "); scanf("%d", &choice);
+    while(choice != 1 && choice != 2 && choice != 3){
+        printf("\nMasukan salah, pilih antara 1/2/3!\nCari berdasarkan?\n1. ID\n2. Nama\n3. Penyakit\n>> Pilihan: ");
+        scanf("%d", &choice);
+    }
     if (choice == 3) {
         char disease[MAX_FIELD];
         printf("\n>>> Masukkan nama penyakit: "); scanf("%s", disease);
@@ -144,7 +149,7 @@ void cariPasien(ListUser *lu) {
             displayHeader(1);
             displayUser(&lu->users[idx], 1);
         }
-    } else {
+    } else if (choice == 2) {
         char name[MAX_FIELD];
         printf("\n>>> Masukkan nama pasien: "); scanf("%s", name);
         int idx = sequentialSearchByName(lu->users, lu->jumlahuser, name);
@@ -161,6 +166,10 @@ void cariPasien(ListUser *lu) {
 void cariDokter(ListUser *lu) {
     int choice;
     printf("Cari berdasarkan?\n1. ID\n2. Nama\n>>> Pilihan: "); scanf("%d", &choice);
+    while(choice != 1 && choice != 2){
+        printf("\nMasukan salah, pilih antara 1/2!\nCari berdasarkan?\n1. ID\n2. Nama\n>> Pilihan: ");
+        scanf("%d", &choice);
+    }
     if (choice == 1) {
         int id;
         printf("\n>>> Masukkan nomor ID dokter: "); scanf("%d", &id);
@@ -172,7 +181,7 @@ void cariDokter(ListUser *lu) {
             displayHeader(2);
             displayUser(&lu->users[idx], 2);
         }
-    } else {
+    } else if (choice == 2){
         char name[MAX_FIELD];
         printf("\n>>> Masukkan nama dokter: "); scanf("%s", name);
         int idx = sequentialSearchByName(lu->users, lu->jumlahuser, name);

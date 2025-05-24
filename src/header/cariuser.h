@@ -1,3 +1,6 @@
+#ifndef CARIUSER_H
+#define CARIUSER_H
+
 /*
 
 3 PROSEDUR PEMANGGILAN:
@@ -10,7 +13,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include "user.h"
+#include "ADT/user.h"
 
 void toLowerCase(char *dest, const char *src);
 
@@ -34,3 +37,4 @@ void cariPasien(ListUser *lu);
 
 void cariDokter(ListUser *lu);
 
+#endif

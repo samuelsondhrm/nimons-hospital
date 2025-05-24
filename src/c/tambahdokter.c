@@ -6,10 +6,7 @@ assignDokter(&rs, &listUser)
 
 */
 
-#include "../header/user.h"
-#include "../header/room.h"
-#include <stdio.h>
-#include <string.h>
+#include "../header/tambahdokter.h"
 
 void tambahDokter(ListUser *lUser) {
     char username[MAX_FIELD], password[MAX_FIELD];
