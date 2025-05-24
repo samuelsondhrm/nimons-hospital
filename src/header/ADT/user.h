@@ -4,6 +4,8 @@
 #ifndef USER_H
 #define USER_H
 
+#include <string.h>
+#include <stdio.h>
 #define MAX_FIELD 128
 
 // Struktur data untuk menyimpan informasi pasien
@@ -29,11 +31,13 @@ typedef struct {
 typedef struct {
     User users[MAX_FIELD];
     int jumlahuser;
-} ListUser;
+} ListUser; // ListUser adalah list rata kiri yang diurut menaik berdasarkan USER_ID user
+            // Semua jenis perilaku terhadap user menggunakan USER_ID (menghapus, insert, mencari), tidak menggunakan index
+            // USER_ID user > 0
 
 /* ********** SELEKTOR ********** */
 // Makro untuk mempermudah akses elemen User
-#define ID(u) (u).id
+#define USER_ID(u) (u).id
 #define USERNAME(u) (u).username
 #define PASSWORD(u) (u).password
 #define ROLE(u) (u).role
@@ -49,10 +53,24 @@ typedef struct {
 #define KOLESTEROL(u) (u).kadar_kolesterol
 #define KOLESTEROL_LDL(u) (u).kadar_kolesterol_ldl
 #define TROMBOSIT(u) (u).trombosit
+#define USERS(l,i) (l).users[i]
+#define JUMLAHUSER(l) (l).jumlahuser
 
 /* ********** KONSTRUKTOR ********** */
 // Membuat user kosong (default value)
 void CreateUser(User *u);
+// Membuat ListUser kosong
 void InitializeListUser(ListUser *l);
+
+/* ********** ETC ********** */
+// Menerima USER_ID, mengembalikan user dengan id tersebut (Jika tidak ada, akan direturn user dengan USER_ID = -1)
+User GetUser(ListUser l, int id);
+// Menghapus user dengan id tersebut
+void DelUser(ListUser *l, int id, User *buffer);
+// Memasukkan user ke dalam ListUser (Jika ListUser penuh, tidak dilakukan apa-apa)
+void InsUser(ListUser *l, User buffer);
+// Print semua isi ListUser beserta atributnya
+void tampilkan_user(ListUser ListUser);
+
 
 #endif
