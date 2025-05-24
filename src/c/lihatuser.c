@@ -7,10 +7,7 @@
 
 */
 
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-#include "lihatuser.h"
+#include "../header/lihatuser.h"
 
 // Convert string to lowercase for case-insensitive compare
 void toLowerCase(char *dest, const char *src) {

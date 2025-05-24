@@ -7,10 +7,7 @@
 
 */
 
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-#include "cariuser.h"
+#include "../header/cariuser.h"
 
 void toLowerCase(char *dest, const char *src) {
     int i;

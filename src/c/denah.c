@@ -5,12 +5,7 @@ lihatRuangan(&rs, input + 14, users, 3);
 
 */
 
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include "denah.h"
-#include "../header/room.h"
-#include "../header/user.h" 
+#include "../header/denah.h"
 
 void printDenah(const RumahSakit rs) {
     printf("    ");
