@@ -8,6 +8,9 @@ char to_upper(char c) {
     return c;
 }
 
+int pasienAntri[CAPACITY] = {0}; 
+
+
 void DaftarCheckUp(ListUser *listUser, Queue *antrianDokter, RumahSakit *rs, const char *username) {
     // 1. Cari pasien
     User *pasien = NULL;
@@ -17,6 +20,13 @@ void DaftarCheckUp(ListUser *listUser, Queue *antrianDokter, RumahSakit *rs, con
             break;
         }
     }
+    
+    if (!pasien) { // validasi pasien
+        return;
+    }
+
+     if (pasienAntri[pasien->id] == 1) { // cek apakah sudah antri
+        return;
 
     // Input data medis
     scanf("%f", &pasien->suhu_tubuh);
@@ -32,7 +42,6 @@ void DaftarCheckUp(ListUser *listUser, Queue *antrianDokter, RumahSakit *rs, con
 
     // Pilih ruangan
     char ruangan[3];
-    printf("Pilih ruangan (contoh: A1): ");
     scanf("%s", ruangan);
 
     // Konversi huruf
@@ -42,4 +51,5 @@ void DaftarCheckUp(ListUser *listUser, Queue *antrianDokter, RumahSakit *rs, con
     //Tambah ke antrian dokter
     int dokterId = rs->data[baris][kolom].dokterId;
     enqueue(&antrianDokter[dokterId], pasien->id);
+    pasienAntri[pasien->id] = 1; // sedang antri
 }
