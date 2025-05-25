@@ -55,7 +55,7 @@ bool login(User users[], int user_count);
 
     while (getchar() != '\n'); // hapus memori temporer
 
-    User* user = find_user_by_username(users, username);
+    User* user = find_user_by_username(ListUsers, username);
 
     if (user == NULL) { // nama salah
         return false;
