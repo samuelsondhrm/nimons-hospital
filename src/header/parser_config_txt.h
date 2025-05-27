@@ -1,8 +1,8 @@
-#ifndef SET_H
-#define SET_H
+#ifndef PARSER_CONFIG
+#define PARSER_CONFIG
 
 #define MAX_OBAT 100
-#include "room.h"
+#include "ADT/room.h"
 
 typedef struct {
     int id;

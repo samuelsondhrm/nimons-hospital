@@ -16,11 +16,11 @@
 # This is variable that specifies the compiler to use.
 CC = gcc
 # This is variable that specifies the compiler flags to use.
-CFLAGS = -g -Wall
+CFLAGS = -g -Wall 
 # This is variable that specifies the source files to compile.
-SRCS = $(wildcard *.c)
+SRCS = $(wildcard c/*.c)
 # This is variable that specifies the object files to create.
-OBJS = $(SRCS:.c=.o)
+OBJS = $(patsubst c/%.c, build/%.o, $(SRCS))
 # This is variable that specifies the name of the executable file.
 TARGET = main
 # This is variable that specifies target compile directory.
@@ -46,15 +46,18 @@ main: main.c
 # The -Wall option is used to enable all compiler warnings.
 # The -c option is used to compile the source files without linking them.
 # *.c: compile all C source files in the current directory
-compile:
-	mkdir -p build
-	$(CC) $(CFLAGS) -c $(SRCS) -o $(TARGET_DIR)/$(OBJS)
+compile: $(OBJS)
 
+$(TARGET_DIR):
+	mkdir -p $(TARGET_DIR)
 
+build/%.o: c/%.c | $(TARGET_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+	
 # This target is used to link the object files and create the executable.
 # The -o option specifies the output file name.
-link:
-	$(CC) $(CFLAGS) -o $(TARGET) $(TARGET_DIR)/$(OBJS)
+link: $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
 # This target is used to compile all the source files in the src directory and link them together.
 clean:

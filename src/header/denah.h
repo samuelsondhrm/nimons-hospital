@@ -1,10 +1,13 @@
 #ifndef DENAH_H
 #define DENAH_H
 
-#include "../header/room.h"
-#include "../header/user.h"
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "ADT/room.h"
+#include "ADT/user.h"
 
-void printDenah(const RumahSakit* rs);
+void printDenah(const RumahSakit rs);
 /**
  * Prosedur untuk menampilkan denah rumah sakit
  **/
