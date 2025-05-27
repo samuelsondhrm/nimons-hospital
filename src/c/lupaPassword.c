@@ -126,7 +126,7 @@ void updatePassword(const char *username_dicari, const char *password_baru, cons
 
 }
 
-void lupaPassword() {
+void lupaPass() {
     char username[MAX_FIELD];
     char kode[MAX_FIELD];
     char passwordBaru[MAX_FIELD];

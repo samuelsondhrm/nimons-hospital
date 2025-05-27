@@ -11,4 +11,4 @@ void getRole(const char *username_dicari, const char *filename, char *role);
 
 void updatePassword(const char *username_dicari, const char *password_baru, const char *filename);
 
-void lupaPassword();
+void lupaPass();
