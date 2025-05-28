@@ -1,9 +1,10 @@
 #ifndef DIAGNOSIS_H
 #define DIAGNOSIS_H
 
-#include "../src/header/ADT/user.h"
-#include "../src/header/ADT/penyakit_dan_obat.h"
-#include "../src/header/ADT/room.h"
+#include "ADT/user.h"
+#include "ADT/penyakit_dan_obat.h"
+#include "ADT/room.h"
+#include "checkUp.h"
 
 void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit *lPenyakit);
 
