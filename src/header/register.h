@@ -1,9 +1,9 @@
 #ifndef REGISTER_H
 #define REGISTER_H
 
-#include "../header/user.h"
-#include "../header/set.h"
-#include "../header/csv_parser.h"  // tulis user csv
+#include "ADT/user.h"
+#include "ADT/set.h"
+#include "csv_parser.h"  // tulis user csv
 
 
 #define MAX_FIELD 128
