@@ -19,7 +19,7 @@ int listLength(ListStatik l) {
 }
 
 /* *** Selektor INDEKS *** */
-IdxType getFirstIdx(ListStatik l) {
+IdxType getListFirstIdx(ListStatik l) {
     for (int i = 0; i < CAPACITY_LIST; i++) {
         if (ELMT_LIST(l, i) != MARK) {
             return i;
@@ -28,7 +28,7 @@ IdxType getFirstIdx(ListStatik l) {
     return IDX_UNDEF;  // Kembalikan IDX_UNDEF jika tidak ditemukan
 }
 
-IdxType getLastIdx(ListStatik l) {
+IdxType getListLastIdx(ListStatik l) {
     IdxType first = getFirstIdx(l);
     for (int i = first; i < CAPACITY_LIST; i++) {
         if (ELMT_LIST(l, i) == MARK) {
@@ -39,16 +39,16 @@ IdxType getLastIdx(ListStatik l) {
 }
 
 /* ********** TEST INDEKS YANG VALID ********** */
-boolean isIdxValid(ListStatik l, IdxType i) {
+boolean isIdxValidList(ListStatik l, IdxType i) {
     return (i >= IDX_MIN && i < CAPACITY_LIST);
 }
 
-boolean isIdxEff(ListStatik l, IdxType i) {
+boolean isIdxEffList(ListStatik l, IdxType i) {
     return (i >= getFirstIdx(l) && i <= getLastIdx(l));
 }
 
 /* ********** TEST KOSONG/PENUH ********** */
-boolean isEmpty(ListStatik l) {
+boolean isListEmpty(ListStatik l) {
     for (int i = 0; i < CAPACITY_LIST; i++) {
         if (ELMT_LIST(l, i) != MARK) {
             return false;
@@ -57,7 +57,7 @@ boolean isEmpty(ListStatik l) {
     return true;
 }
 
-boolean isFull(ListStatik l) {
+boolean isListFull(ListStatik l) {
     for (int i = 0; i < CAPACITY_LIST; i++) {
         if (ELMT_LIST(l, i) == MARK) {
             return false;
@@ -119,7 +119,7 @@ boolean isListEqual(ListStatik l1, ListStatik l2) {
 }
 
 /* ********** SEARCHING ********** */
-int indexOf(ListStatik l, ElType val) {
+int indexOfList(ListStatik l, ElType val) {
     for (int i = 0; i < listLength(l); i++) {
         if (ELMT_LIST(l, i) == val) {
             return i;
@@ -129,7 +129,7 @@ int indexOf(ListStatik l, ElType val) {
 }
 
 /* ********** NILAI EKSTREM ********** */
-void extremeValues(ListStatik l, ElType *max, ElType *min) {
+void extremeValuesList(ListStatik l, ElType *max, ElType *min) {
     *max = ELMT_LIST(l, 0);
     *min = ELMT_LIST(l, 0);
     for (int i = 1; i < listLength(l); i++) {
@@ -143,26 +143,26 @@ void extremeValues(ListStatik l, ElType *max, ElType *min) {
 }
 
 /* ********** MENAMBAH ELEMEN ********** */
-void insertFirst(ListStatik *l, ElType val) {
+void insertFirstList(ListStatik *l, ElType val) {
     for (int i = listLength(*l); i > 0; i--) {
         ELMT_LIST(*l, i) = ELMT_LIST(*l, i - 1);
     }
     ELMT_LIST(*l, 0) = val;
 }
 
-void insertAt(ListStatik *l, ElType val, IdxType idx) {
+void insertAtList(ListStatik *l, ElType val, IdxType idx) {
     for (int i = listLength(*l); i > idx; i--) {
         ELMT_LIST(*l, i) = ELMT_LIST(*l, i - 1);
     }
     ELMT_LIST(*l, idx) = val;
 }
 
-void insertLast(ListStatik *l, ElType val) {
+void insertLastList(ListStatik *l, ElType val) {
     ELMT_LIST(*l, listLength(*l)) = val;
 }
 
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteFirst(ListStatik *l, ElType *val) {
+void deleteFirstList(ListStatik *l, ElType *val) {
     *val = ELMT_LIST(*l, 0);
     for (int i = 0; i < listLength(*l) - 1; i++) {
         ELMT_LIST(*l, i) = ELMT_LIST(*l, i + 1);
@@ -170,7 +170,7 @@ void deleteFirst(ListStatik *l, ElType *val) {
     ELMT_LIST(*l, listLength(*l) - 1) = MARK;
 }
 
-void deleteAt(ListStatik *l, ElType *val, IdxType idx) {
+void deleteAtList(ListStatik *l, ElType *val, IdxType idx) {
     *val = ELMT_LIST(*l, idx);
     for (int i = idx; i < listLength(*l) - 1; i++) {
         ELMT_LIST(*l, i) = ELMT_LIST(*l, i + 1);
@@ -178,7 +178,7 @@ void deleteAt(ListStatik *l, ElType *val, IdxType idx) {
     ELMT_LIST(*l, listLength(*l) - 1) = MARK;
 }
 
-void deleteLast(ListStatik *l, ElType *val) {
+void deleteLastList(ListStatik *l, ElType *val) {
     *val = ELMT_LIST(*l, listLength(*l) - 1);
     ELMT_LIST(*l, listLength(*l) - 1) = MARK;
 }
