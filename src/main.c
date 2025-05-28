@@ -177,13 +177,30 @@ int main() {
                 break;
             case 9: printf("CARI_USER"); 
                 ListUser lUser; //global
-                cariUser(&lUser, 2);
+                cariUser(&lUser);
                 break;
-            case 10: printf("CARI_PASIEN"); break;
-            case 11: printf("CARI_DOKTER"); break;
-            case 12: printf("LIHAT_SEMUA_ANTRIAN"); break;
-            case 13: printf("TAMBAH_DOKTER"); break;
-            case 14: printf("ASSIGN_DOKTER"); break;
+            case 10: printf("CARI_PASIEN"); 
+                ListUser lUser; //global
+                cariPasien(&lUser);
+                break;
+            case 11: printf("CARI_DOKTER"); 
+                ListUser lUser; //global
+                cariDokter(&lUser);
+                break;
+            case 12: printf("LIHAT_SEMUA_ANTRIAN"); 
+                RumahSakit rs; //global
+                ListUser lUser; //global
+                lihatSemuaAntrian(rs, lUser);
+                break;
+            case 13: printf("TAMBAH_DOKTER"); 
+                ListUser lUser; //global
+                tambahDokter(&lUser);
+                break;
+            case 14: printf("ASSIGN_DOKTER"); 
+                RumahSakit rs; //global
+                ListUser lUser; //global
+                assignDokter(&rs, &lUser);
+                break;
             case 15: printf("DIAGNOSIS"); break;
             case 16: printf("NGOBATIN"); break;
             case 17: printf("PULANGDOK"); break;
