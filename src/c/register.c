@@ -1,70 +1,66 @@
 #include "register.h"
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
 
-// Fungsi ctype versi manual
+// Manual ctype
 char to_lower(char c) {
-    if (c >= 'A' && c <= 'Z') {
-        return c + ('a' - 'A');
-    }
-    return c;
+    return (c >= 'A' && c <= 'Z') ? c + 32 : c;
 }
 
-void register_pasien(ListUser *ListUser,const char* filename) {
+// banding string case-insensitive
+int compare_case_insensitive(const char* a, const char* b) {
+    while (*a && *b) {
+        if (to_lower(*a) != to_lower(*b)) {
+            return 0; 
+        }
+        a++;
+        b++;
+    }
+    return *a == *b; 
+}
+
+void register_pasien(ListUser *list, const char* filename) {
     char username[MAX_FIELD];
     char password[MAX_FIELD];
     
-    if (scanf("%127s", username) != 1) { //validasi input username
+    // Input username
+    if (scanf("%127s", username) != 1) {
         while (getchar() != '\n');
         return;
     }
-    
-    if (!is_username_valid(username)) { // validasi input username
-        while (getchar() != '\n');
-        return;
-    }
-    
-    printf("Password: ");
-    if (scanf("%127s", password) != 1) { // validasi password
-        while (getchar() != '\n');
-        return;
-    }
-    
-    while (getchar() != '\n');
-    
-    // Validasi username unik 
-    Set username_set;
-    CreateEmptySet(&username_set);
-    
-    for (int i = 0; i < ListUser->jumlahuser; i++) {
-        char lower[MAX_FIELD];
-        strcpy(lower, ListUser->users[i].username);
-        for (int j = 0; lower[j]; j++) {
-            lower[j] = to_lower(lower[j]);
+    // validasi format username
+    bool is_username_valid(const char* username);
+    if (!username || !username[0]) return false;
+    for (int i = 0; username[i]; i++) {
+        if (!(username[i] >= 'a' && username[i] <= 'z') &&
+            !(username[i] >= 'A' && username[i] <= 'Z')) {
+            return false;
         }
-        InsertSet(&username_set, (ElType)lower);
     }
-    
-    char new_lower[MAX_FIELD];
-    strcpy(new_lower, username);
-    for (int j = 0; new_lower[j]; j++) {
-        new_lower[j] = to_lower(new_lower[j]);
-    }
-    
-    if (IsMember(username_set, (ElType)new_lower)) {  //cek apakah sudah terdaftar
+    return true;
+
+    // Input password
+    if (scanf("%127s", password) != 1) {
+        while (getchar() != '\n');
         return;
     }
-    
-    // Tambahkan user baru
+    while (getchar() != '\n'); 
+
+    // Cek username unik 
+    for (int i = 0; i < list->jumlahuser; i++) {
+        if (compare_case_insensitive(list->users[i].username, username)) {
+            return;
+        }
+    }
+
+    // user baru
     User new_user;
     CreateUser(&new_user);
-    new_user.id = (ListUser->jumlahuser == 0) ? 1 : (ListUser->users[ListUser->jumlahuser - 1].id + 1);
-    strcpy(new_user.username, username);
-    strcpy(new_user.password, password);
-    strcpy(new_user.role, "pasien");
-    
-    ListUser->users[ListUser->jumlahuser] = new_user;
-    ListUser->jumlahuser++;
+    new_user.id = (list->jumlahuser == 0) ? 1 : (list->users[list->jumlahuser - 1].id + 1);
+    strncpy(new_user.username, username, MAX_FIELD);
+    strncpy(new_user.password, password, MAX_FIELD);
+    strncpy(new_user.role, "pasien", MAX_FIELD);
 
-} 
+    // Tambah ke list
+    list->users[list->jumlahuser++] = new_user;
+}
