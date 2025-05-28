@@ -3,10 +3,8 @@
 
 #include "../header/user.h"
 #include "../header/set.h"
-#include "../header/parser_user_csv.h"
-#include <stdbool.h>
-#include <stdio.h>
-#include <string.h>
+#include "../header/csv_parser.h"
+
 
 // Variabel global
 extern User* current_user;

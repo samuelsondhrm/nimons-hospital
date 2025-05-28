@@ -2,8 +2,8 @@
 
 // Implementasi global variabel
 User* current_user = NULL;
-bool SudahLogin = false;
-bool PasswordSalah = false;
+boolean SudahLogin = false;
+boolean PasswordSalah = false;
 
 // Fungsi ctype manual
 char to_lower(char c) {
@@ -35,7 +35,7 @@ static User* find_user_by_username(const ListUser* list, const char* username) {
     }
 }
 
-bool login(User users[], int user_count);
+boolean login(User users[], int user_count);
     char username[MAX_FIELD];
     char password[MAX_FIELD];
 
