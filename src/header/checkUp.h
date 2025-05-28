@@ -2,13 +2,10 @@
 #define CHECKUP_H
 
 #include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "ADT/user.h"
 #include "ADT/room.h"
 #include "ADT/linkedlist.h"
-#include "ADT/queue.h"
+
 
 #define CAPACITY 100
 
