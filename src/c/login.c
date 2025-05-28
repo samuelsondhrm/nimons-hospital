@@ -1,7 +1,4 @@
-#include "login.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
+#include "../header/login.h"
 
 // Implementasi global variabel
 User* current_user = NULL;
@@ -34,6 +31,8 @@ static User* find_user_by_username(const ListUser* list, const char* username) {
     for (int i = 0; i < list->jumlahuser; i++) {
         if (strcmp(list->users[i].username, username) == 0) {
             return &list->users[i];
+        }
+    }
 }
 
 bool login(User users[], int user_count);
