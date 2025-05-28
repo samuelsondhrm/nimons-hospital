@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "user.h": "c",
-        "cariuser.h": "c"
+        "cariuser.h": "c",
+        "denah.h": "c"
     }
 }

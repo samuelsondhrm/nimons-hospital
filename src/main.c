@@ -4,7 +4,6 @@
 #include "header/Boolean.h"
 #include "header/parser_config_txt.h"
 #include "header/parser_user_csv.h"
-#include "header/tes.h"
 #include "header/ADT/liststatik.h"
 #include "header/ADT/map.h"
 #include "header/ADT/matrix.h"
@@ -13,6 +12,12 @@
 #include "header/ADT/set.h"
 #include "header/ADT/stack.h"
 #include "header/ADT/user.h"
+
+#include "header/denah.h"
+#include "header/lihatuser.h"
+#include "header/cariuser.h"
+#include "header/lihatantrian.h"
+#include "header/tambahdokter.h"
 
 int main() {
 /* INITIALIZATION */
@@ -92,6 +97,16 @@ int main() {
         printf(">>> ");
         fgets(ans, MAX_FIELD, stdin);
         ans[strcspn(ans, "\n")] = 0;
+
+        //kasus khusus untuk LIHAT_RUANGAN
+        if(strncmp(ans, "LIHAT_RUANGAN ", 14) == 0  /* Buat check 14 char pertama 'LIHAT_RUANGAN ' atau bukan */ 
+           && 
+           strlen(ans) >= 16                        /* Buat check input nyertain ruangan apa kaga */ ){
+            RumahSakit rs; //global
+            ListUser lUser; //global
+            lihatRuangan(&rs, ans + 14 /* kode diambil secara otomatis dari character ke-15 string ans */, lUser);
+        }
+
         selected_option = GetValue(options, ans);
         printf("%d", selected_option);
         switch(selected_option){
@@ -100,11 +115,27 @@ int main() {
             case 2: printf("LOGOUT"); break;
             case 3: printf("LUPA_PASSWORD"); break;
             case 4: printf("HELP"); break;
-            case 5: printf("DENAH"); break;
-            case 6: printf("LIHAT_USER"); break;
-            case 7: printf("LIHAT_PASIEN"); break;
-            case 8: printf("LIHAT_DOKTER"); break;
-            case 9: printf("CARI_USER"); break;
+            case 5: printf("LIHAT_DENAH");
+                RumahSakit rs; //global
+                ListUser lUser; //global
+                printDenah(rs);
+                break;
+            case 6: printf("LIHAT_USER"); 
+                ListUser lUser; //global
+                lihatUser(&lUser, 0);
+                break;
+            case 7: printf("LIHAT_PASIEN"); 
+                ListUser lUser; //global
+                lihatUser(&lUser, 1);
+                break;
+            case 8: printf("LIHAT_DOKTER"); 
+                ListUser lUser; //global
+                lihatUser(&lUser, 2);
+                break;
+            case 9: printf("CARI_USER"); 
+                
+
+                break;
             case 10: printf("CARI_PASIEN"); break;
             case 11: printf("CARI_DOKTER"); break;
         }
