@@ -8,14 +8,14 @@ void CreateQueue(Queue *q){
 
 
 /* ********* Prototype ********* */
-boolean isEmpty(Queue q){
+boolean isEmptyQueue(Queue q){
     if(IDX_HEAD(q) == IDX_UNDEF && IDX_TAIL(q) == IDX_UNDEF){
         return true;
     }
     return false;
 }
 
-boolean isFull(Queue q){
+boolean isFullQueue(Queue q){
     if (!(isEmpty(q))){
         int idxtail2 = (IDX_TAIL(q)+1) % CAPACITY_QUEUE;
         if(IDX_HEAD(q) == idxtail2){
@@ -25,7 +25,7 @@ boolean isFull(Queue q){
     return false;
 }
 
-int length(Queue q){
+int lengthQueue(Queue q){
     if (isEmpty(q)) return 0;
     if (IDX_TAIL(q) >= IDX_HEAD(q)) {
         return IDX_TAIL(q) - IDX_HEAD(q) + 1;
