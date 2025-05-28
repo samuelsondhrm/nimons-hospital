@@ -29,15 +29,21 @@ void register_pasien(ListUser *list, const char* filename) {
         return;
     }
     // validasi format username
-    bool is_username_valid(const char* username);
+bool is_username_valid(const char* username) {
     if (!username || !username[0]) return false;
     for (int i = 0; username[i]; i++) {
-        if (!(username[i] >= 'a' && username[i] <= 'z') &&
-            !(username[i] >= 'A' && username[i] <= 'Z')) {
+        if (!((username[i] >= 'a' && username[i] <= 'z') ||
+              (username[i] >= 'A' && username[i] <= 'Z'))) {
             return false;
         }
     }
     return true;
+}
+
+if (!is_username_valid(username)) {
+    printf("Format username tidak valid.\n");
+    return;
+}
 
     // Input password
     if (scanf("%127s", password) != 1) {
