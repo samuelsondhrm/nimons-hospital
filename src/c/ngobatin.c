@@ -14,7 +14,23 @@ Ruangan* cariRuanganDokter(RumahSakit *rs, int dokterId) {
     return NULL;
 }
 
-void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lObat, ListFormula *lFormula, ListPenyakit *lPenyakit) {
+void TambahObatKeInventory(Inventory *inv, int pasienId, int id_obat) {
+    for (int i = 0; i < inv->jumlahPasienwObat; i++) {
+        if (inv->data[i].id == pasienId) {
+            if (inv->data[i].jumlahobat < MAX_OBAT) {
+                inv->data[i].obat[inv->data[i].jumlahobat++] = id_obat;
+            }
+            return;
+        }
+    }
+    
+    inv->data[inv->jumlahPasienwObat].id = pasienId;
+    inv->data[inv->jumlahPasienwObat].jumlahobat = 1;
+    inv->data[inv->jumlahPasienwObat].obat[0] = id_obat;
+    inv->jumlahPasienwObat++;
+}
+
+void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lObat, ListFormula *lFormula, ListPenyakit *lPenyakit, Inventory *inv) {
     if (strcmp(ROLE(current_user), "Dokter") != 0) { // cuma dokter yang bisa
         return;
     }
@@ -49,6 +65,10 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
             // tampilkan obat kalau cocok
             if (ID_PENYAKIT(p) == f.penyakit_id && strcmp(NAMA_PENYAKIT(p), RIWAYAT_PENYAKIT(pasien)) == 0) {
                 Obat o = GetObat(*lObat, f.obat_id);
+
+                //printf("%d. %s\n", count++, NAMA_OBAT(o));
+
+                TambahObatKeInventory(inv, pasienId, f.obat_id);
             }
         }
     }

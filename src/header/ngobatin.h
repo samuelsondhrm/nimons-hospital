@@ -8,6 +8,6 @@
 #include "../src/header/ADT/room.h"
 #include <stdbool.h>
 
-void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lObat, ListFormula *lFormula, ListPenyakit *lPenyakit);
+void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lObat, ListFormula *lFormula, ListPenyakit *lPenyakit, Inventory *inv);
 
 #endif
