@@ -24,7 +24,7 @@ void EnqueueLinked(LinkedQueue *q, int pasienId) {
 }
 
 // tampilkan dokter tersedia
-static void tampilkanDokterTersedia(ListUser *listUser, RumahSakit *rs) {
+void tampilkanDokterTersedia(ListUser *listUser, RumahSakit *rs) {
     int counter = 1;
     for (int i = 0; i < rs->rows; i++) {
         for (int j = 0; j < rs->cols; j++) {
