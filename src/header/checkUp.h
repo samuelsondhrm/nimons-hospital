@@ -1,7 +1,6 @@
 #ifndef CHECKUP_H
 #define CHECKUP_H
 
-#include <string.h>
 #include "ADT/user.h"
 #include "ADT/room.h"
 #include "ADT/linkedlist.h"
