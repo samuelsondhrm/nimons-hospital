@@ -14,6 +14,10 @@
 #include "header/ADT/user.h"
 
 #include "header/denah.h"
+#include "header/lihatuser.h"
+#include "header/cariuser.h"
+#include "header/lihatantrian.h"
+#include "header/tambahdokter.h"
 
 int main() {
 /* INITIALIZATION */
@@ -128,7 +132,10 @@ int main() {
                 ListUser lUser; //global
                 lihatUser(&lUser, 2);
                 break;
-            case 9: printf("CARI_USER"); break;
+            case 9: printf("CARI_USER"); 
+                
+
+                break;
             case 10: printf("CARI_PASIEN"); break;
             case 11: printf("CARI_DOKTER"); break;
         }
