@@ -1,40 +1,26 @@
-#ifndef SET_H
-#define SET_H
+/* File: parser_config_txt.h */
+/* Parser config.txt, dan juga menulis */
+#ifndef PARSER_CONFIG_TXT_H
+#define PARSER_CONFIG_TXT_H
 
-#define MAX_OBAT 100
-#include "room.h"
+#include <stdio.h>
+#include "ADT/room.h"   // Definisi RumahSakit, Ruangan, Inventory, Pasien, dll
 
-typedef struct {
-    int id;
-    int inventory[MAX_OBAT];
-    int inventory_count;
-} Pasien;                       // STRUCT INI MASIH HARUS DIGANTI SEIRING DIBUTUHKANNYA INVENTORY OBAT
+// Membaca file konfigurasi rumah sakit dan mengisi data RumahSakit dan Inventory
+// maxAntrianLuar akan diisi dengan kapasitas antrian baris
+// Return 1 jika berhasil, 0 jika gagal
+int loadConfig(const char *filename, RumahSakit *rs, Inventory *invntry, int *maxAntrianLuar);
 
-/**
- * Mem-parse satu baris string yang berisi angka-angka dan menyimpannya ke array of int.
- * 
- * @param line      String input yang berisi angka-angka yang dipisahkan spasi.
- * @param arr       Output array untuk menyimpan hasil angka yang diparse.
- * @param count     Output jumlah angka yang berhasil diparse dan disimpan ke arr.
- */
-void parseLineToInts(const char *line, int *arr, int *count);
+// Membaca satu baris dari file ke buffer, return 0 jika EOF, 1 jika berhasil baca
+int readLine(FILE *fp, char *buffer, int maxLen);
 
-/**
- * Membaca file konfigurasi rumah sakit dari file teks dan mengisi struktur RumahSakit dan data pasien.
- *
- * @param filename      Nama file konfigurasi (biasanya "config.txt").
- * @param rs            Pointer ke struktur RumahSakit yang akan diisi.
- * @param pasienData    Array data pasien (berisi ID dan inventory obat).
- */
-void readHospitalConfig(const char *filename, RumahSakit *rs, Pasien pasienData[MAX_PASIEN]);
+// Mendapatkan integer berikutnya dari pointer string, return -1 jika tidak ada angka lagi
+int nextInt(const char **p);
 
-/**
- * Menyimpan keadaan rumah sakit dan data pasien (termasuk inventory obat) ke dalam file konfigurasi.
- *
- * @param filename      Nama file tempat konfigurasi disimpan.
- * @param rs            Struktur RumahSakit yang akan disimpan.
- * @param pasienData    Array data pasien yang akan disimpan ke file.
- */
-void simpanKonfigurasi(const char *filename, RumahSakit rs, Pasien pasienData[MAX_PASIEN]);
+// Parsing satu baris konfigurasi ruangan dan mengisi struktur Ruangan
+void parseRuanganLine(char *line, Ruangan *ruangan, int kapasitasPerRuangan, int kapasitasBaris);
+
+// Parsing satu baris data pasien dengan daftar obat dan mengisi Inventory
+void parsePasienObatLine(char *line, Inventory *invntry);
 
 #endif
