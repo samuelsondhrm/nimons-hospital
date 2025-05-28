@@ -2,8 +2,8 @@
 
 3 PROSEDUR PEMANGGILAN:
     lihatUser(&lu, 0); --> melihat semua user
-    lihatUser(&lu, 1); --> melihat hanya dokter
-    lihatUser(&lu, 2); --> melihat hanya pasien
+    lihatUser(&lu, 1); --> melihat hanya pasien
+    lihatUser(&lu, 2); --> melihat hanya dokter
 
 */
 

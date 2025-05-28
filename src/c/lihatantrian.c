@@ -44,19 +44,19 @@ void lihatSemuaAntrian(RumahSakit rs, ListUser lUser) {
                     printf("  Tidak ada pasien di antrian saat ini.\n");
                 } else {
                     int nomor = 1;
-                    int i = IDX_HEAD(r.baris);
+                    int k = IDX_HEAD(r.baris);
                     while (1) {
                         // Cari nama pasien berdasarkan ID
                         const char* pasienName = "-";
-                        for (int j = 0; j < lUser.jumlahuser; j++) {
-                            if (lUser.users[j].id == r.baris.buffer[i]) {
-                                pasienName = lUser.users[j].username;
+                        for (int l = 0; l < lUser.jumlahuser; l++) {
+                            if (lUser.users[l].id == r.baris.buffer[k]) {
+                                pasienName = lUser.users[l].username;
                                 break;
                             }
                         }
                         printf("  %d. %s\n", nomor, pasienName);
-                        if (i == IDX_TAIL(r.baris)) break;
-                        i = (i + 1) % CAPACITY_QUEUE;
+                        if (k == IDX_TAIL(r.baris)) break;
+                        k = (k + 1) % CAPACITY_QUEUE;
                         nomor++;
                     }
                 }
