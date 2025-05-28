@@ -27,10 +27,10 @@ int str_case_cmp(const char *s1, const char *s2) {
     return to_lower(*s1) - to_lower(*s2);
 }
 
-static User* find_user_by_username(const ListUser* list, const char* username) {
-    for (int i = 0; i < list->jumlahuser; i++) {
-        if (strcmp(list->users[i].username, username) == 0) {
-            return &list->users[i];
+static User* find_user_by_username(const ListUser* users, const char* username) {
+    for (int i = 0; i < users->jumlahuser; i++) {
+        if (strcmp(users->users[i].username, username) == 0) {
+            return &users->users[i];
         }
     }
 }

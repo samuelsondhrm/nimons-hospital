@@ -12,7 +12,7 @@ boolean is_username_valid(const char* username) {
     return true;
 }
 
-void register_pasien(ListUser *list, const char* filename) {
+void register_pasien(ListUser *ListUser, const char* filename) {
     char username[MAX_FIELD];
     char password[MAX_FIELD];
 

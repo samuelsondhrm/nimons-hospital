@@ -153,9 +153,20 @@ int main() {
         selected_option = GetValue(options, ans);
         printf("%d", selected_option);
         switch(selected_option){
-            case 0: printf("LOGIN"); break;
-            case 1: printf("REGISTER"); break;
-            case 2: printf("LOGOUT"); break;
+            case 0: printf("LOGIN");
+                ListUser users; //global
+                login(users);
+            break;
+            case 1: printf("REGISTER");
+                ListUser Listuser; // global
+                User new_user; // global
+                user current_user; // global
+                register_pasien(ListUser)
+                CreateUser(&new_user);
+            
+            break;
+            case 2: printf("LOGOUT"); 
+            break;
             case 3: printf("LUPA_PASSWORD"); break;
             case 4: printf("HELP"); break;
             case 5: printf("LIHAT_DENAH");
@@ -201,10 +212,33 @@ int main() {
                 ListUser lUser; //global
                 assignDokter(&rs, &lUser);
                 break;
-            case 15: printf("DIAGNOSIS"); break;
-            case 16: printf("NGOBATIN"); break;
+            case 15: printf("DIAGNOSIS");
+                RumahSakit rs; // global
+                ListUser lUser; // global
+                User current_user; //global
+                ListPenyakit lPenyakit; //global
+                diagnosis(current_user,rs,&lUser,&lPenyakit);
+            break;
+
+            case 16: printf("NGOBATIN");
+             case 16: printf("NGOBATIN"); 
+                Inventory inv; // global
+                User current_user; // global
+                RumahSakit rs; // global
+                ListUser lUser; // global
+                ListObat lObat; // global
+                ListFormula lFormula; // global
+                ListPenyakit lPenyakit; // global
+                TambahObatKeInventory(inv);
+                ngobatin(rs,&lUser,&IObat,&IFormula,&lPenyakit,inv);
+            break;
             case 17: printf("PULANGDOK"); break;
-            case 18: printf("DAFTAR_CHECKUP"); break;
+            case 18: printf("DAFTAR_CHECKUP");
+                ListUser listUser; // global
+                RumahSakit rs; // global
+                tampilkanDokterTersedia(listUser,rs);
+                DaftarCheckUp(rs,listUser);
+            break;
             case 19: printf("ANTRIAN"); break;
             case 20: printf("MINUM_OBAT"); break;
             case 21: printf("PENAWAR"); break;
