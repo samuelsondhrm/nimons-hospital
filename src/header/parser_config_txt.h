@@ -4,7 +4,7 @@
 #define PARSER_CONFIG_TXT_H
 
 #include <stdio.h>
-#include "room.h"   // Definisi RumahSakit, Ruangan, Inventory, Pasien, dll
+#include "ADT/room.h"   // Definisi RumahSakit, Ruangan, Inventory, Pasien, dll
 
 // Membaca file konfigurasi rumah sakit dan mengisi data RumahSakit dan Inventory
 // maxAntrianLuar akan diisi dengan kapasitas antrian baris
