@@ -1,4 +1,5 @@
 #include "../../header/ADT/room.h"
+
 void InitializeRumahSakit(RumahSakit *rs){
     rs->rows = 0;
     rs->cols = 0;
@@ -14,7 +15,7 @@ void InitializeRumahSakit(RumahSakit *rs){
 }
 void InitializePasien(Pasien *P){
     P->jumlahobat = 0;
-    CreateEmpty(&P->perut);
+    CreateEmptyStack(&P->perut);
 }
 
 void InitializeInventory(Inventory *I){

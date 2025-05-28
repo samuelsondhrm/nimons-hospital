@@ -37,11 +37,7 @@ typedef struct {
     Pasien data[MAX_PASIEN];                                            // data[ID_User][ID_Obat], ID_Obat valid kecuali -1 (MARK)
 } Inventory;                                                // MIsal data[1][2,3,-1,-1,-1,..,-1] bearti pasien ID 1, punya obat ID 2 dan 3
 
-void InitializeRumahSakit(RumahSakit *rs){
-}
-void InitializePasien(Pasien *P){
-}
-
-void InitializeInventory(Inventory *I){
-}
+void InitializeRumahSakit(RumahSakit *rs);
+void InitializePasien(Pasien *P);
+void InitializeInventory(Inventory *I);
 #endif
