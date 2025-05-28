@@ -13,11 +13,41 @@
 #include "header/ADT/stack.h"
 #include "header/ADT/user.h"
 
+//include header for each features
+#include "header/login.h"
+#include "header/register.h"
+#include "header/logout.h"
+#include "header/lupaPassword.h"
+#include "header/help.h"
 #include "header/denah.h"
 #include "header/lihatuser.h"
 #include "header/cariuser.h"
 #include "header/lihatantrian.h"
 #include "header/tambahdokter.h"
+#include "header/diagnosis.h"
+#include "header/ngobatin.h"
+#include "header/pulangDok.h"
+#include "header/checkUp.h"
+#include "header/antrianSaya.h"
+#include "header/minumObat.h"
+#include "header/minumPenawar.h"
+#include "header/exit.h"
+#include "header/load.h"
+#include "header/save.h"
+
+/* 
+TAMBAH FUNGSI/PROSEDUR VALIDASI APAKAH FITUR YANG DIAKSES SUDAH SESUAI DENGAN ROLE
+
+Jika salah, akan menampilkan: 
+"Anda tidak bisa mengakses fitur <ans>, fitur <ans> hanya boleh diakses oleh seorang <role yang boleh akses fitur tsb>!" 
+
+Catatan:
+- fitur ini akan dijalankan sekali setelah user menginput <ans> dan menggunakan skema if-else
+- jadi butuh membuat 2 fungsi/prosedur dan 1 typedef/list/yang lainnya untuk:
+    1. function mengecek apakah fitur boleh diakses ato ga (boolean)
+    2. procedure menampilkan pesan error yang bisa otomatis menginput ans dan role yang bisa akses fitur
+    3. constant list/typedef untuk ngedeclare role x bisa akses apa aja (untuk keperluan function dan procedure diatas)
+*/
 
 int main() {
 /* INITIALIZATION */
@@ -72,18 +102,31 @@ int main() {
 
     Map options;
     CreateEmptyMap(&options);
-    InsertMap(&options, "LOGIN", 0);
-    InsertMap(&options, "REGISTER", 1);
-    InsertMap(&options, "LOGOUT", 2);
-    InsertMap(&options, "LUPA_PASSWORD", 3);
-    InsertMap(&options, "HELP", 4);
-    InsertMap(&options, "DENAH", 5);
-    InsertMap(&options, "LIHAT_USER", 6);
-    InsertMap(&options, "LIHAT_PASIEN", 7);
-    InsertMap(&options, "LIHAT_DOKTER", 8);
-    InsertMap(&options, "CARI_USER", 9);
-    InsertMap(&options, "CARI_PASIEN", 10);
-    InsertMap(&options, "CARI_DOKTER", 11);
+    InsertMap(&options, "LOGIN", 0); // ACCESS: All
+    InsertMap(&options, "REGISTER", 1); // ACCESS: Pasien
+    InsertMap(&options, "LOGOUT", 2); // ACCESS: All
+    InsertMap(&options, "LUPA_PASSWORD", 3); // ACCESS: All
+    InsertMap(&options, "HELP", 4); // ACCESS: All
+    InsertMap(&options, "LIHAT_DENAH", 5); // ACCESS: All
+    InsertMap(&options, "LIHAT_USER", 6); // ACCESS: Manager
+    InsertMap(&options, "LIHAT_PASIEN", 7); // ACCESS: Manager
+    InsertMap(&options, "LIHAT_DOKTER", 8); // ACCESS: Manager
+    InsertMap(&options, "CARI_USER", 9); // ACCESS: Manager
+    InsertMap(&options, "CARI_PASIEN", 10); // ACCESS: Manager
+    InsertMap(&options, "CARI_DOKTER", 11); // ACCESS: Manager
+    InsertMap(&options, "LIHAT_SEMUA_ANTRIAN", 12); // ACCESS: Manager 
+    InsertMap(&options, "TAMBAH_DOKTER", 13); // ACCESS: Manager
+    InsertMap(&options, "ASSIGN_DOKTER", 14); // ACCESS: Manager
+    InsertMap(&options, "DIAGNOSIS", 15); // ACCESS: Dokter
+    InsertMap(&options, "NGOBATIN", 16); // ACCESS: Dokter
+    InsertMap(&options, "PULANGDOK", 17); // ACCESS: Pasien
+    InsertMap(&options, "DAFTAR_CHECKUP", 18); // ACCESS: Pasien
+    InsertMap(&options, "ANTRIAN", 19); // ACCESS: Pasien
+    InsertMap(&options, "MINUM_OBAT", 20); // ACCESS: Pasien
+    InsertMap(&options, "PENAWAR", 21); // ACCESS: Pasien
+    InsertMap(&options, "EXIT", 22); // ACCESS: All
+    InsertMap(&options, "SAVE", 23); // ACCESS: All
+    InsertMap(&options, "LIHAT_RUANGAN ", 24); //perlukah, Nael? soalnya ini special case.  // ACCESS: All
     int selected_option;
     
     // InitializeListUser(&accounts);
@@ -128,16 +171,30 @@ int main() {
                 ListUser lUser; //global
                 lihatUser(&lUser, 1);
                 break;
-            case 8: printf("LIHAT_DOKTER"); 
+            case 8: printf("LIHAT_DOKTER");
                 ListUser lUser; //global
                 lihatUser(&lUser, 2);
                 break;
             case 9: printf("CARI_USER"); 
-                
-
+                ListUser lUser; //global
+                cariUser(&lUser, 2);
                 break;
             case 10: printf("CARI_PASIEN"); break;
             case 11: printf("CARI_DOKTER"); break;
+            case 12: printf("LIHAT_SEMUA_ANTRIAN"); break;
+            case 13: printf("TAMBAH_DOKTER"); break;
+            case 14: printf("ASSIGN_DOKTER"); break;
+            case 15: printf("DIAGNOSIS"); break;
+            case 16: printf("NGOBATIN"); break;
+            case 17: printf("PULANGDOK"); break;
+            case 18: printf("DAFTAR_CHECKUP"); break;
+            case 19: printf("ANTRIAN"); break;
+            case 20: printf("MINUM_OBAT"); break;
+            case 21: printf("PENAWAR"); break;
+            case 22: printf("EXIT"); break;
+            case 23: printf("SAVE"); break;
+            case 24: printf("LIHAT_RUANGAN"); break;
+            default: printf("Perintah tidak dikenali.\n");
         }
     printf("\n");
     }
