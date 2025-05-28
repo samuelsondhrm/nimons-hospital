@@ -1,6 +1,5 @@
-#include "register.h"
-#include <stdio.h>
-#include <string.h>
+#include "../header/register.h"
+
 
 // Manual ctype
 char to_lower(char c) {
@@ -29,7 +28,7 @@ void register_pasien(ListUser *list, const char* filename) {
         return;
     }
     // validasi format username
-    bool is_username_valid(const char* username);
+    boolean is_username_valid(const char* username);
     if (!username || !username[0]) return false;
     for (int i = 0; username[i]; i++) {
         if (!(username[i] >= 'a' && username[i] <= 'z') &&
