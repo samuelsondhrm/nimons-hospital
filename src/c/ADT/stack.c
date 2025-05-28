@@ -1,17 +1,17 @@
 #include "../../header/ADT/stack.h"
 
 /* *** Konstruktor/Kreator *** */
-void CreateEmpty(Stack *S){
+void CreateEmptyStack(Stack *S){
     S->TOP = Nil;
 }
 
 /* ************   Predikat   ************ */
-boolean IsEmpty(Stack S){
+boolean IsEmptyStack(Stack S){
     if(Top(S) == Nil) return true;
     else return false;
 }
 
-boolean IsFull(Stack S){
+boolean IsFullStack(Stack S){
     if(Top(S) == CAPACITY_STCK-1) return true;
     else return false;
 }

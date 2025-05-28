@@ -33,24 +33,24 @@ int listLength(ListStatik l);
 /* Mengirimkan banyaknya elemen efektif List l */
 
 /* Indeks yang digunakan [0..CAPACITY_LIST-1] */
-IdxType getFirstIdx(ListStatik l);
+IdxType getListFirstIdx(ListStatik l);
 /* Mengirimkan indeks elemen pertama */
 
-IdxType getLastIdx(ListStatik l);
+IdxType getListLastIdx(ListStatik l);
 /* Mengirimkan indeks elemen terakhir */
 
 /* Test Indeks yang valid */
-boolean isIdxValid(ListStatik l, IdxType i);
+boolean isIdxValidList(ListStatik l, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang valid utk kapasitas List l */
 
-boolean isIdxEff(ListStatik l, IdxType i);
+boolean isIdxEffList(ListStatik l, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk List l */
 
 /* Test kosong/penuh */
-boolean isEmpty(ListStatik l);
+boolean isListEmpty(ListStatik l);
 /* Mengirimkan true jika List l kosong */
 
-boolean isFull(ListStatik l);
+boolean isListFull(ListStatik l);
 /* Mengirimkan true jika List l penuh */
 
 /* Baca dan tulis dengan input/output device */
@@ -69,35 +69,35 @@ boolean isListEqual(ListStatik l1, ListStatik l2);
 /* Mengirimkan true jika l1 sama dengan l2 */
 
 /* Searching */
-int indexOf(ListStatik l, ElType val);
+int indexOfList(ListStatik l, ElType val);
 /* Mencari indeks dari elemen val */
 
 /* Nilai Ekstrem */
-void extremeValues(ListStatik l, ElType *max, ElType *min);
+void extremeValuesList(ListStatik l, ElType *max, ElType *min);
 /* Mencari nilai terbesar dan terkecil dalam List */
 
 /* Menambah elemen */
-void insertFirst(ListStatik *l, ElType val);
+void insertFirstList(ListStatik *l, ElType val);
 /* Menambahkan elemen pertama */
 
-void insertAt(ListStatik *l, ElType val, IdxType idx);
+void insertAtList(ListStatik *l, ElType val, IdxType idx);
 /* Menambahkan elemen pada indeks tertentu */
 
-void insertLast(ListStatik *l, ElType val);
+void insertLastList(ListStatik *l, ElType val);
 /* Menambahkan elemen terakhir */
 
 /* Menghapus elemen */
-void deleteFirst(ListStatik *l, ElType *val);
+void deleteFirstList(ListStatik *l, ElType *val);
 /* Menghapus elemen pertama */
 
-void deleteAt(ListStatik *l, ElType *val, IdxType idx);
+void deleteAtList(ListStatik *l, ElType *val, IdxType idx);
 /* Menghapus elemen pada indeks tertentu */
 
-void deleteLast(ListStatik *l, ElType *val);
+void deleteLastList(ListStatik *l, ElType *val);
 /* Menghapus elemen terakhir */
 
 /* Sorting */
 void sortList(ListStatik *l, boolean asc);
 /* Mengurutkan list */
 
-#endif /* LISTSTATIK_H */
+#endif 

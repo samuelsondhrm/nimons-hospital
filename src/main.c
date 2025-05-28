@@ -4,7 +4,6 @@
 #include "header/Boolean.h"
 #include "header/parser_config_txt.h"
 #include "header/parser_user_csv.h"
-#include "header/tes.h"
 #include "header/ADT/liststatik.h"
 #include "header/ADT/map.h"
 #include "header/ADT/matrix.h"
@@ -92,6 +91,10 @@ int main() {
         printf(">>> ");
         fgets(ans, MAX_FIELD, stdin);
         ans[strcspn(ans, "\n")] = 0;
+        if(!strcmp(ans, "LIHAT_RUANGAN")){
+            char ruangan[14];
+            // cut ans
+        }
         selected_option = GetValue(options, ans);
         printf("%d", selected_option);
         switch(selected_option){
@@ -100,13 +103,15 @@ int main() {
             case 2: printf("LOGOUT"); break;
             case 3: printf("LUPA_PASSWORD"); break;
             case 4: printf("HELP"); break;
-            case 5: printf("DENAH"); break;
+            case 5: printf("LIHAT_DENAH"); break;
             case 6: printf("LIHAT_USER"); break;
             case 7: printf("LIHAT_PASIEN"); break;
             case 8: printf("LIHAT_DOKTER"); break;
             case 9: printf("CARI_USER"); break;
             case 10: printf("CARI_PASIEN"); break;
             case 11: printf("CARI_DOKTER"); break;
+            case 22: printf("LIHAT_DENAH"); break;
+            case 23: printf("LIHAT_RUANGAN";) break;
         }
     printf("\n");
     }
