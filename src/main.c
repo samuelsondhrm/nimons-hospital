@@ -46,7 +46,7 @@ Catatan:
 - jadi butuh membuat 2 fungsi/prosedur dan 1 typedef/list/yang lainnya untuk:
     1. function mengecek apakah fitur boleh diakses ato ga (boolean)
     2. procedure menampilkan pesan error yang bisa otomatis menginput ans dan role yang bisa akses fitur
-    3. constant list/typedef untuk ngedeclare role x bisa akses apa aja (untuk keperluan function dan procedure diatas)
+    3. constant list/typedef untuk ngedeclare role x bisa akses apa aja (untuk keperluan function dan procedure diatas), idenya sih memanfaatkan List Map options aja
 */
 
 int main() {
