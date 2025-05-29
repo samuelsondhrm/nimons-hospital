@@ -164,9 +164,9 @@ int main() {
                 register_pasien(ListUser)
                 CreateUser(&new_user);
             
-            break;
+                break;
             case 2: printf("LOGOUT"); 
-            break;
+                break;
             case 3: printf("LUPA_PASSWORD"); break;
             case 4: printf("HELP"); break;
             case 5: printf("LIHAT_DENAH");
