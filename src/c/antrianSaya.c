@@ -1,10 +1,6 @@
 #include "../header/antrianSaya.h"
 
 void antrianSaya(User current_user, RumahSakit rs) {
-    if (strcmp(ROLE(current_user), "Pasien") != 0) {
-        printf("Fitur ini hanya dapat digunakan oleh pasien!\n");
-        return;
-    }
 
     int found = 0;
 
