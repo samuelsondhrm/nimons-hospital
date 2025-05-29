@@ -1,14 +1,14 @@
 #ifndef REGISTER_H
 #define REGISTER_H
 
-#include "../header/user.h"
-#include "../header/set.h"
-#include "../header/parser_user_csv.h"  // tulis user csv
-#include <stdbool.h>
+#include "ADT/user.h"
+#include "ADT/set.h"
+#include "csv_parser.h"  
+
 
 #define MAX_FIELD 128
 
-bool is_username_valid(const char* username);
-void register_pasien(ListUser *ListUser, const char* filename); 
+boolean is_username_valid(const char* username);
+void register_pasien(ListUser *lUser, User *new_user);
 
 #endif
