@@ -1,6 +1,6 @@
 #include "../header/minumPenawar.h"
 
-void minumPenawar(User current_user, Inventory *inv, ListObat *lObat) {
+void minumPenawar(User current_user, Inventory *inv, const ListObat *lObat) {
     int pasienId = USER_ID(current_user);
 
     int idxInv = -1;
