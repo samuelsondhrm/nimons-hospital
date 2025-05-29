@@ -1,6 +1,6 @@
 #include "../header/minumPenawar.h"
 
-void minumPenawar(User current_user, Inventory *inv) {
+void minumPenawar(User current_user, Inventory *inv, ListObat *lObat) {
     int pasienId = USER_ID(current_user);
 
     int idxInv = -1;
@@ -18,14 +18,14 @@ void minumPenawar(User current_user, Inventory *inv) {
         return;
     }
 
-
     int obatId;
     Pop(perut, &obatId);
 
-    // Penambahan kembali ke inventory
+    Obat o = GetObat(*lObat, obatId);
+
     if (inv->data[idxInv].jumlahobat < MAX_OBAT) {
         inv->data[idxInv].obat[inv->data[idxInv].jumlahobat++] = obatId;
     }
 
-    printf("Uwekkk!!! Obat dengan ID %d keluar dan kembali ke inventory\n", obatId);
+    printf("Uwekkk!!! %s keluar dan kembali ke inventory\n", NAMA_OBAT(o));
 }

@@ -10,6 +10,6 @@
  Mengeluarkan obat terakhir yang diminum (dari stack perut), dan mengembalikannya ke inventory pasien.
  - Jika perut kosong, tampilkan pesan kesalahan.
 */
-void minumPenawar(User current_user, Inventory *inv);
+void minumPenawar(User current_user, Inventory *inv, const ListObat *lObat);
 
 #endif
