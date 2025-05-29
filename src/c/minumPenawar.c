@@ -1,34 +1,31 @@
 #include "../header/minumPenawar.h"
 
-Pasien* cariPasienById(Inventory *inv, int userId) {
+void minumPenawar(User current_user, Inventory *inv) {
+    int pasienId = USER_ID(current_user);
+
+    int idxInv = -1;
     for (int i = 0; i < inv->jumlahPasienwObat; i++) {
-        if (inv->data[i].id == userId) {
-            return &inv->data[i];
+        if (inv->data[i].id == pasienId) {
+            idxInv = i;
+            break;
         }
     }
-    return NULL;
-}
 
-void minumPenawar(int userId, ListObat *lObat, Inventory *inv) {
-    Pasien *pasien = cariPasienById(inv, userId);
-    if (pasien == NULL) {
-        printf("Data pasien tidak ditemukan.\n");
-        return;
-    }
+    Stack *perut = &inv->data[idxInv].perut;
 
-    if (IsEmpty(pasien->perut)) {
+    if (idxInv == -1 || isEmptyStack(*perut)) {
         printf("Perut kosong!! Belum ada obat yang dimakan.\n");
         return;
     }
 
-    int obatId;
-    Pop(&pasien->perut, &obatId);
 
-    if (pasien->jumlahobat < MAX_OBAT) {
-        pasien->obat[pasien->jumlahobat++] = obatId;
-        Obat o = GetObat(*lObat, obatId);
-        printf("Uwekkk!!! %s keluar dan kembali ke inventory\n", o.nama);
-    } else {
-        printf("Inventory penuh! Tidak bisa mengembalikan obat.\n");
+    int obatId;
+    Pop(perut, &obatId);
+
+    // Penambahan kembali ke inventory
+    if (inv->data[idxInv].jumlahobat < MAX_OBAT) {
+        inv->data[idxInv].obat[inv->data[idxInv].jumlahobat++] = obatId;
     }
+
+    printf("Uwekkk!!! Obat dengan ID %d keluar dan kembali ke inventory\n", obatId);
 }
