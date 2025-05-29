@@ -1,13 +1,4 @@
 {
-  "files.associations": {
-    "user.h": "c",
-    "cariuser.h": "c",
-    "denah.h": "c",
-    "tambahdokter.h": "c",
-    "login.h": "c",
-    "register.h": "c",
-    "diagnosis.h": "c"
-  },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
   "C_Cpp_Runner.debuggerPath": "gdb",
