@@ -6,7 +6,6 @@ void login(ListUser *users, User *current_user) {
     char username[MAX_FIELD];
     char password[MAX_FIELD];
 
-    PasswordSalah = false;
     SudahLogin = false;
 
     //printf("Username: ");
@@ -30,13 +29,40 @@ void login(ListUser *users, User *current_user) {
         return;
     }
 
-    if (strcmp(user->password, password) != 0) { // username atau password salah
-        PasswordSalah = true; // variable global PasswordSalah terisi true
-        return;
+   while (1) {
+        //printf("Password: ");
+        scanf("%127s", password);
+        while (getchar() != '\n'); // Bersihkan buffer
+
+        if (strcmp(user->password, password) == 0) {
+            current_user = user;
+            SudahLogin = true;
+            //printf("Login berhasil! Selamat datang, %s.\n", current_user->username);
+            return;
+        }
+
+        // Password salah
+        //printf("Password salah!\n");
+        //printf("Pilih aksi:\n");
+        //printf("1. Coba lagi\n");
+        //printf("2. Keluar dari login\n");
+        //printf("3. Lupa password\n");
+        //printf("Masukkan pilihan (1/2/3): ");
+        int pilihan;
+        scanf("%d", &pilihan);
+
+        while (getchar() != '\n'); // Bersihkan buffer
+
+        if (pilihan == 1) {
+            continue;
+        } else if (pilihan == 2) {
+            return;
+        } else if (pilihan == 3) {
+            lupaPass(); 
+            return;
+        } else {
+            //printf("Pilihan tidak valid. Keluar dari login.\n");
+            return;
+        }
     }
-
-    current_user = user; // variable global current_user kini terisi dengan user
-    SudahLogin = true; // variabel global SudahLogin terisi true
-
-    return;
 }
