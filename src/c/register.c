@@ -44,7 +44,7 @@ void register_pasien(ListUser *lUser, User *new_user) {
 
     // Buat user baru
     CreateUser(new_user);
-    new_user->id = (lUser->jumlahuser == 0) ? 1 : (lUser->users[lUser->jumlahuser - 1].id + 1);
+    new_user->id = (lUser->jumlahuser == 0) ? 1 : (lUser->users[lUser->jumlahuser - 1].id + 1); // ID baru
     strncpy(new_user->username, username, MAX_FIELD);
     strncpy(new_user->password, password, MAX_FIELD);
     strncpy(new_user->role, "pasien", MAX_FIELD);

@@ -9,6 +9,6 @@
 #define MAX_FIELD 128
 
 boolean is_username_valid(const char* username);
-void register_pasien(ListUser *ListUser, const char* filename); 
+void register_pasien(ListUser *lUser, User *new_user);
 
 #endif
