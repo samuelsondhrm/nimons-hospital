@@ -1,52 +1,62 @@
-#include "minumObat.h"
+#include "../header/minumObat.h"
 
-Pasien* cariPasienById(Inventory *inv, int userId) {
+
+void minumObat(User current_user, Inventory *inv, RumahSakit *rs, ListObat *lObat) {
+
+    int pasienId = USER_ID(current_user);
+
+    // Cari inventory pasien
+    int idxInv = -1;
     for (int i = 0; i < inv->jumlahPasienwObat; i++) {
-        if (inv->data[i].id == userId) {
-            return &inv->data[i];
+        if (inv->data[i].id == pasienId) {
+            idxInv = i;
+            break;
         }
     }
-    return NULL;
-}
 
-void minumObat(int userId, ListObat *lObat, Inventory *inv) {
-
-    Pasien *pasien = cariPasienById(inv, userId);
-    if (pasien == NULL) {
-        printf("Data pasien tidak ditemukan.\n");
+    if (idxInv == -1 || inv->data[idxInv].jumlahobat == 0) {
+        printf("Tidak ada obat dalam inventory!\n");
         return;
     }
 
-    if (pasien->jumlahobat == 0) {
-        printf("Inventory kosong. Tidak ada obat untuk diminum!\n");
-        return;
-    }
-
-    // Daftar obat
+    // Tampilkan daftar obat
     printf("============ DAFTAR OBAT ============\n");
-    for (int i = 0; i < pasien->jumlahobat; i++) {
-        Obat o = GetObat(*lObat, pasien->obat[i]); 
-        printf("%d. %s\n", i + 1, o.nama);
+    for (int i = 0; i < inv->data[idxInv].jumlahobat; i++) {
+        int obatId = inv->data[idxInv].obat[i];
+        Obat o = GetObat(*lObat, obatId);
+        printf("%d. %s\n", i + 1, NAMA_OBAT(o));
     }
 
-    printf("Pilih obat untuk diminum: ");
+    printf("\nPilih obat untuk diminum: ");
     int pilihan;
-    scanf("%d", &pilihan);
+    scanf("%d /n", &pilihan);
 
-    if (pilihan < 1 || pilihan > pasien->jumlahobat) {
-        printf("Pilihan obat tidak tersedia! Mohon masukkan ulang pilihan anda:\n");
+    if (pilihan < 1 || pilihan > inv->data[idxInv].jumlahobat) {
+        printf("Pilihan nomor tidak tersedia!\n");
         return;
     }
 
-    int obatId = pasien->obat[pilihan - 1];
+    int obatId = inv->data[idxInv].obat[pilihan - 1];
     Obat o = GetObat(*lObat, obatId);
-    Push(&pasien->perut, obatId);       // Masukkan ke stack perut (F17)
 
-    // Hapus dari inventory
-    for (int i = pilihan - 1; i < pasien->jumlahobat - 1; i++) {
-        pasien->obat[i] = pasien->obat[i + 1];
+    // Push ke stack perut (untuk F17)
+    for (int i = 0; i < rs->rows; i++) {
+        for (int j = 0; j < rs->cols; j++) {
+            Queue q = rs->data[i][j].antrianPasienIds;
+            for (int k = 0; k < lengthQueue(q); k++) {
+                int idx = (q.idxHead + k) % CAPACITY_QUEUE;
+                if (q.buffer[idx] == pasienId) {
+                    Push(&inv->data[idxInv].perut, obatId);
+                    printf("\nGLEKGLEKGLEK... %s berhasil diminum!!!\n", NAMA_OBAT(o));
+
+                    // Hapus obat diminum dari inventory
+                    for (int x = pilihan - 1; x < inv->data[idxInv].jumlahobat - 1; x++) {
+                        inv->data[idxInv].obat[x] = inv->data[idxInv].obat[x + 1];
+                    }
+                    inv->data[idxInv].jumlahobat--;
+                    return;
+                }
+            }
+        }
     }
-    pasien->jumlahobat--;
-
-    printf("GLEKGLEKGLEK... %s berhasil diminum!!!\n", o.nama);
 }

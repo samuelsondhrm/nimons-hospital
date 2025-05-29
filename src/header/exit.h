@@ -4,37 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "user.h"
+#include "../header/save.h"
+#include "../header/ADT/user.h"
 
 
 
-void saveToCSV(User u[], int count) ;
-// Menyimpan dari ADT user ke user.csv
+void exitProgram(ListUser listUser, RumahSakit rs, Pasien pasienData[]);
+// Prosedur untuk keluar dari program, dengan opsi untuk menyimpan data yang telah diubah
 
-char readExit(){
-    int n;
-    scanf("%s" , &n);
-    while(n != 'n' || n != 'N' || n!='y' || n != 'Y'){
-        scanf("%s" , &n);
-    }
-    return n;
-}
-// Membaca dan memastikan agar input user valid
-
-
-void exit(User u[], int count,char n){
-    n = readExit();
-    if(n == 'n' || n =='N'){
-        return;
-        // lakukan procedure untuk keluar dari program utama
-    }
-    else if(n == 'Y' || n == 'y'){
-        saveToCSV(u,count);
-        // lakukan procedure untuk keluar dari program utama
-        return;
-
-    }
-}
-// melakukan exit program
+void save_data(ListUser listUser, RumahSakit rs, Pasien pasienData[]);
+// Prosedur untuk menyimpan data ke dalam file
 
 #endif

@@ -21,6 +21,6 @@ int nextInt(const char **p);
 void parseRuanganLine(char *line, Ruangan *ruangan, int kapasitasPerRuangan, int kapasitasBaris);
 
 // Parsing satu baris data pasien dengan daftar obat dan mengisi Inventory
-void parsePasienObatLine(char *line, Inventory *invntry);
+void parsePasienObatLine(char *line, Inventory *invntry, int idx);
 
 #endif

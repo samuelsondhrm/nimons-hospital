@@ -69,6 +69,25 @@ boolean accessCheck(const char* required_role, User request) {
     ListFormula lFormula; 
     Inventory inventory; 
 
+boolean accessCheck(const char* required_role, User request) {
+    if (strcmp(required_role, ROLE(request)) != 0) {
+        printf(" hanya bisa diakses: %s\n", required_role);
+        printf("Sementara kamu adalah: %s\n", ROLE(request));
+        return false;
+    }
+    return true;
+}
+
+// GLOBAL VARIABLES
+    ListUser accounts;
+    User current_user;
+    CreateUser(current_user);
+    RumahSakit rs;
+    ListPenyakit lPenyakit;
+    ListObat lObat; 
+    ListFormula lFormula; 
+    Inventory inventory; 
+
 int main() {
 /* INITIALIZATION */
     const char *ascii_art = 
@@ -162,7 +181,7 @@ int main() {
         if(strncmp(ans, "LIHAT_RUANGAN ", 14) == 0 && strlen(ans) >= 16){
             lihatRuangan(&rs, ans + 14 /* kode diambil secara otomatis dari character ke-15 string ans */, accounts);
         }
-        else(){
+        else{
             selected_option = GetValue(options, ans);
             printf("%d", selected_option);
             switch(selected_option){

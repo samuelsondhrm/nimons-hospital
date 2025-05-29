@@ -1,10 +1,16 @@
-#ifndef AntrianSaya_H
-#define AntrianSaya_H
+#ifndef ANTRIANSAYA_H
+#define ANTRIANSAYA_H
 
-#include "../header/queue.h"
-#include "../header/user.h"
-#include "../header/room.h"
+#include "ADT/room.h"
+#include "ADT/user.h"
 
-void AntrianSaya(ListUser *listUser, Queue *antrianDokter, RumahSakit rs, const char *username);
+/* 
+Menampilkan status antrian pasien saat ini.
+ - Jika pasien sudah masuk ruangan (berada dalam kapasitas ruangan), akan ditampilkan pesan sedang berada di ruangan.
+ - Jika pasien masih dalam antrian luar, akan ditampilkan informasi antrian.
+ - Jika pasien tidak ditemukan dalam antrian manapun, akan diberi tahu untuk daftar check-up terlebih dahulu.
+ */
+
+void antrianSaya(User current_user, RumahSakit rs);
 
 #endif
