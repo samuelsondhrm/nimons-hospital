@@ -18,7 +18,7 @@ void minumPenawar(User current_user, Inventory *inv, ListObat *lObat) {
 
     Stack *perut = &inv->data[idxInv].perut;
 
-    if (isEmptyStack(*perut)) {
+    if (IsEmptyStack(*perut)) {
         printf("Perut kosong!! Belum ada obat yang dimakan.\n");
         return;
     }
