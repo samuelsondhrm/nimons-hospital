@@ -3,6 +3,8 @@
         "user.h": "c",
         "cariuser.h": "c",
         "denah.h": "c",
-        "tambahdokter.h": "c"
+        "tambahdokter.h": "c",
+        "login.h": "c",
+        "register.h": "c"
     }
 }

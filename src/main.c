@@ -155,15 +155,14 @@ int main() {
         switch(selected_option){
             case 0: printf("LOGIN");
                 ListUser users; //global
+                user current_user; // global
                 login(users);
             break;
             case 1: printf("REGISTER");
-                ListUser Listuser; // global
+                ListUser *lUser; // global
                 User new_user; // global
-                user current_user; // global
-                register_pasien(ListUser)
+                register_pasien(lUser,new_user)
                 CreateUser(&new_user);
-            
             break;
             case 2: printf("LOGOUT"); 
             break;

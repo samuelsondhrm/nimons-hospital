@@ -2,7 +2,7 @@
 #include <ctype.h>
 
 
-void login(ListUser *users) {
+void login(ListUser *users, User *current_user) {
     char username[MAX_FIELD];
     char password[MAX_FIELD];
 
