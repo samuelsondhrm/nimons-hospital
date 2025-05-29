@@ -3,7 +3,7 @@
 
 #include "ADT/user.h"
 #include "ADT/set.h"
-#include "csv_parser.h"  // tulis user csv
+#include "csv_parser.h"  
 
 
 #define MAX_FIELD 128

@@ -3,7 +3,7 @@
 #include <string.h>
 #include "header/Boolean.h"
 #include "header/parser_config_txt.h"
-#include "header/parser_user_csv.h"
+#include "header/csv_parser.h"
 #include "header/ADT/liststatik.h"
 #include "header/ADT/map.h"
 #include "header/ADT/matrix.h"
@@ -48,6 +48,26 @@ Catatan:
     2. procedure menampilkan pesan error yang bisa otomatis menginput ans dan role yang bisa akses fitur
     3. constant list/typedef untuk ngedeclare role x bisa akses apa aja (untuk keperluan function dan procedure diatas), idenya sih memanfaatkan List Map options aja
 */
+// Terkait constant listny kita coba buat kalau semuanya udah selesai aja dlu, sekarang masih dikit fungsi yang butuh permission jadi masi aman aj harusny
+
+boolean accessCheck(const char* required_role, User request) {
+    if (strcmp(required_role, ROLE(request)) != 0) {
+        printf(" hanya bisa diakses: %s\n", required_role);
+        printf("Sementara kamu adalah: %s\n", ROLE(request));
+        return false;
+    }
+    return true;
+}
+
+// GLOBAL VARIABLES
+    ListUser accounts;
+    User current_user;
+    CreateUser(current_user);
+    RumahSakit rs;
+    ListPenyakit lPenyakit;
+    ListObat lObat; 
+    ListFormula lFormula; 
+    Inventory inventory; 
 
 boolean accessCheck(const char* required_role, User request) {
     if (strcmp(required_role, ROLE(request)) != 0) {
@@ -161,7 +181,7 @@ int main() {
         if(strncmp(ans, "LIHAT_RUANGAN ", 14) == 0 && strlen(ans) >= 16){
             lihatRuangan(&rs, ans + 14 /* kode diambil secara otomatis dari character ke-15 string ans */, accounts);
         }
-        else(){
+        else{
             selected_option = GetValue(options, ans);
             printf("%d", selected_option);
             switch(selected_option){
