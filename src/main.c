@@ -218,10 +218,8 @@ int main() {
                 User current_user; //global
                 ListPenyakit lPenyakit; //global
                 diagnosis(current_user,rs,&lUser,&lPenyakit);
-            break;
-
-            case 16: printf("NGOBATIN");
-             case 16: printf("NGOBATIN"); 
+                break;
+            case 16: printf("NGOBATIN"); 
                 Inventory inv; // global
                 User current_user; // global
                 RumahSakit rs; // global
@@ -231,14 +229,14 @@ int main() {
                 ListPenyakit lPenyakit; // global
                 TambahObatKeInventory(inv);
                 ngobatin(rs,&lUser,&IObat,&IFormula,&lPenyakit,inv);
-            break;
+                break;
             case 17: printf("PULANGDOK"); break;
             case 18: printf("DAFTAR_CHECKUP");
                 ListUser listUser; // global
                 RumahSakit rs; // global
                 tampilkanDokterTersedia(listUser,rs);
                 DaftarCheckUp(rs,listUser);
-            break;
+                break;
             case 19: printf("ANTRIAN"); break;
             case 20: printf("MINUM_OBAT"); break;
             case 21: printf("PENAWAR"); break;
