@@ -98,7 +98,6 @@ int main() {
     const char* user_csv_path = "file/user.csv";
     char ans[MAX_FIELD]; 
     boolean ON = true;
-    ListUser accounts;
 
     Map options;
     CreateEmptyMap(&options);
@@ -132,6 +131,16 @@ int main() {
     // InitializeListUser(&accounts);
     // parse_user_csv(user_csv_path, &accounts);
 
+    // GLOBAL VARIABLES
+    ListUser accounts;
+    user current_user;
+    CreateUser(current_user);
+    RumahSakit rs;
+    ListPenyakit lPenyakit;
+    ListObat lObat; 
+    ListFormula lFormula; 
+    Inventory inventory; 
+
 
 /* MAIN LOOP */
     printf("%s", ascii_art);
@@ -146,95 +155,67 @@ int main() {
            && 
            strlen(ans) >= 16                        /* Buat check input nyertain ruangan apa kaga */ ){
             RumahSakit rs; //global
-            ListUser lUser; //global
-            lihatRuangan(&rs, ans + 14 /* kode diambil secara otomatis dari character ke-15 string ans */, lUser);
+            ListUser accounts; //global
+            lihatRuangan(&rs, ans + 14 /* kode diambil secara otomatis dari character ke-15 string ans */, accounts);
         }
 
         selected_option = GetValue(options, ans);
         printf("%d", selected_option);
         switch(selected_option){
             case 0: printf("LOGIN");
-                ListUser users; //global
-                user current_user; // global
-                login(users,current_user);
+                login(&accounts,&current_user); 
             break;
             case 1: printf("REGISTER");
-                ListUser *lUser; // global
-                User new_user; // global
-                register_pasien(lUser,new_user)
                 CreateUser(&new_user);
+                register_pasien(&accounts, new_user);
+               
                 break;
             case 2: printf("LOGOUT"); 
                 break;
             case 3: printf("LUPA_PASSWORD"); break;
             case 4: printf("HELP"); break;
             case 5: printf("LIHAT_DENAH");
-                RumahSakit rs; //global
-                ListUser lUser; //global
                 printDenah(rs);
                 break;
             case 6: printf("LIHAT_USER"); 
-                ListUser lUser; //global
-                lihatUser(&lUser, 0);
+                lihatUser(&accounts, 0);
                 break;
             case 7: printf("LIHAT_PASIEN"); 
-                ListUser lUser; //global
-                lihatUser(&lUser, 1);
+                lihatUser(&accounts, 1);
                 break;
             case 8: printf("LIHAT_DOKTER");
-                ListUser lUser; //global
-                lihatUser(&lUser, 2);
+                lihatUser(&accounts, 2);
                 break;
             case 9: printf("CARI_USER"); 
-                ListUser lUser; //global
-                cariUser(&lUser);
+                cariUser(&accounts);
                 break;
             case 10: printf("CARI_PASIEN"); 
-                ListUser lUser; //global
-                cariPasien(&lUser);
+                cariPasien(&accounts);
                 break;
             case 11: printf("CARI_DOKTER"); 
-                ListUser lUser; //global
-                cariDokter(&lUser);
+                cariDokter(&accounts);
                 break;
             case 12: printf("LIHAT_SEMUA_ANTRIAN"); 
-                RumahSakit rs; //global
-                ListUser lUser; //global
-                lihatSemuaAntrian(rs, lUser);
+                lihatSemuaAntrian(rs, accounts);
                 break;
             case 13: printf("TAMBAH_DOKTER"); 
-                ListUser lUser; //global
-                tambahDokter(&lUser);
+                tambahDokter(&accounts);
                 break;
             case 14: printf("ASSIGN_DOKTER"); 
-                RumahSakit rs; //global
-                ListUser lUser; //global
-                assignDokter(&rs, &lUser);
+                assignDokter(&rs, &accounts);
                 break;
             case 15: printf("DIAGNOSIS");
-                RumahSakit rs; // global
-                ListUser lUser; // global
-                User current_user; //global
-                ListPenyakit lPenyakit; //global
-                diagnosis(current_user,rs,&lUser,&lPenyakit);
+                ListPenyakit lPenyakit; 
+                diagnosis(current_user,rs,&accounts,&lPenyakit);
                 break;
             case 16: printf("NGOBATIN"); 
-                Inventory inv; // global
-                User current_user; // global
-                RumahSakit rs; // global
-                ListUser lUser; // global
-                ListObat lObat; // global
-                ListFormula lFormula; // global
-                ListPenyakit lPenyakit; // global
                 TambahObatKeInventory(inv);
-                ngobatin(rs,&lUser,&IObat,&IFormula,&lPenyakit,inv);
+                ngobatin(rs,&accounts,&IObat,&IFormula,&lPenyakit,inventory);
                 break;
             case 17: printf("PULANGDOK"); break;
             case 18: printf("DAFTAR_CHECKUP");
-                ListUser listUser; // global
-                RumahSakit rs; // global
-                tampilkanDokterTersedia(listUser,rs);
-                DaftarCheckUp(rs,listUser);
+                tampilkanDokterTersedia(accounts,rs);
+                DaftarCheckUp(rs,accounts);
                 break;
             case 19: printf("ANTRIAN"); break;
             case 20: printf("MINUM_OBAT"); break;
