@@ -3,7 +3,7 @@
 #include <string.h>
 #include "header/Boolean.h"
 #include "header/parser_config_txt.h"
-#include "header/parser_user_csv.h"
+#include "header/csv_parser.h"
 #include "header/ADT/liststatik.h"
 #include "header/ADT/map.h"
 #include "header/ADT/matrix.h"
@@ -49,7 +49,7 @@ Catatan:
     3. constant list/typedef untuk ngedeclare role x bisa akses apa aja (untuk keperluan function dan procedure diatas), idenya sih memanfaatkan List Map options aja
 */
 
-int main() {
+int main(int argc, char *argv[]) {
 /* INITIALIZATION */
     const char *ascii_art = 
 "          _____                   _______                   _____                    _____                    _____                _____                    _____                    _____  \n"
@@ -99,7 +99,20 @@ int main() {
     char ans[MAX_FIELD]; 
     boolean ON = true;
     ListUser accounts;
+    RumahSakit rs;
 
+    Pasien pasienData[100];
+    // Cek argumen untuk load
+    if (argc < 2) {
+        printf("Tidak ada nama folder yang diberikan!\n");
+        printf("Usage : ./main <<nama_folder>>\n");
+        return 1;
+    }
+
+    // Load data dari folder yang diberikan
+    load_data(argv[1], &accounts, &rs, pasienData);
+
+    // Inisialisasi Map untuk command
     Map options;
     CreateEmptyMap(&options);
     InsertMap(&options, "LOGIN", 0); // ACCESS: All
@@ -168,7 +181,10 @@ int main() {
             case 2: printf("LOGOUT"); 
             break;
             case 3: printf("LUPA_PASSWORD"); break;
-            case 4: printf("HELP"); break;
+            case 4: 
+                printf("HELP"); 
+                templateHelp(currentUser, sudahLogin);
+                break;
             case 5: printf("LIHAT_DENAH");
                 RumahSakit rs; //global
                 ListUser lUser; //global
@@ -243,7 +259,10 @@ int main() {
             case 20: printf("MINUM_OBAT"); break;
             case 21: printf("PENAWAR"); break;
             case 22: printf("EXIT"); break;
-            case 23: printf("SAVE"); break;
+            case 23: 
+                printf("SAVE");
+                save_data(accounts, rs, pasienData); 
+                break;
             case 24: printf("LIHAT_RUANGAN"); break;
             default: printf("Perintah tidak dikenali.\n");
         }
