@@ -32,7 +32,7 @@ void tambahDokter(ListUser *lUser) {
     strcpy(newUser.username, username);
     strcpy(newUser.password, password);
     strcpy(newUser.role, "dokter");
-    lUser->users[lUser->jumlahuser-1] = newUser;
+    lUser->users[lUser->jumlahuser - 1] = newUser;
 
     printf("Dokter %s berhasil ditambahkan!\n", username);
 }
@@ -71,18 +71,8 @@ void assignDokter(RumahSakit *rs, ListUser *lUser) {
     for (int i = 0; i < rs->rows; i++) {
         for (int j = 0; j < rs->cols; j++) {
             if (rs->data[i][j].dokterId == dokterId) {
-                if (rs->data[row][col].dokterId == 0) {
-                    printf("Dokter %s sudah diassign ke ruangan %c%d!\n", username, i + 'A', j + 1);
-                } else {
-                    // Ruangan target juga sudah ditempati
-                    for (int k = 0; k < lUser->jumlahuser; k++) {
-                        if (lUser->users[k].id == rs->data[row][col].dokterId) {
-                            printf("Dokter %s sudah menempati ruangan %c%d!\n", lUser->users[k].username, row + 'A', col + 1);
-                            break;
-                        }
-                    }
-                    printf("Silakan cari ruangan lain untuk dokter %s.\n", username);
-                }
+                // Jika dokter sudah diassign
+                printf("Dokter %s sudah diassign ke ruangan %c%d!\n", username, i + 'A', j + 1);
                 return;
             }
         }
@@ -92,8 +82,7 @@ void assignDokter(RumahSakit *rs, ListUser *lUser) {
     if (rs->data[row][col].dokterId != 0) {
         for (int i = 0; i < lUser->jumlahuser; i++) {
             if (lUser->users[i].id == rs->data[row][col].dokterId) {
-                printf("Dokter %s sudah menempati ruangan %c%d!\n", lUser->users[i].username, row + 'A', col + 1);
-                printf("Ruangan %c%d juga sudah ditempati dokter %s!\n", row + 'A', col + 1, lUser->users[i].username);
+                printf("Ruangan %c%d sudah ditempati oleh Dokter %s!\n", row + 'A', col + 1, lUser->users[i].username);
                 return;
             }
         }
