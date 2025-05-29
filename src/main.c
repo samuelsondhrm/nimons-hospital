@@ -3,7 +3,7 @@
 #include <string.h>
 #include "header/Boolean.h"
 #include "header/parser_config_txt.h"
-#include "header/parser_user_csv.h"
+#include "header/csv_parser.h"
 #include "header/ADT/liststatik.h"
 #include "header/ADT/map.h"
 #include "header/ADT/matrix.h"
@@ -48,28 +48,8 @@ Catatan:
     2. procedure menampilkan pesan error yang bisa otomatis menginput ans dan role yang bisa akses fitur
     3. constant list/typedef untuk ngedeclare role x bisa akses apa aja (untuk keperluan function dan procedure diatas), idenya sih memanfaatkan List Map options aja
 */
-// Terkait constant listny kita coba buat kalau semuanya udah selesai aja dlu, sekarang masih dikit fungsi yang butuh permission jadi masi aman aj harusny
 
-boolean accessCheck(const char* required_role, User request) {
-    if (strcmp(required_role, ROLE(request)) != 0) {
-        printf(" hanya bisa diakses: %s\n", required_role);
-        printf("Sementara kamu adalah: %s\n", ROLE(request));
-        return false;
-    }
-    return true;
-}
-
-// GLOBAL VARIABLES
-    ListUser accounts;
-    User current_user;
-    CreateUser(current_user);
-    RumahSakit rs;
-    ListPenyakit lPenyakit;
-    ListObat lObat; 
-    ListFormula lFormula; 
-    Inventory inventory; 
-
-int main() {
+int main(int argc, char *argv[]) {
 /* INITIALIZATION */
     const char *ascii_art = 
 "          _____                   _______                   _____                    _____                    _____                _____                    _____                    _____  \n"
@@ -118,8 +98,21 @@ int main() {
     const char* user_csv_path = "file/user.csv";
     char ans[MAX_FIELD]; 
     boolean ON = true;
+    ListUser accounts;
+    RumahSakit rs;
 
-    // INISIALISASI OPTIONS
+    Pasien pasienData[100];
+    // Cek argumen untuk load
+    if (argc < 2) {
+        printf("Tidak ada nama folder yang diberikan!\n");
+        printf("Usage : ./main <<nama_folder>>\n");
+        return 1;
+    }
+
+    // Load data dari folder yang diberikan
+    load_data(argv[1], &accounts, &rs, pasienData);
+
+    // Inisialisasi Map untuk command
     Map options;
     CreateEmptyMap(&options);
     InsertMap(&options, "LOGIN", 0); // ACCESS: All
@@ -146,10 +139,13 @@ int main() {
     InsertMap(&options, "PENAWAR", 21); // ACCESS: Pasien
     InsertMap(&options, "EXIT", 22); // ACCESS: All
     InsertMap(&options, "SAVE", 23); // ACCESS: All
+    InsertMap(&options, "LIHAT_RUANGAN ", 24); //perlukah, Nael? soalnya ini special case.  // ACCESS: All
     int selected_option;
     
-    // INISIALISAS VARIABEL GLOBAL
+    // InitializeListUser(&accounts);
     // parse_user_csv(user_csv_path, &accounts);
+
+
 /* MAIN LOOP */
     printf("%s", ascii_art);
     PrintMap(options);
@@ -159,96 +155,121 @@ int main() {
         ans[strcspn(ans, "\n")] = 0;
 
         //kasus khusus untuk LIHAT_RUANGAN
-        if(strncmp(ans, "LIHAT_RUANGAN ", 14) == 0 && strlen(ans) >= 16){
-            lihatRuangan(&rs, ans + 14 /* kode diambil secara otomatis dari character ke-15 string ans */, accounts);
+        if(strncmp(ans, "LIHAT_RUANGAN ", 14) == 0  /* Buat check 14 char pertama 'LIHAT_RUANGAN ' atau bukan */ 
+           && 
+           strlen(ans) >= 16                        /* Buat check input nyertain ruangan apa kaga */ ){
+            RumahSakit rs; //global
+            ListUser lUser; //global
+            lihatRuangan(&rs, ans + 14 /* kode diambil secara otomatis dari character ke-15 string ans */, lUser);
         }
-        else(){
-            selected_option = GetValue(options, ans);
-            printf("%d", selected_option);
-            switch(selected_option){
-                case 0: printf("LOGIN");
-                    login(&accounts,&current_user); 
+
+        selected_option = GetValue(options, ans);
+        printf("%d", selected_option);
+        switch(selected_option){
+            case 0: printf("LOGIN");
+                ListUser users; //global
+                login(users);
+            break;
+            case 1: printf("REGISTER");
+                ListUser Listuser; // global
+                User new_user; // global
+                user current_user; // global
+                register_pasien(ListUser)
+                CreateUser(&new_user);
+            
+            break;
+            case 2: printf("LOGOUT"); 
+            break;
+            case 3: printf("LUPA_PASSWORD"); break;
+            case 4: 
+                printf("HELP"); 
+                templateHelp(currentUser, sudahLogin);
                 break;
-                case 1: printf("REGISTER");
-                    CreateUser(&new_user);
-                    register_pasien(&accounts, new_user);
-                    break;
-                case 2: printf("LOGOUT"); 
-                    break;
-                case 3: printf("LUPA_PASSWORD"); break;
-                case 4: printf("HELP"); break;
-                case 5: printf("LIHAT_DENAH");
-                    printDenah(rs);
-                    break;
-                case 6: printf("LIHAT_USER"); 
-                    if(!accessCheck("manager", current_user)); break; 
-                    lihatUser(&accounts, 0);
-                    break;
-                case 7: printf("LIHAT_PASIEN"); 
-                    if(!accessCheck("manager", current_user)); break;
-                    lihatUser(&accounts, 1);
-                    break;
-                case 8: printf("LIHAT_DOKTER");
-                    if(!accessCheck("manager", current_user)); break;
-                    lihatUser(&accounts, 2);
-                    break;
-                case 9: printf("CARI_USER"); 
-                    if(!accessCheck("manager", current_user)); break;
-                    cariUser(&accounts);
-                    break;
-                case 10: printf("CARI_PASIEN"); 
-                    if(!accessCheck("manager", current_user)); break;
-                    cariPasien(&accounts);
-                    break;
-                case 11: printf("CARI_DOKTER"); 
-                    if(!accessCheck("manager", current_user)); break;
-                    cariDokter(&accounts);
-                    break;
-                case 12: printf("LIHAT_SEMUA_ANTRIAN"); 
-                    if(!accessCheck("manager", current_user)); break;
-                    lihatSemuaAntrian(rs, accounts);
-                    break;
-                case 13: printf("TAMBAH_DOKTER"); 
-                    if(!accessCheck("manager", current_user)); break;
-                    tambahDokter(&accounts);
-                    break;
-                case 14: printf("ASSIGN_DOKTER"); 
-                    if(!accessCheck("manager", current_user)); break;
-                    assignDokter(&rs, &accounts);
-                    break;
-                case 15: printf("DIAGNOSIS");
-                    if(!accessCheck("dokter", current_user)); break;
-                    ListPenyakit lPenyakit; 
-                    diagnosis(current_user,rs,&accounts,&lPenyakit);
-                    break;
-                case 16: printf("NGOBATIN"); 
-                    if(!accessCheck("dokter", current_user)); break;
-                    TambahObatKeInventory(inv);
-                    ngobatin(rs,&accounts,&IObat,&IFormula,&lPenyakit,inventory);
-                    break;
-                case 17: printf("PULANGDOK"); 
-                    if(!accessCheck("pasien", current_user)); break;
-                    break;
-                case 18: printf("DAFTAR_CHECKUP");
-                    if(!accessCheck("pasien", current_user)); break;
-                    tampilkanDokterTersedia(accounts,rs);
-                    DaftarCheckUp(rs,accounts);
-                    break;
-                case 19: printf("ANTRIAN"); 
-                    if(!accessCheck("pasien", current_user)); break;
-                    break;
-                case 20: printf("MINUM_OBAT"); 
-                    if(!accessCheck("pasien", current_user)); break;
-                    break;
-                case 21: printf("PENAWAR"); 
-                    if(!accessCheck("pasien", current_user)); break;
-                    break;
-                case 22: printf("EXIT"); break;
-                case 23: printf("SAVE"); break;
-                default: printf("Perintah tidak dikenali.\n");
-            }
-        printf("\n");
+            case 5: printf("LIHAT_DENAH");
+                RumahSakit rs; //global
+                ListUser lUser; //global
+                printDenah(rs);
+                break;
+            case 6: printf("LIHAT_USER"); 
+                ListUser lUser; //global
+                lihatUser(&lUser, 0);
+                break;
+            case 7: printf("LIHAT_PASIEN"); 
+                ListUser lUser; //global
+                lihatUser(&lUser, 1);
+                break;
+            case 8: printf("LIHAT_DOKTER");
+                ListUser lUser; //global
+                lihatUser(&lUser, 2);
+                break;
+            case 9: printf("CARI_USER"); 
+                ListUser lUser; //global
+                cariUser(&lUser);
+                break;
+            case 10: printf("CARI_PASIEN"); 
+                ListUser lUser; //global
+                cariPasien(&lUser);
+                break;
+            case 11: printf("CARI_DOKTER"); 
+                ListUser lUser; //global
+                cariDokter(&lUser);
+                break;
+            case 12: printf("LIHAT_SEMUA_ANTRIAN"); 
+                RumahSakit rs; //global
+                ListUser lUser; //global
+                lihatSemuaAntrian(rs, lUser);
+                break;
+            case 13: printf("TAMBAH_DOKTER"); 
+                ListUser lUser; //global
+                tambahDokter(&lUser);
+                break;
+            case 14: printf("ASSIGN_DOKTER"); 
+                RumahSakit rs; //global
+                ListUser lUser; //global
+                assignDokter(&rs, &lUser);
+                break;
+            case 15: printf("DIAGNOSIS");
+                RumahSakit rs; // global
+                ListUser lUser; // global
+                User current_user; //global
+                ListPenyakit lPenyakit; //global
+                diagnosis(current_user,rs,&lUser,&lPenyakit);
+            break;
+
+            case 16: printf("NGOBATIN");
+             case 16: printf("NGOBATIN"); 
+                Inventory inv; // global
+                User current_user; // global
+                RumahSakit rs; // global
+                ListUser lUser; // global
+                ListObat lObat; // global
+                ListFormula lFormula; // global
+                ListPenyakit lPenyakit; // global
+                TambahObatKeInventory(inv);
+                ngobatin(rs,&lUser,&IObat,&IFormula,&lPenyakit,inv);
+            break;
+            case 17: printf("PULANGDOK"); break;
+            case 18: printf("DAFTAR_CHECKUP");
+                ListUser listUser; // global
+                RumahSakit rs; // global
+                tampilkanDokterTersedia(listUser,rs);
+                DaftarCheckUp(rs,listUser);
+            break;
+            case 19: printf("ANTRIAN"); break;
+            case 20: printf("MINUM_OBAT"); break;
+            case 21: printf("PENAWAR"); break;
+            case 22: 
+                printf("EXIT"); 
+                exitProgram(accounts, rs, pasienData);
+                break;
+            case 23: 
+                printf("SAVE");
+                save_data(accounts, rs, pasienData); 
+                break;
+            case 24: printf("LIHAT_RUANGAN"); break;
+            default: printf("Perintah tidak dikenali.\n");
         }
+    printf("\n");
     }
     return 0;
 }
