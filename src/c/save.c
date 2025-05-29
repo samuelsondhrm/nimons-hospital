@@ -44,6 +44,7 @@ int create_directory_recursive(const char *path) {
             *p = SEPARATOR;
         }
     }
+}
 
 
     #ifdef _WIN32
