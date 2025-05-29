@@ -4,8 +4,12 @@
         "cariuser.h": "c",
         "denah.h": "c",
         "tambahdokter.h": "c",
+<<<<<<< HEAD
         "login.h": "c",
         "register.h": "c",
         "diagnosis.h": "c"
+=======
+        "save.h": "c"
+>>>>>>> dev-migu
     }
 }
