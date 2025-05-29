@@ -258,7 +258,10 @@ int main(int argc, char *argv[]) {
             case 19: printf("ANTRIAN"); break;
             case 20: printf("MINUM_OBAT"); break;
             case 21: printf("PENAWAR"); break;
-            case 22: printf("EXIT"); break;
+            case 22: 
+                printf("EXIT"); 
+                exitProgram(accounts, rs, pasienData);
+                break;
             case 23: 
                 printf("SAVE");
                 save_data(accounts, rs, pasienData); 
