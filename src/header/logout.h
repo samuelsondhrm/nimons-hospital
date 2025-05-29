@@ -1,6 +1,8 @@
 #ifndef LOGOUT_H
 #define LOGOUT_H
 
-void logout();
+#include "login.h"
+
+void logout(boolean *SudahLogin, User **current_user);
 
 #endif
