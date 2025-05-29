@@ -12,6 +12,6 @@ boolean SudahLogin = false;
 boolean PasswordSalah = false; 
 
 // Deklarasi fungsi login
-void login(ListUser *users);
+void login(ListUser *users, User *current_user);
 
 #endif 
