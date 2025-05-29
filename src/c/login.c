@@ -1,73 +1,42 @@
 #include "../header/login.h"
+#include <ctype.h>
 
-// Implementasi global variabel
-User* current_user = NULL;
-boolean SudahLogin = false;
-boolean PasswordSalah = false;
 
-// Fungsi ctype manual
-char to_lower(char c) {
-    if (c >= 'A' && c <= 'Z') {
-        return c + ('a' - 'A');
-    }
-    return c;
-}
-
-// Fungsi strcasecmp manual
-int str_case_cmp(const char *s1, const char *s2) {
-    while (*s1 && *s2) {
-        char c1 = to_lower(*s1);
-        char c2 = to_lower(*s2);
-        if (c1 != c2) {
-            return c1 - c2;
-        }
-        s1++;
-        s2++;
-    }
-    return to_lower(*s1) - to_lower(*s2);
-}
-
-static User* find_user_by_username(const ListUser* users, const char* username) {
-    for (int i = 0; i < users->jumlahuser; i++) {
-        if (strcmp(users->users[i].username, username) == 0) {
-            return &users->users[i];
-        }
-    }
-}
-
-boolean login(User users[], int user_count);
+void login(ListUser *users) {
     char username[MAX_FIELD];
     char password[MAX_FIELD];
 
     PasswordSalah = false;
     SudahLogin = false;
 
-    if (scanf("%127s", username) != 1) { // username tidak valid
-        while (getchar() != '\n'); // hapus memori temporer
-        return false;
+    //printf("Username: ");
+    scanf("%127s", username);
+    //printf("Password: ");
+    scanf("%127s", password);
+
+    while (getchar() != '\n'); // Bersihkan buffer
+
+    // Cari user 
+    User *user = NULL; // dari ListUser
+    for (int i = 0; i < users->jumlahuser; i++) {
+        if (strcmp(users->users[i].username, username) == 0) {
+            user = &users->users[i];
+            break;
+        }
     }
-
-    if (scanf("%127s", password) != 1) { // password tidak valid
-        while (getchar() != '\n'); // hapus memori temporer
-        return false;
-    }
-
-    while (getchar() != '\n'); // hapus memori temporer
-
-    User* user = find_user_by_username(ListUsers, username);
 
     if (user == NULL) { // nama salah
-        return false;
+        //printf("username tidak ditemukan!")
+        return;
     }
 
     if (strcmp(user->password, password) != 0) { // username atau password salah
-        PasswordSalah = true;
-        return false;
+        PasswordSalah = true; // variable global PasswordSalah terisi true
+        return;
     }
 
-    current_user = user;
-    SudahLogin = true;
+    current_user = user; // variable global current_user kini terisi dengan user
+    SudahLogin = true; // variabel global SudahLogin terisi true
 
-
-    return true;
+    return;
 }

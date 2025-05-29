@@ -7,12 +7,11 @@
 
 
 // Variabel global
-extern User* current_user;
-boolean SudahLogin;
-boolean PasswordSalah;
+User *current_user = NULL;  
+boolean SudahLogin = false;  
+boolean PasswordSalah = false; 
 
 // Deklarasi fungsi login
-User* find_user_by_username(User users[], int count, const char* username);
-boolean login(User users[], int user_count);
+void login(ListUser *users);
 
 #endif 

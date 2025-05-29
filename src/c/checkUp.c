@@ -82,8 +82,8 @@ void DaftarCheckUp(ListUser *listUser, RumahSakit *rs, const char *username) {
         }
     }
 
-    Queue *antrian = rs->data[rowRuangan][colRuangan].baris;
-    if (lengthQueue(*antrian) >= rs->kapasitasPerRuangan) {
+    Queue antrian = rs->data[rowRuangan][colRuangan].baris;
+    if (lengthQueue(antrian) >= rs->kapasitasPerRuangan) {
     // printf("Antrian untuk ruangan ini sudah penuh.\n");
         return;
     }
