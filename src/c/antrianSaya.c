@@ -1,43 +1,43 @@
-#include <stdio.h>
-#include "antrianSaya.h"
-#include "checkUp.h"
+#include "../header/antrianSaya.h"
 
-void AntrianSaya(ListUser *listUser, Queue *antrianDokter, RumahSakit rs, const char *username) {
-    User *pasien = NULL;
-    for (int i = 0; i < listUser->jumlahuser; i++) {
-        if (strcmp(listUser->users[i].username, username) == 0) {
-            pasien = &listUser->users[i];
-            break;
-        }
-    }
-
-    if (!pasien) {
+void antrianSaya(User current_user, RumahSakit rs) {
+    if (strcmp(ROLE(current_user), "Pasien") != 0) {
+        printf("Fitur ini hanya dapat digunakan oleh pasien!\n");
         return;
     }
 
-    if (!pasienAntri[pasien->id]) {
-        printf("Anda belum terdaftar dalam antrian check-up!\n");
-        printf("Silakan daftar terlebih dahulu dengan command DAFTAR_CHECKUP.\n");
-        return;
-    }
+    int found = 0;
 
     for (int i = 0; i < rs.rows; i++) {
         for (int j = 0; j < rs.cols; j++) {
-            int dokterId = rs.data[i][j].dokterId;
-            Queue q = antrianDokter[dokterId];
-            int len = length(q);
-            int idx = IDX_HEAD(q);
+            Ruangan ruang = rs.data[i][j];
+            Queue q = ruang.antrianPasienIds;
+            int len = lengthQueue(q);
 
             for (int k = 0; k < len; k++) {
-                if (q.buffer[idx] == pasien->id) {
-                    printf("Status antrian Anda:\n");
-                    printf("Dokter: %s\n", listUser->users[dokterId].username);
-                    printf("Ruangan: %c%d\n", 'A' + i, j + 1);
-                    printf("Posisi antrian: %d dari %d\n", k + 1, len);
+                int idx = (q.idxHead + k) % CAPACITY_QUEUE;
+                int pasienId = q.buffer[idx];
+
+                if (pasienId == current_user.id) {
+                    found = 1;
+                    if (k < rs.kapasitasPerRuangan) {
+                        printf("Anda sedang berada di dalam ruangan dokter!\n");
+                    } 
+                    
+                    else {
+                        printf("Status antrian Anda:\n");
+                        printf("Dokter: ID %d\n", ruang.dokterId);
+                        printf("Ruangan: %c%d\n", 'A' + i, j + 1);
+                        printf("Posisi antrian: %d dari %d\n", k + 1, len);
+                    }
                     return;
                 }
-                idx = (idx + 1) % CAPACITY;
             }
         }
+    }
+
+    if (!found) {
+        printf("Anda belum terdaftar dalam antrian check-up!\n");
+        printf("Silakan daftar terlebih dahulu dengan command DAFTAR_CHECKUP.\n");
     }
 }
