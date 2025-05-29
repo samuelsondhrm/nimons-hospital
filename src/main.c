@@ -243,7 +243,7 @@ int main() {
             case 22: printf("EXIT"); break;
             case 23: printf("SAVE"); break;
             case 24: printf("LIHAT_RUANGAN"); break;
-            default: printf("Perintah tidak dikenali.\n");
+            default: printf("Perintah tidak dikenali. Ketik 'HELP' untuk melihat perintah yang tersedia!\n");
         }
     printf("\n");
     }
