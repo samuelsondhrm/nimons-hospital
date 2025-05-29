@@ -5,6 +5,7 @@
         "denah.h": "c",
         "tambahdokter.h": "c",
         "login.h": "c",
-        "register.h": "c"
+        "register.h": "c",
+        "diagnosis.h": "c"
     }
 }

@@ -139,7 +139,11 @@ int main() {
     ListPenyakit lPenyakit;
     ListObat lObat; 
     ListFormula lFormula; 
-    Inventory inventory; 
+    Inventory inventory;
+    boolean SudahDiagnosis[CAPACITY_QUEUE];
+    boolean SudahLogin = false;  
+    boolean PasswordSalah = false; 
+    
 
 
 /* MAIN LOOP */
