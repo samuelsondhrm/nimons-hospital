@@ -1,14 +1,14 @@
-#include "../header/csv_parser.h"
-#include "../header/Boolean.h"
+#ifndef LUPAPASSWORD_H
+#define LUPAPASSWORD_H
 
-boolean usernameFound(const char *username, const char *filename); 
+#include "ADT/user.h"
+#include "Boolean.h"
 
-void runLengthEncoding(const char *username, char *username_encoded);
+/*
+Dapat mengganti password user.
+Validasi dilakukan dengan mencocokkan Run-Length Encoding, Case Sensitive dari username.
+*/
 
-boolean kodeUnik(const char *username_dicari, const char *kode);
+void lupaPassword(ListUser *LU);
 
-void getRole(const char *username_dicari, const char *filename, char *role);
-
-void updatePassword(const char *username_dicari, const char *password_baru, const char *filename);
-
-void lupaPass();
+#endif

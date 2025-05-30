@@ -193,8 +193,12 @@ int main() {
                     register_pasien(&accounts, new_user);
                     break;
                 case 2: printf("LOGOUT"); 
+                    logout(&SudahLogin, &current_user);
                     break;
-                case 3: printf("LUPA_PASSWORD"); break;
+                case 3: printf("LUPA_PASSWORD"); 
+                    lupa_password(&accounts);
+                    tulis_user_csv("src/file/user.csv", &accounts);
+                    break;
                 case 4: printf("HELP"); break;
                 case 5: printf("LIHAT_DENAH");
                     printDenah(rs);
@@ -247,6 +251,7 @@ int main() {
                     break;
                 case 17: printf("PULANGDOK"); 
                     if(!accessCheck("pasien", current_user)); break;
+                    bolehPulang(*current_user, &inventory, &lObat, &lFormula, &lPenyakit, &rs);
                     break;
                 case 18: printf("DAFTAR_CHECKUP");
                     if(!accessCheck("pasien", current_user)); break;
@@ -255,12 +260,15 @@ int main() {
                     break;
                 case 19: printf("ANTRIAN"); 
                     if(!accessCheck("pasien", current_user)); break;
+                    antrianSaya(*current_user, rs);
                     break;
                 case 20: printf("MINUM_OBAT"); 
                     if(!accessCheck("pasien", current_user)); break;
+                    minumObat(*current_user, &inventory, &rs, &lObat);
                     break;
                 case 21: printf("PENAWAR"); 
                     if(!accessCheck("pasien", current_user)); break;
+                    minumPenawar(*current_user, &inventory, &lObat);
                     break;
                 case 22: printf("EXIT"); break;
                 case 23: printf("SAVE"); break;
