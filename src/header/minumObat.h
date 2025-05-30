@@ -1,8 +1,17 @@
-#include <stdio.h>
-#include "../header/ADT/stack.h"
-#include "../header/ADT/room.h"
-#include "../header/ADT/penyakit_dan_obat.h"  
+#ifndef MINUMOBAT_H
+#define MINUMOBAT_H
 
-Pasien* cariPasienById(Inventory *inv, int userId);
+#include "ADT/room.h"
+#include "ADT/user.h"
+#include "ADT/penyakit_dan_obat.h"
+#include "ADT/stack.h"
 
-void minumObat(int userId, ListObat *lObat, Inventory *inv);
+/*
+ Memungkinkan pasien untuk meminum obat dari inventorynya.
+ - Obat yang dipilih akan masuk ke dalam stack perut pasien.
+ - Inventory akan berkurang sesuai pilihan pasien.
+*/
+
+void minumObat(User current_user, Inventory *inv, RumahSakit *rs, ListObat *lObat);
+
+#endif
