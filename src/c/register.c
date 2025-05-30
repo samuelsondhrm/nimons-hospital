@@ -37,20 +37,20 @@ void register_pasien(ListUser *lUser, User *new_user) {
         return;
     }
 
-    // Input password
-    if (scanf("%127s", password) != 1) {
-        while (getchar() != '\n');
-        return;
-    }
-    while (getchar() != '\n');
-
-    // Cek username unik
+     // Cek username unik
     for (int i = 0; i < lUser->jumlahuser; i++) {
         if (compare_case_insensitive(lUser->users[i].username, username)) {
            // printf("Username sudah digunakan.\n");
             return;
         }
     }
+
+    // Input password
+    if (scanf("%127s", password) != 1) {
+        while (getchar() != '\n');
+        return;
+    }
+    while (getchar() != '\n');
 
     // Buat user baru
     CreateUser(new_user);
