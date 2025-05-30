@@ -26,22 +26,31 @@ void register_pasien(ListUser *lUser, User *new_user) {
     char username[MAX_FIELD];
     char password[MAX_FIELD];
 
-    // Input username
-    if (scanf("%127s", username) != 1) {
-        while (getchar() != '\n');
-        return;
-    }
+     while (1) {
+        printf("Masukkan username: ");
+        if (scanf("%127s", username) != 1) {
+            while (getchar() != '\n');
+            continue;
+        }
 
-    if (!is_username_valid(username)) {
-        //printf("Format username tidak valid.\n");
-        return;
-    }
+        // Cek format
+        if (!is_username_valid(username)) {
+            printf("Format username tidak valid. Hanya boleh Huruf!\n");
+            continue;
+        }
 
-     // Cek username unik
-    for (int i = 0; i < lUser->jumlahuser; i++) {
-        if (compare_case_insensitive(lUser->users[i].username, username)) {
-           // printf("Username sudah digunakan.\n");
-            return;
+        // Cek unik
+        int i;
+        for (i = 0; i < lUser->jumlahuser; i++) {
+            if (compare_case_insensitive(lUser->users[i].username, username)) {
+                printf("Username sudah digunakan.\n");
+                break;
+            }
+        }
+
+        if (i == lUser->jumlahuser) {
+            // Username valid dan unik
+            break;
         }
     }
 
