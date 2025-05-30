@@ -1,5 +1,15 @@
 #include "../header/register.h"
 
+int compare_case_insensitive(const char* a, const char* b) {
+    while (*a && *b) {
+        char ca = (*a >= 'A' && *a <= 'Z') ? *a + 32 : *a;
+        char cb = (*b >= 'A' && *b <= 'Z') ? *b + 32 : *b;
+        if (ca != cb) return 0;
+        a++;
+        b++;
+    }
+    return *a == *b;
+}
 
 boolean is_username_valid(const char* username) {
     if (!username || !username[0]) return false;
