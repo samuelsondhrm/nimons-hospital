@@ -65,7 +65,7 @@ Node* searchNode(LinkedList* list, int data) {
     return NULL;
 }
 
-void printList(LinkedList* list) {
+void printLinkedList(LinkedList* list) {
     Node* current = list->head;
     printf("List: ");
     while (current != NULL) {

@@ -35,7 +35,7 @@ boolean deleteNode(LinkedList* list, int data);
 Node* searchNode(LinkedList* list, int data);
 
 // Print the entire list
-void printList(LinkedList* list);
+void printLinkedList(LinkedList* list);
 
 // Free all nodes and clear the list
 void freeList(LinkedList* list);
