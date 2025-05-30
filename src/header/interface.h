@@ -78,7 +78,7 @@ void animate_text(const char *text, int delay_ms);
 void print_color(const char *text, const char *color_code);
 
 // Fungsi untuk print header
-void print_header(const char *title)
+void print_header(const char *title);
 
 
 #endif
