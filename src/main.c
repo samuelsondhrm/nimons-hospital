@@ -194,7 +194,10 @@ int main() {
                     break;
                 case 2: printf("LOGOUT"); 
                     break;
-                case 3: printf("LUPA_PASSWORD"); break;
+                case 3: printf("LUPA_PASSWORD"); 
+                    lupa_password(&accounts);
+                    tulis_user_csv("src/file/user.csv", &accounts);
+                    break;
                 case 4: printf("HELP"); break;
                 case 5: printf("LIHAT_DENAH");
                     printDenah(rs);
