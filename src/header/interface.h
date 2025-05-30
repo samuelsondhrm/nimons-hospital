@@ -3,7 +3,6 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #ifdef _WIN32
 #include <windows.h>  // buat Sleep()
@@ -78,7 +77,10 @@ void animate_text(const char *text, int delay_ms);
 void print_color(const char *text, const char *color_code);
 
 // Fungsi untuk print header
-void print_header(const char *title);
+void print_header();
+
+// Fungsi untuk print fungsi
+void print_case(const char *func_name);
 
 
 #endif

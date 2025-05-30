@@ -19,26 +19,26 @@
 
 
 //include header for each features
-#include "header/login.h"
-#include "header/register.h"
-#include "header/logout.h"
-#include "header/lupaPassword.h"
-#include "header/help.h"
-#include "header/denah.h"
-#include "header/lihatuser.h"
-#include "header/cariuser.h"
-#include "header/lihatantrian.h"
-#include "header/tambahdokter.h"
-#include "header/diagnosis.h"
-#include "header/ngobatin.h"
-#include "header/pulangDok.h"
-#include "header/checkUp.h"
-#include "header/antrianSaya.h"
-#include "header/minumObat.h"
-#include "header/minumPenawar.h"
-#include "header/exit.h"
-#include "header/load.h"
-#include "header/save.h"
+// #include "header/login.h"
+// #include "header/register.h"
+// #include "header/logout.h"
+// #include "header/lupaPassword.h"
+// #include "header/help.h"
+// #include "header/denah.h"
+// #include "header/lihatuser.h"
+// #include "header/cariuser.h"
+// #include "header/lihatantrian.h"
+// #include "header/tambahdokter.h"
+// #include "header/diagnosis.h"
+// #include "header/ngobatin.h"
+// #include "header/pulangDok.h"
+// #include "header/checkUp.h"
+// #include "header/antrianSaya.h"
+// #include "header/minumObat.h"
+// #include "header/minumPenawar.h"
+// #include "header/exit.h"
+// #include "header/load.h"
+// #include "header/save.h"
 
 #include "c/interface.c"
 
@@ -116,10 +116,11 @@ int main() {
     // parse_obatpenyakit_csv(obatpenyakit_csv_path, &lFormula);
 
 /* MAIN LOOP */
-    printf("%s", ascii_art);
+
     // PrintMap(options);
     while(ON){
-        printf(">>> ");
+        print_header();
+        animate_text("Enter input > > > ", 100);
         fgets(ans, MAX_FIELD, stdin);
         ans[strcspn(ans, "\n")] = 0;
 
@@ -134,91 +135,94 @@ int main() {
         //         case 0: printf("LOGIN");
         //             login(&accounts,&cur_user); 
         //         break;
-        //         case 1: printf("REGISTER");
+        //         case 1: print_case("REGISTER");
         //             User new_user;
         //             CreateUser(&new_user);
         //             register_pasien(&accounts, &new_user);
         //             break;
-        //         case 2: printf("LOGOUT"); 
+        //         case 2: print_case("LOGOUT"); 
         //             logout(&SudahLogin, &cur_user);
         //             break;
-        //         case 3: printf("LUPA_PASSWORD"); 
+        //         case 3: print_case("LUPA_PASSWORD"); 
         //             lupa_password(&accounts);
         //             tulis_user_csv("src/file/user.csv", &accounts);
         //             break;
-        //         case 4: printf("HELP"); break;
-        //         case 5: printf("LIHAT_DENAH");
+        //         case 4: print_case("HELP"); break;
+        //         case 5: print_case("LIHAT_DENAH");
         //             printDenah(rs);
         //             break;
-        //         case 6: printf("LIHAT_USER"); 
+        //         case 6: print_case("LIHAT_USER"); 
         //             if(!accessCheck("manager", cur_user)); break; 
         //             lihatUser(&accounts, 0);
         //             break;
-        //         case 7: printf("LIHAT_PASIEN"); 
+        //         case 7: print_case("LIHAT_PASIEN"); 
         //             if(!accessCheck("manager", cur_user)); break;
         //             lihatUser(&accounts, 1);
         //             break;
-        //         case 8: printf("LIHAT_DOKTER");
+        //         case 8: print_case("LIHAT_DOKTER");
         //             if(!accessCheck("manager", cur_user)); break;
         //             lihatUser(&accounts, 2);
         //             break;
-        //         case 9: printf("CARI_USER"); 
+        //         case 9: print_case("CARI_USER"); 
         //             if(!accessCheck("manager", cur_user)); break;
         //             cariUser(&accounts);
         //             break;
-        //         case 10: printf("CARI_PASIEN"); 
+        //         case 10: print_case("CARI_PASIEN"); 
         //             if(!accessCheck("manager", cur_user)); break;
         //             cariPasien(&accounts);
         //             break;
-        //         case 11: printf("CARI_DOKTER"); 
+        //         case 11: print_case("CARI_DOKTER"); 
         //             if(!accessCheck("manager", cur_user)); break;
         //             cariDokter(&accounts);
         //             break;
-        //         case 12: printf("LIHAT_SEMUA_ANTRIAN"); 
+        //         case 12: print_case("LIHAT_SEMUA_ANTRIAN"); 
         //             if(!accessCheck("manager", cur_user)); break;
         //             lihatSemuaAntrian(rs, accounts);
         //             break;
-        //         case 13: printf("TAMBAH_DOKTER"); 
+        //         case 13: print_case("TAMBAH_DOKTER"); 
         //             if(!accessCheck("manager", cur_user)); break;
         //             tambahDokter(&accounts);
         //             break;
-        //         case 14: printf("ASSIGN_DOKTER"); 
+        //         case 14: print_case("ASSIGN_DOKTER"); 
         //             if(!accessCheck("manager", cur_user)); break;
         //             assignDokter(&rs, &accounts);
         //             break;
-        //         case 15: printf("DIAGNOSIS");
+        //         case 15: print_case("DIAGNOSIS");
         //             if(!accessCheck("dokter", cur_user)); break;
         //             diagnosis(&cur_user,&rs,&accounts,&lPenyakit, &SudahDiagnosis);
         //             break;
-        //         case 16: printf("NGOBATIN"); 
+        //         case 16: print_case("NGOBATIN"); 
         //             if(!accessCheck("dokter", cur_user)); break;
         //             TambahObatKeInventory(inventory);
         //             ngobatin(cur_user, &rs, &accounts,&lObat,&lFormula,&lPenyakit, &inventory);
         //             break;
-        //         case 17: printf("PULANGDOK"); 
+        //         case 17: print_case("PULANGDOK"); 
         //             if(!accessCheck("pasien", cur_user)); break;
         //             bolehPulang(cur_user, &inventory, &lObat, &lFormula, &lPenyakit, &rs);
         //             break;
-        //         case 18: printf("DAFTAR_CHECKUP");
+        //         case 18: print_case("DAFTAR_CHECKUP");
         //             if(!accessCheck("pasien", cur_user)); break;
         //             tampilkanDokterTersedia(accounts,rs);
         //             DaftarCheckUp(&accounts, &rs, USERNAME(cur_user));
         //             break;
-        //         case 19: printf("ANTRIAN"); 
+        //         case 19: print_case("ANTRIAN"); 
         //             if(!accessCheck("pasien", cur_user)); break;
         //             antrianSaya(cur_user, rs);
         //             break;
-        //         case 20: printf("MINUM_OBAT"); 
+        //         case 20: print_case("MINUM_OBAT"); 
         //             if(!accessCheck("pasien", cur_user)); break;
         //             minumObat(cur_user, &inventory, &rs, &lObat);
         //             break;
-        //         case 21: printf("PENAWAR"); 
+        //         case 21: print_case("PENAWAR"); 
         //             if(!accessCheck("pasien", cur_user)); break;
         //             minumPenawar(cur_user, &inventory, &lObat);
         //             break;
-        //         case 22: printf("EXIT"); break;
-        //         case 23: printf("SAVE"); break;
-        //         default: printf("Perintah tidak dikenali.\n");
+        //         case 22: print_case("EXIT"); break;
+        //         case 23: print_case("SAVE"); break;
+        //         default: print_case("Perintah tidak dikenali.\n");
+        //                  printf("Tekan enter untuk kembali ke main menu");
+        //                  char empty;
+        //                  scanf("%c", &empty);
         //     }
         printf("\n");
         }
