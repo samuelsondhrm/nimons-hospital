@@ -11,14 +11,14 @@ void InitializeListObat(ListObat *l) {
     l->jumlahobat = 0;
 }
 
-Obat GetUser(ListObat l, int id){
+Obat GetObat(ListObat l, int id){
     for(int i = 0; i<JUMLAH_OBAT(l); i++){
         if(ID_OBAT(OBAT_LIST(l, i)) == id){
             return OBAT_LIST(l,i);
         }
     }
     Obat ERR_MSG;
-    CreateUser(&ERR_MSG);
+    CreateObat(&ERR_MSG);
     ID_OBAT(ERR_MSG) = -1;
     return ERR_MSG; // Kalau id Obat -1, bearti error
 }

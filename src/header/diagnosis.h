@@ -5,8 +5,8 @@
 #include "checkUp.h"
 
 // variabel global
-boolean SudahDiagnosis[CAPACITY_QUEUE];
+extern boolean SudahDiagnosis[CAPACITY_QUEUE];
 
-void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit *lPenyakit, boolean SudahDiagnosis[CAPACITY_QUEUE]);
+void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit *lPenyakit);
 
 #endif
