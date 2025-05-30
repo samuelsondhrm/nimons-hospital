@@ -1,8 +1,10 @@
 #include "../header/login.h"
 #include <ctype.h>
 
+User *current_user = NULL;
+boolean SudahLogin = false; 
 
-void login(ListUser *users, User *current_user) {
+void login(ListUser *users) {
     char username[MAX_FIELD];
     char password[MAX_FIELD];
 
@@ -10,8 +12,6 @@ void login(ListUser *users, User *current_user) {
 
     //printf("Username: ");
     scanf("%127s", username);
-    //printf("Password: ");
-    scanf("%127s", password);
 
     while (getchar() != '\n'); // Bersihkan buffer
 
@@ -37,17 +37,17 @@ void login(ListUser *users, User *current_user) {
         if (strcmp(user->password, password) == 0) {
             current_user = user;
             SudahLogin = true;
-            //printf("Login berhasil! Selamat datang, %s.\n", current_user->username);
+            printf("Login berhasil! Selamat datang, %s.\n", current_user->username);
             return;
         }
 
         // Password salah
-        //printf("Password salah!\n");
-        //printf("Pilih aksi:\n");
-        //printf("1. Coba lagi\n");
-        //printf("2. Keluar dari login\n");
-        //printf("3. Lupa password\n");
-        //printf("Masukkan pilihan (1/2/3): ");
+        printf("Password salah!\n");
+        printf("Pilih aksi:\n");
+        printf("1. Coba lagi\n");
+        printf("2. Keluar dari login\n");
+        printf("3. Lupa password\n");
+        printf("Masukkan pilihan (1/2/3): ");
         int pilihan;
         scanf("%d", &pilihan);
 
@@ -58,10 +58,10 @@ void login(ListUser *users, User *current_user) {
         } else if (pilihan == 2) {
             return;
         } else if (pilihan == 3) {
-            lupaPassword(&users); 
+            lupaPassword(users); 
             return;
         } else {
-            //printf("Pilihan tidak valid. Keluar dari login.\n");
+            printf("Pilihan tidak valid. Keluar dari login.\n");
             return;
         }
     }
