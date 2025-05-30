@@ -6,6 +6,7 @@ void InitializeRumahSakit(RumahSakit *rs){
     for(int i = 0; i < MAX_BARIS_RUANGAN; i++){
         for(int j = 0; j < MAX_KOLOM_RUANGAN; j++){
             rs->data[i][j].dokterId = 0;
+            lengthQueue(rs->data[i][j].antrianPasienIds);
             CreateQueue(&rs->data[i][j].antrianPasienIds);
         }
     }
