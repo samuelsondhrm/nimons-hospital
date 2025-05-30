@@ -58,20 +58,33 @@ void lihatRuangan(RumahSakit rs, char* kode, ListUser lUser) {
     }
 
     // Tampilkan pasien
-    printf("Pasien di dalam ruangan:\n");
-    if (r.jumlahPasien == 0) {
+    int len = lengthQueue(r.antrianPasienIds);
+
+    if (len == 0) {
+        printf("Pasien di dalam ruangan:\n");
         printf("  Tidak ada pasien di dalam ruangan saat ini.\n");
     } else {
-        for (int i = 0; i < r.jumlahPasien; i++) {
+        printf("Pasien di dalam ruangan:\n");
+        int printed = 0;
+        int printedCount = 0;
+        int cap = rs.kapasitasPerRuangan;
+
+        for (int i = 0; i < len && printedCount < cap; i++) {
+            int idx = (r.antrianPasienIds.idxHead + i) % CAPACITY_QUEUE;
+            int pasienId = r.antrianPasienIds.buffer[idx];
             const char* pasienName = "-";
             for (int j = 0; j < lUser.jumlahuser; j++) {
-                if (lUser.users[j].id == r.pasienIds[i]) {
+                if (lUser.users[j].id == pasienId) {
                     pasienName = lUser.users[j].username;
                     break;
                 }
             }
-            printf("  %d. %s\n", i + 1, pasienName);
+            printf("  %d. %s\n", printedCount + 1, pasienName);
+            printedCount++;
         }
+
+        if (printedCount == 0)
+            printf("  Tidak ada pasien di dalam ruangan saat ini.\n");
     }
 
     // Pemisah akhir seperti di gambar
