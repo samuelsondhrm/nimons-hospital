@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "header/Boolean.h"
+#include "header/interface.h"
 #include "header/parser_config_txt.h"
 #include "header/csv_parser.h"
 #include "header/ADT/liststatik.h"
@@ -12,6 +13,10 @@
 #include "header/ADT/set.h"
 #include "header/ADT/stack.h"
 #include "header/ADT/user.h"
+#include "header/ADT/linkedlist.h"
+#include "header/ADT/penyakit_dan_obat.h"
+
+
 
 //include header for each features
 #include "header/login.h"
@@ -35,20 +40,6 @@
 #include "header/load.h"
 #include "header/save.h"
 
-/* 
-TAMBAH FUNGSI/PROSEDUR VALIDASI APAKAH FITUR YANG DIAKSES SUDAH SESUAI DENGAN ROLE
-
-Jika salah, akan menampilkan: 
-"Anda tidak bisa mengakses fitur <ans>, fitur <ans> hanya boleh diakses oleh seorang <role yang boleh akses fitur tsb>!" 
-
-Catatan:
-- fitur ini akan dijalankan sekali setelah user menginput <ans> dan menggunakan skema if-else
-- jadi butuh membuat 2 fungsi/prosedur dan 1 typedef/list/yang lainnya untuk:
-    1. function mengecek apakah fitur boleh diakses ato ga (boolean)
-    2. procedure menampilkan pesan error yang bisa otomatis menginput ans dan role yang bisa akses fitur
-    3. constant list/typedef untuk ngedeclare role x bisa akses apa aja (untuk keperluan function dan procedure diatas), idenya sih memanfaatkan List Map options aja
-*/
-// Terkait constant listny kita coba buat kalau semuanya udah selesai aja dlu, sekarang masih dikit fungsi yang butuh permission jadi masi aman aj harusny
 
 boolean accessCheck(const char* required_role, User request) {
     if (strcmp(required_role, ROLE(request)) != 0) {
@@ -60,81 +51,10 @@ boolean accessCheck(const char* required_role, User request) {
 }
 
 // GLOBAL VARIABLES
-    ListUser accounts;
-    User current_user;
-    CreateUser(current_user);
-    RumahSakit rs;
-    ListPenyakit lPenyakit;
-    ListObat lObat; 
-    ListFormula lFormula; 
-    Inventory inventory; 
-
-boolean accessCheck(const char* required_role, User request) {
-    if (strcmp(required_role, ROLE(request)) != 0) {
-        printf(" hanya bisa diakses: %s\n", required_role);
-        printf("Sementara kamu adalah: %s\n", ROLE(request));
-        return false;
-    }
-    return true;
-}
-
-// GLOBAL VARIABLES
-    ListUser accounts;
-    User current_user;
-    CreateUser(current_user);
-    RumahSakit rs;
-    ListPenyakit lPenyakit;
-    ListObat lObat; 
-    ListFormula lFormula; 
-    Inventory inventory; 
+    
 
 int main() {
 /* INITIALIZATION */
-    const char *ascii_art = 
-"          _____                   _______                   _____                    _____                    _____                _____                    _____                    _____  \n"
-"         /\\    \\                 /::\\    \\                 /\\    \\                  /\\    \\                  /\\    \\              /\\    \\                  /\\    \\                  /\\    \\ \n"
-"        /::\\____\\               /::::\\    \\               /::\\    \\                /::\\    \\                /::\\    \\            /::\\    \\                /::\\    \\                /::\\____\\\n"
-"       /:::/    /              /::::::\\    \\             /::::\\    \\              /::::\\    \\               \\:::\\    \\           \\:::\\    \\              /::::\\    \\              /:::/    /\n"
-"      /:::/    /              /::::::::\\    \\           /::::::\\    \\            /::::::\\    \\               \\:::\\    \\           \\:::\\    \\            /::::::\\    \\            /:::/    / \n"
-"     /:::/    /              /:::/~~\\:::\\    \\         /:::/\\:::\\    \\          /:::/\\:::\\    \\               \\:::\\    \\           \\:::\\    \\          /:::/\\:::\\    \\          /:::/    /  \n"
-"    /:::/____/              /:::/    \\:::    \\       /:::/__\\:::    \\        /:::/__\\:::    \\               \\:::    \\           \\:::    \\        /:::/__\\:::    \\        /:::/    /   \n"
-"   /::::\\    \\             /:::/    / \\:::    \\      \\:::\\   \\:::    \\      /::::\\   \\:::    \\              /::::\\    \\          /::::\\    \\      /::::\\   \\:::    \\      /:::/    /    \n"
-"  /::::::\\    \\   _____   /:::/____/   \\:::____\\   ___\\:::   \\:::    \\    /::::::\\   \\:::    \\    ____    /::::::\\    \\        /::::::\\    \\    /::::::\\   \\:::    \\    /:::/    /     \n"
-" /:::/\\:::    \\ /\\    \\ |:::|    |     |:::|    | /\\   \\:::   \\:::    \\  /:::/\\:::   \\:::____\\  /\\   \\  /:::/\\:::    \\      /:::/\\:::    \\  /:::/\\:::   \\:::    \\  /:::/    /      \n"
-"/:::/  \\:::    /::\\____\\|:::|____|     |:::|    |/::\\   \\:::   \\:::____\\/:::/  \\:::   \\:::|    |/::\\   \\/:::/  \\:::____\\    /:::/  \\:::____\\/:::/  \\:::   \\:::____\\/:::/____/       \n"
-"\\::/    \\:::  /:::/    / \\:::    \\   /:::/    / \\:::   \\:::   \\::/    /\\::/    \\:::  /:::|____|\\:::  /:::/    \\::/    /   /:::/    \\::/    /\\::/    \\:::  /:::/    /\\:::\\    \\       \n"
-" \\/____/ \\:::\\/:::/    /   \\:::    \\ /:::/    /   \\:::   \\:::   \\/____/  \\/_____/\\::: \\/:::/    /  \\:::\\/:::/    / \\/____/   /:::/    / \\/____/  \\/____/ \\::: \\/:::/    /  \\:::\\    \\      \n"
-"          \\::::::/    /     \\:::    /:::/    /     \\:::   \\:::    \\               \\::::::/    /    \\::::::/    /           /:::/    /                    \\::::::/    /    \\:::\\    \\     \n"
-"           \\::::/    /       \\:::__/:::/    /       \\:::   \\:::____\\               \\::::/    /      \\::::/____/           /:::/    /                      \\::::/    /      \\:::\\    \\    \n"
-"           /:::/    /         \\::::::::/    /         \\:::  /:::/    /                \\::/____/        \\:::    \\           \\::/    /                       /:::/    /        \\:::\\    \\   \n"
-"          /:::/    /           \\::::::/    /           \\:::\\/:::/    /                  ~~               \\:::    \\           \\/____/                       /:::/    /          \\:::\\    \\  \n"
-"         /:::/    /             \\::::/    /             \\::::::/    /                                     \\:::    \\                                       /:::/    /            \\:::\\    \\ \n"
-"        /:::/    /               \\::/____/               \\::::/    /                                       \\:::____\\                                     /:::/    /              \\:::\\____\\\n"
-"        \\::/    /                 ~~                      \\::/    /                                         \\::/    /                                     \\::/    /                \\::/    /\n"
-"         \\/____/                                           \\/____/                                           \\/____/                                       \\/____/                  \\/____/ \n"
-"                                                                                                                                                                                             \n"
-"          _____                    _____                    _____                   _______                   _____                    _____                                                \n"
-"         /\\    \\                  /\\    \\                  /\\    \\                 /::\\    \\                 /\\    \\                  /\\    \\                                               \n"
-"        /::\\____\\                /::\\    \\                /::\\____\\               /::::\\    \\               /::\\____\\                /::\\    \\                                              \n"
-"       /::::|   |                \\:::    \\              /::::|   |              /::::::\\    \\             /::::|   |               /::::\\    \\                                             \n"
-"      /:::::|   |                 \\:::    \\            /:::::|   |             /::::::::\\    \\           /:::::|   |              /::::::\\    \\                                            \n"
-"     /::::::|   |                  \\:::    \\          /::::::|   |            /:::/~~\\:::    \\         /::::::|   |             /:::/\\:::    \\                                           \n"
-"    /:::/|::|   |                   \\:::    \\        /:::/|::|   |           /:::/    \\:::    \\       /:::/|::|   |            /:::/__\\:::    \\                                          \n"
-"   /:::/ |::|   |                   /::::\\    \\      /:::/ |::|   |          /:::/    / \\:::    \\     /:::/ |::|   |            \\:::   \\:::    \\                                         \n"
-"  /:::/  |::|   | _____    ____    /::::::\\    \\    /:::/  |::|___|______   /:::/____/   \\:::____\\   /:::/  |::|   | _____    ___\\:::   \\:::    \\                                        \n"
-" /:::/   |::|   |/\\    \\  /\\   \\  /:::/\\:::    \\  /:::/   |::::::::\\    \\ |:::|    |     |:::|    | /:::/   |::|   |/\\    \\  /\\   \\:::   \\:::    \\                                       \n"
-"/:: /    |::|   /::\\____\\/::\\   \\/:::/  \\:::____\\/:::/    |:::::::::\\____\\|:::|____|     |:::|    |/:: /    |::|   /::\\____\\/::\\   \\:::   \\:::____\\                                      \n"
-"\\::/    /|::|  /:::/    /\\:::   /:::/    \\::/    /\\::/    / ~~~~~/:::/    / \\:::    \\   /:::/    / \\::/    /|::|  /:::/    /\\:::   \\:::   \\::/    /                                      \n"
-" \\/____/ |::| /:::/    /  \\:::\\/:::/    / \\/____/  \\/____/      /:::/    /   \\:::    \\ /:::/    /   \\/____/ |::| /:::/    /  \\:::   \\:::   \\/____/                                       \n"
-"         |::|/:::/    /    \\::::::/    /                       /:::/    /     \\:::    /:::/    /            |::|/:::/    /    \\:::   \\:::    \\                                           \n"
-"         |::::::/    /      \\::::/____/                       /:::/    /       \\:::__/:::/    /             |::::::/    /      \\:::   \\:::____\\                                          \n"
-"         |:::::/    /        \\:::    \\                      /:::/    /         \\::::::::/    /              |:::::/    /        \\:::  /:::/    /                                          \n"
-"         |::::/    /          \\:::    \\                    /:::/    /           \\::::::/    /               |::::/    /          \\:::\\/:::/    /                                           \n"
-"         /:::/    /            \\:::    \\                  /:::/    /             \\::::/    /                /:::/    /            \\::::::/    /                                            \n"
-"        /:::/    /              \\:::____\\                /:::/    /               \\::/____/                /:::/    /              \\::::/    /                                             \n"
-"        \\::/    /                \\::/    /                \\::/    /                 ~~                      \\::/    /                \\::/    /                                              \n"
-"         \\/____/                  \\/____/                  \\/____/                                           \\/____/                  \\/____/                                               \n";
-    const char* user_csv_path = "file/user.csv";
     char ans[MAX_FIELD]; 
     boolean ON = true;
 
@@ -167,8 +87,33 @@ int main() {
     InsertMap(&options, "SAVE", 23); // ACCESS: All
     int selected_option;
     
-    // INISIALISAS VARIABEL GLOBAL
-    // parse_user_csv(user_csv_path, &accounts);
+    ListUser accounts;
+    User cur_user;
+    RumahSakit rs;
+    ListPenyakit lPenyakit;
+    ListObat lObat; 
+    ListFormula lFormula; 
+    Inventory inventory; 
+
+    // INISIALISASI VARIABEL GLOBAL
+    InitializeListUser(&accounts);
+    CreateUser(&cur_user);
+    InitializeRumahSakit(&rs);
+    InitializeListPenyakit(&lPenyakit);
+    InitializeListObat(&lObat);
+    InitializeListFormula(&lFormula);
+    InitializeInventory(&inventory);
+
+    // PARSING
+    const char* user_csv_path = "file/user.csv";
+    const char* obat_csv_path = "file/obat.csv";
+    const char* penyakit_csv_path = "file/penyait.csv";
+    const char* obatpenyakit_csv_path = "file/obat_penyakit.csv";
+    parse_user_csv(user_csv_path, &accounts);
+    parse_obat_csv(obat_csv_path, &lObat);
+    parse_penyakit_csv(penyakit_csv_path, &lPenyakit);
+    parse_obatpenyakit_csv(obatpenyakit_csv_path, &lFormula);
+
 /* MAIN LOOP */
     printf("%s", ascii_art);
     PrintMap(options);
@@ -179,88 +124,96 @@ int main() {
 
         //kasus khusus untuk LIHAT_RUANGAN
         if(strncmp(ans, "LIHAT_RUANGAN ", 14) == 0 && strlen(ans) >= 16){
-            lihatRuangan(&rs, ans + 14 /* kode diambil secara otomatis dari character ke-15 string ans */, accounts);
+            lihatRuangan(rs, ans + 14 /* kode diambil secara otomatis dari character ke-15 string ans */, accounts);
         }
         else{
             selected_option = GetValue(options, ans);
             printf("%d", selected_option);
             switch(selected_option){
                 case 0: printf("LOGIN");
-                    login(&accounts,&current_user); 
+                    login(&accounts,&cur_user); 
                 break;
                 case 1: printf("REGISTER");
+                    User new_user;
                     CreateUser(&new_user);
-                    register_pasien(&accounts, new_user);
+                    register_pasien(&accounts, &new_user);
                     break;
                 case 2: printf("LOGOUT"); 
+                    logout(&SudahLogin, &cur_user);
                     break;
-                case 3: printf("LUPA_PASSWORD"); break;
+                case 3: printf("LUPA_PASSWORD"); 
+                    lupa_password(&accounts);
+                    tulis_user_csv("src/file/user.csv", &accounts);
+                    break;
                 case 4: printf("HELP"); break;
                 case 5: printf("LIHAT_DENAH");
                     printDenah(rs);
                     break;
                 case 6: printf("LIHAT_USER"); 
-                    if(!accessCheck("manager", current_user)); break; 
+                    if(!accessCheck("manager", cur_user)); break; 
                     lihatUser(&accounts, 0);
                     break;
                 case 7: printf("LIHAT_PASIEN"); 
-                    if(!accessCheck("manager", current_user)); break;
+                    if(!accessCheck("manager", cur_user)); break;
                     lihatUser(&accounts, 1);
                     break;
                 case 8: printf("LIHAT_DOKTER");
-                    if(!accessCheck("manager", current_user)); break;
+                    if(!accessCheck("manager", cur_user)); break;
                     lihatUser(&accounts, 2);
                     break;
                 case 9: printf("CARI_USER"); 
-                    if(!accessCheck("manager", current_user)); break;
+                    if(!accessCheck("manager", cur_user)); break;
                     cariUser(&accounts);
                     break;
                 case 10: printf("CARI_PASIEN"); 
-                    if(!accessCheck("manager", current_user)); break;
+                    if(!accessCheck("manager", cur_user)); break;
                     cariPasien(&accounts);
                     break;
                 case 11: printf("CARI_DOKTER"); 
-                    if(!accessCheck("manager", current_user)); break;
+                    if(!accessCheck("manager", cur_user)); break;
                     cariDokter(&accounts);
                     break;
                 case 12: printf("LIHAT_SEMUA_ANTRIAN"); 
-                    if(!accessCheck("manager", current_user)); break;
+                    if(!accessCheck("manager", cur_user)); break;
                     lihatSemuaAntrian(rs, accounts);
                     break;
                 case 13: printf("TAMBAH_DOKTER"); 
-                    if(!accessCheck("manager", current_user)); break;
+                    if(!accessCheck("manager", cur_user)); break;
                     tambahDokter(&accounts);
                     break;
                 case 14: printf("ASSIGN_DOKTER"); 
-                    if(!accessCheck("manager", current_user)); break;
+                    if(!accessCheck("manager", cur_user)); break;
                     assignDokter(&rs, &accounts);
                     break;
                 case 15: printf("DIAGNOSIS");
-                    if(!accessCheck("dokter", current_user)); break;
-                    ListPenyakit lPenyakit; 
-                    diagnosis(current_user,rs,&accounts,&lPenyakit);
+                    if(!accessCheck("dokter", cur_user)); break;
+                    diagnosis(&cur_user,&rs,&accounts,&lPenyakit, &SudahDiagnosis);
                     break;
                 case 16: printf("NGOBATIN"); 
-                    if(!accessCheck("dokter", current_user)); break;
-                    TambahObatKeInventory(inv);
-                    ngobatin(rs,&accounts,&IObat,&IFormula,&lPenyakit,inventory);
+                    if(!accessCheck("dokter", cur_user)); break;
+                    TambahObatKeInventory(inventory);
+                    ngobatin(cur_user, &rs, &accounts,&lObat,&lFormula,&lPenyakit, &inventory);
                     break;
                 case 17: printf("PULANGDOK"); 
-                    if(!accessCheck("pasien", current_user)); break;
+                    if(!accessCheck("pasien", cur_user)); break;
+                    bolehPulang(cur_user, &inventory, &lObat, &lFormula, &lPenyakit, &rs);
                     break;
                 case 18: printf("DAFTAR_CHECKUP");
-                    if(!accessCheck("pasien", current_user)); break;
+                    if(!accessCheck("pasien", cur_user)); break;
                     tampilkanDokterTersedia(accounts,rs);
-                    DaftarCheckUp(rs,accounts);
+                    DaftarCheckUp(&accounts, &rs, USERNAME(cur_user));
                     break;
                 case 19: printf("ANTRIAN"); 
-                    if(!accessCheck("pasien", current_user)); break;
+                    if(!accessCheck("pasien", cur_user)); break;
+                    antrianSaya(cur_user, rs);
                     break;
                 case 20: printf("MINUM_OBAT"); 
-                    if(!accessCheck("pasien", current_user)); break;
+                    if(!accessCheck("pasien", cur_user)); break;
+                    minumObat(cur_user, &inventory, &rs, &lObat);
                     break;
                 case 21: printf("PENAWAR"); 
-                    if(!accessCheck("pasien", current_user)); break;
+                    if(!accessCheck("pasien", cur_user)); break;
+                    minumPenawar(cur_user, &inventory, &lObat);
                     break;
                 case 22: printf("EXIT"); break;
                 case 23: printf("SAVE"); break;
