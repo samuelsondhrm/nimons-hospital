@@ -3,7 +3,7 @@
 #ifndef ROOM_H
 #define ROOM_H
 
-#define MAX_OBAT 10
+#define MAX_OBAT 100
 #define MAX_KOLOM_RUANGAN 26
 #define MAX_BARIS_RUANGAN 26
 #include "queue.h"
