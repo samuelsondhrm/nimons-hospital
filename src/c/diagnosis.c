@@ -1,6 +1,4 @@
 #include "diagnosis.h"
-#include <stdio.h>
-#include <string.h>
 
 // cari ruangan dari ID dokter
 static Ruangan* cariRuanganDokter(RumahSakit *rs, int dokterId) {
@@ -14,17 +12,18 @@ static Ruangan* cariRuanganDokter(RumahSakit *rs, int dokterId) {
     return NULL;
 }
 
-void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit *lPenyakit) {
+void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit *lPenyakit, boolean SudahDiagnosis[CAPACITY_QUEUE]) {
     if (strcmp(ROLE(*current_user), "Dokter") != 0) {
         return; // cuman dokter yang bisa
     }
 
     Ruangan *ruang = cariRuanganDokter(rs, USER_ID(*current_user));
-    if (ruang == NULL || ruang->jumlahPasien == 0) {
+    if (ruang == NULL || isEmptyQueue(ruang->antrianPasienIds)) {
         return; // tidak ada pasien
     }
 
-    int pasienId = ruang->pasienIds[0];
+    // ambil baris queue paling pertama
+    int pasienId =  ruang->antrianPasienIds.buffer[ruang->antrianPasienIds.idxHead];
     User *pasien = NULL;
     for (int i = 0; i < JUMLAHUSER(*lUser); i++) {
         if (USER_ID(USERS(*lUser, i)) == pasienId) {
@@ -52,12 +51,17 @@ void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit
             KOLESTEROL(*pasien) >= KOLESTEROL_MIN(p) && KOLESTEROL(*pasien) <= KOLESTEROL_MAX(p) &&
             TROMBOSIT(*pasien) >= TROMBOSIT_MIN(p) && TROMBOSIT(*pasien) <= TROMBOSIT_MAX(p)) {
 
-            // Diagnosis bisa
+            // Diagnosis bisa didapatkan
             strcpy(RIWAYAT_PENYAKIT(*pasien), NAMA_PENYAKIT(p));
+            SudahDiagnosis[pasienId] = true;
+            //printf("Pasien %s di-diagnosiskan dengan penyakit: %s\n", USERNAME(*pasien) NAMA-PENYAKIT(p))
             return;
         }
     }
 
     // tidak ada diagnosis cocok
     strcpy(RIWAYAT_PENYAKIT(*pasien), "-"); 
+    SudahDiagnosis[pasienId] = false;
+    //printf("Tidak ada diagnosis yang cocok untuk pasien!")
+    return;
 }

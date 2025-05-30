@@ -1,9 +1,7 @@
 #include <stdio.h>
-#include "login.h"
+#include "..\header\ADT\user.h"
 #include <stdlib.h>
-#include "parser_user_csv.h"
-#include "user.h"
-#include "help.h"
+#include "..\header\login.h"
 
 void helpManager(User u){
     printf("Halo manager %s." , u.username);

@@ -1,5 +1,15 @@
 #include "../header/register.h"
 
+int compare_case_insensitive(const char* a, const char* b) {
+    while (*a && *b) {
+        char ca = (*a >= 'A' && *a <= 'Z') ? *a + 32 : *a;
+        char cb = (*b >= 'A' && *b <= 'Z') ? *b + 32 : *b;
+        if (ca != cb) return 0;
+        a++;
+        b++;
+    }
+    return *a == *b;
+}
 
 boolean is_username_valid(const char* username) {
     if (!username || !username[0]) return false;
@@ -12,7 +22,7 @@ boolean is_username_valid(const char* username) {
     return true;
 }
 
-void register_pasien(ListUser *list, const char* filename) {
+void register_pasien(ListUser *lUser, User *new_user) {
     char username[MAX_FIELD];
     char password[MAX_FIELD];
 
@@ -35,21 +45,20 @@ void register_pasien(ListUser *list, const char* filename) {
     while (getchar() != '\n');
 
     // Cek username unik
-    for (int i = 0; i < list->jumlahuser; i++) {
-        if (compare_case_insensitive(list->users[i].username, username)) {
+    for (int i = 0; i < lUser->jumlahuser; i++) {
+        if (compare_case_insensitive(lUser->users[i].username, username)) {
            // printf("Username sudah digunakan.\n");
             return;
         }
     }
 
     // Buat user baru
-    User new_user;
-    CreateUser(&new_user);
-    new_user.id = (list->jumlahuser == 0) ? 1 : (list->users[list->jumlahuser - 1].id + 1);
-    strncpy(new_user.username, username, MAX_FIELD);
-    strncpy(new_user.password, password, MAX_FIELD);
-    strncpy(new_user.role, "pasien", MAX_FIELD);
+    CreateUser(new_user);
+    new_user->id = (lUser->jumlahuser == 0) ? 1 : (lUser->users[lUser->jumlahuser - 1].id + 1); // ID baru
+    strncpy(new_user->username, username, MAX_FIELD);
+    strncpy(new_user->password, password, MAX_FIELD);
+    strncpy(new_user->role, "pasien", MAX_FIELD);
 
     // Tambah ke list 
-    InsUser(list, new_user);
+    InsUser(lUser, *new_user);
 }

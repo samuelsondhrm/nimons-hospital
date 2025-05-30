@@ -16,7 +16,7 @@ void tampilkanDokterTersedia(ListUser *listUser, RumahSakit *rs) {
             if (id != 0) {
                 for (int k = 0; k < listUser->jumlahuser; k++) {
                     if (listUser->users[k].id == id) {
-                        printf("%d. Dr. %s (Ruangan %c%d)\n", counter++, listUser->users[k].username, 'A' + i, j + 1);
+                        //printf("%d. Dr. %s (Ruangan %c%d)\n", counter++, listUser->users[k].username, 'A' + i, j + 1);
                         break;
                     }
                 }
@@ -82,14 +82,14 @@ void DaftarCheckUp(ListUser *listUser, RumahSakit *rs, const char *username) {
         }
     }
 
-    Queue *antrian = rs->data[rowRuangan][colRuangan].baris;
-    if (lengthQueue(*antrian) >= rs->kapasitasPerRuangan) {
+    Queue antrian = rs->data[rowRuangan][colRuangan].antrianPasienIds;
+    if (lengthQueue(antrian) >= rs->kapasitasBaris) {
     // printf("Antrian untuk ruangan ini sudah penuh.\n");
         return;
     }
 
     if (dokterId != -1 && rowRuangan != -1 && colRuangan != -1) { // masuk antrian
-        enqueue(&rs->data[rowRuangan][colRuangan].baris, pasien->id);
+        enqueue(&rs->data[rowRuangan][colRuangan].antrianPasienIds, pasien->id);
         //printf("Pasien berhasil masuk ke antrian check up.\n");
     } else { // tidak valid
         //printf("pilihan anda tidak valid");
