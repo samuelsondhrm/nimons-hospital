@@ -7,10 +7,11 @@
 
 
 // Variabel global
-User *current_user = NULL;  
-boolean SudahLogin = false;  
+extern User *current_user; 
+extern boolean SudahLogin; 
 
 // Deklarasi fungsi login
-void login(ListUser *users, User *current_user);
+void login(ListUser *users);
+void lupaPassword(ListUser *LU);
 
 #endif 
