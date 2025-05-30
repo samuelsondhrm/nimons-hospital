@@ -1,4 +1,6 @@
-#include "diagnosis.h"
+#include "../header/diagnosis.h"
+
+boolean SudahDiagnosis[CAPACITY_QUEUE];
 
 // cari ruangan dari ID dokter
 static Ruangan* cariRuanganDokter(RumahSakit *rs, int dokterId) {
@@ -12,7 +14,7 @@ static Ruangan* cariRuanganDokter(RumahSakit *rs, int dokterId) {
     return NULL;
 }
 
-void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit *lPenyakit, boolean SudahDiagnosis[CAPACITY_QUEUE]) {
+void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit *lPenyakit) {
     if (strcmp(ROLE(*current_user), "Dokter") != 0) {
         return; // cuman dokter yang bisa
     }
@@ -36,6 +38,19 @@ void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit
         return; // pasien tidak ada
     }
 
+    printf("\n=== DEBUG DATA PASIEN UNTUK DIAGNOSIS ===\n");
+    printf("ID Pasien: %d\n", USER_ID(*pasien));
+    printf("Suhu: %.2f\n", SUHU_TUBUH(*pasien));
+    printf("Sistolik: %d\n", TEKANAN_SISTOLIK(*pasien));
+    printf("Diastolik: %d\n", TEKANAN_DIASTOLIK(*pasien));
+    printf("Detak: %d\n", DETAK_JANTUNG(*pasien));
+    printf("Oksigen: %.2f\n", OKSIGEN(*pasien));
+    printf("Gula: %d\n", GULA_DARAH(*pasien));
+    printf("Berat: %.2f\n", BERAT_BADAN(*pasien));
+    printf("Tinggi: %d\n", TINGGI_BADAN(*pasien));
+    printf("Kolesterol: %d\n", KOLESTEROL(*pasien));
+    printf("Trombosit: %d\n", TROMBOSIT(*pasien));
+
     // Diagnosis penyakit 
     for (int i = 0; i < JUMLAH_PENYAKIT(*lPenyakit); i++) {
         Penyakit p = PENYAKIT_LIST(*lPenyakit, i);
@@ -54,7 +69,7 @@ void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit
             // Diagnosis bisa didapatkan
             strcpy(RIWAYAT_PENYAKIT(*pasien), NAMA_PENYAKIT(p));
             SudahDiagnosis[pasienId] = true;
-            //printf("Pasien %s di-diagnosiskan dengan penyakit: %s\n", USERNAME(*pasien) NAMA-PENYAKIT(p))
+            printf("Pasien %s di-diagnosiskan dengan penyakit: %s\n", USERNAME(*pasien), NAMA_PENYAKIT(p));
             return;
         }
     }
@@ -62,6 +77,6 @@ void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit
     // tidak ada diagnosis cocok
     strcpy(RIWAYAT_PENYAKIT(*pasien), "-"); 
     SudahDiagnosis[pasienId] = false;
-    //printf("Tidak ada diagnosis yang cocok untuk pasien!")
+    printf("Tidak ada diagnosis yang cocok untuk pasien!");
     return;
 }
