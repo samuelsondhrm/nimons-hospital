@@ -1,7 +1,7 @@
 #include "../header/login.h"
 #include <ctype.h>
 
-boolean SudahLogin;
+extern boolean SudahLogin;
 
 void login(ListUser *users, User *current_user) {
     char username[MAX_FIELD];
