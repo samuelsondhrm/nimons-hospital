@@ -78,16 +78,6 @@ boolean accessCheck(const char* required_role, User request) {
     return true;
 }
 
-// GLOBAL VARIABLES
-    ListUser accounts;
-    User current_user;
-    CreateUser(current_user);
-    RumahSakit rs;
-    ListPenyakit lPenyakit;
-    ListObat lObat; 
-    ListFormula lFormula; 
-    Inventory inventory; 
-
 int main() {
 /* INITIALIZATION */
     const char *ascii_art = 

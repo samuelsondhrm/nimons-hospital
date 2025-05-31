@@ -7,7 +7,7 @@
 
 
 // Variabel global
-extern User *current_user; 
+extern User current_user; 
 extern boolean SudahLogin; 
 
 // Deklarasi fungsi login
