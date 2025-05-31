@@ -59,15 +59,20 @@ boolean accessCheck(const char* required_role, User request) {
     return true;
 }
 
+
+
 // GLOBAL VARIABLES
+    boolean SudahDiagnosis[CAPACITY_QUEUE];
     ListUser accounts;
     User current_user;
+    User new_user;
     CreateUser(current_user);
     RumahSakit rs;
     ListPenyakit lPenyakit;
     ListObat lObat; 
     ListFormula lFormula; 
     Inventory inventory; 
+    boolean SudahLogin = false;
 
 boolean accessCheck(const char* required_role, User request) {
     if (strcmp(required_role, ROLE(request)) != 0) {
@@ -176,11 +181,11 @@ int main() {
             printf("%d", selected_option);
             switch(selected_option){
                 case 0: printf("LOGIN");
-                    login(&accounts,&current_user); 
+                    login(&accounts, &current_user); 
                 break;
                 case 1: printf("REGISTER");
                     CreateUser(&new_user);
-                    register_pasien(&accounts, new_user);
+                    register_pasien(&accounts, &new_user);
                     break;
                 case 2: printf("LOGOUT"); 
                     logout(&SudahLogin, &current_user);
@@ -231,13 +236,11 @@ int main() {
                     break;
                 case 15: printf("DIAGNOSIS");
                     if(!accessCheck("dokter", current_user)); break;
-                    ListPenyakit lPenyakit; 
-                    diagnosis(current_user,rs,&accounts,&lPenyakit);
+                    diagnosis(&current_user,&rs,&accounts,&lPenyakit);
                     break;
                 case 16: printf("NGOBATIN"); 
                     if(!accessCheck("dokter", current_user)); break;
-                    TambahObatKeInventory(inv);
-                    ngobatin(rs,&accounts,&IObat,&IFormula,&lPenyakit,inventory);
+                    ngobatin(current_user, &rs, &accounts, &lObat, &lFormula, &lPenyakit, &inventory);
                     break;
                 case 17: printf("PULANGDOK"); 
                     if(!accessCheck("pasien", current_user)); break;
@@ -245,8 +248,8 @@ int main() {
                     break;
                 case 18: printf("DAFTAR_CHECKUP");
                     if(!accessCheck("pasien", current_user)); break;
-                    tampilkanDokterTersedia(accounts,rs);
-                    DaftarCheckUp(rs,accounts);
+                    tampilkanDokterTersedia(&accounts, &rs);
+                    DaftarCheckUp(&accounts, &rs, USERNAME(current_user));
                     break;
                 case 19: printf("ANTRIAN"); 
                     if(!accessCheck("pasien", current_user)); break;
