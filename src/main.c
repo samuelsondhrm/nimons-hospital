@@ -16,77 +16,73 @@
 #include "header/ADT/linkedlist.h"
 #include "header/ADT/penyakit_dan_obat.h"
 
+// include header for each features
+#include "header/login.h"
+#include "header/register.h"
+#include "header/logout.h"
+#include "header/lupaPassword.h"
+#include "header/help.h"
+#include "header/denah.h"
+#include "header/lihatuser.h"
+#include "header/cariuser.h"
+#include "header/lihatantrian.h"
+#include "header/tambahdokter.h"
+#include "header/diagnosis.h"
+#include "header/ngobatin.h"
+#include "header/pulangDok.h"
+#include "header/checkUp.h"
+#include "header/antrianSaya.h"
+#include "header/minumObat.h"
+#include "header/minumPenawar.h"
+#include "header/exit.h"
+#include "header/load.h"
+#include "header/save.h"
 
 
-//include header for each features
-// #include "header/login.h"
-// #include "header/register.h"
-// #include "header/logout.h"
-// #include "header/lupaPassword.h"
-// #include "header/help.h"
-// #include "header/denah.h"
-// #include "header/lihatuser.h"
-// #include "header/cariuser.h"
-// #include "header/lihatantrian.h"
-// #include "header/tambahdokter.h"
-// #include "header/diagnosis.h"
-// #include "header/ngobatin.h"
-// #include "header/pulangDok.h"
-// #include "header/checkUp.h"
-// #include "header/antrianSaya.h"
-// #include "header/minumObat.h"
-// #include "header/minumPenawar.h"
-// #include "header/exit.h"
-// #include "header/load.h"
-// #include "header/save.h"
 
-#include "c/interface.c"
+boolean accessCheck(const char* required_role, User request) {
+    if (strcmp(required_role, ROLE(request)) != 0) {
+        printf(" hanya bisa diakses: %s\n", required_role);
+        printf("Sementara kamu adalah: %s\n", ROLE(request));
+        return false;
+    }
+    return true;
+}
 
-// boolean accessCheck(const char* required_role, User request) {
-//     if (strcmp(required_role, ROLE(request)) != 0) {
-//         printf(" hanya bisa diakses: %s\n", required_role);
-//         printf("Sementara kamu adalah: %s\n", ROLE(request));
-//         return false;
-//     }
-//     return true;
-// }
-
-// GLOBAL VARIABLES
-    
 
 int main() {
 /* INITIALIZATION */
     char ans[MAX_FIELD]; 
     boolean ON = true;
 
-    // // INISIALISASI OPTIONS
-    // Map options;
-    // CreateEmptyMap(&options);
-    // InsertMap(&options, "LOGIN", 0); // ACCESS: All
-    // InsertMap(&options, "REGISTER", 1); // ACCESS: Pasien
-    // InsertMap(&options, "LOGOUT", 2); // ACCESS: All
-    // InsertMap(&options, "LUPA_PASSWORD", 3); // ACCESS: All
-    // InsertMap(&options, "HELP", 4); // ACCESS: All
-    // InsertMap(&options, "LIHAT_DENAH", 5); // ACCESS: All
-    // InsertMap(&options, "LIHAT_USER", 6); // ACCESS: Manager
-    // InsertMap(&options, "LIHAT_PASIEN", 7); // ACCESS: Manager
-    // InsertMap(&options, "LIHAT_DOKTER", 8); // ACCESS: Manager
-    // InsertMap(&options, "CARI_USER", 9); // ACCESS: Manager
-    // InsertMap(&options, "CARI_PASIEN", 10); // ACCESS: Manager
-    // InsertMap(&options, "CARI_DOKTER", 11); // ACCESS: Manager
-    // InsertMap(&options, "LIHAT_SEMUA_ANTRIAN", 12); // ACCESS: Manager 
-    // InsertMap(&options, "TAMBAH_DOKTER", 13); // ACCESS: Manager
-    // InsertMap(&options, "ASSIGN_DOKTER", 14); // ACCESS: Manager
-    // InsertMap(&options, "DIAGNOSIS", 15); // ACCESS: Dokter
-    // InsertMap(&options, "NGOBATIN", 16); // ACCESS: Dokter
-    // InsertMap(&options, "PULANGDOK", 17); // ACCESS: Pasien
-    // InsertMap(&options, "DAFTAR_CHECKUP", 18); // ACCESS: Pasien
-    // InsertMap(&options, "ANTRIAN", 19); // ACCESS: Pasien
-    // InsertMap(&options, "MINUM_OBAT", 20); // ACCESS: Pasien
-    // InsertMap(&options, "PENAWAR", 21); // ACCESS: Pasien
-    // InsertMap(&options, "EXIT", 22); // ACCESS: All
-    // InsertMap(&options, "SAVE", 23); // ACCESS: All
-    // int selected_option;
+    // INISIALISASI OPTIONS
+    Map options;
+    CreateEmptyMap(&options);
+    InsertMap(&options, "LOGIN", 0); // ACCESS: All
+    InsertMap(&options, "REGISTER", 1); // ACCESS: Pasien
+    InsertMap(&options, "LOGOUT", 2); // ACCESS: All
+    InsertMap(&options, "LUPA_PASSWORD", 3); // ACCESS: All
+    InsertMap(&options, "HELP", 4); // ACCESS: All
+    InsertMap(&options, "LIHAT_DENAH", 5); // ACCESS: All
+    InsertMap(&options, "LIHAT_USER", 6); // ACCESS: Manager
+    InsertMap(&options, "LIHAT_PASIEN", 7); // ACCESS: Manager
+    InsertMap(&options, "LIHAT_DOKTER", 8); // ACCESS: Manager
+    InsertMap(&options, "CARI_USER", 9); // ACCESS: Manager
+    InsertMap(&options, "CARI_PASIEN", 10); // ACCESS: Manager
+    InsertMap(&options, "CARI_DOKTER", 11); // ACCESS: Manager
+    InsertMap(&options, "LIHAT_SEMUA_ANTRIAN", 12); // ACCESS: Manager 
+    InsertMap(&options, "TAMBAH_DOKTER", 13); // ACCESS: Manager
+    InsertMap(&options, "ASSIGN_DOKTER", 14); // ACCESS: Manager
+    InsertMap(&options, "DIAGNOSIS", 15); // ACCESS: Dokter
+    InsertMap(&options, "NGOBATIN", 16); // ACCESS: Dokter
+    InsertMap(&options, "PULANGDOK", 17); // ACCESS: Pasien
+    InsertMap(&options, "DAFTAR_CHECKUP", 18); // ACCESS: Pasien
+    InsertMap(&options, "ANTRIAN", 19); // ACCESS: Pasien
+    InsertMap(&options, "MINUM_OBAT", 20); // ACCESS: Pasien
+    InsertMap(&options, "PENAWAR", 21); // ACCESS: Pasien
+    InsertMap(&options, "EXIT", 22); // ACCESS: All
+    InsertMap(&options, "SAVE", 23); // ACCESS: All
+    int selected_option;
     
     ListUser accounts;
     User cur_user;
@@ -97,18 +93,18 @@ int main() {
     Inventory inventory; 
 
     // // INISIALISASI VARIABEL GLOBAL
-    // InitializeListUser(&accounts);
-    // CreateUser(&cur_user);
-    // InitializeRumahSakit(&rs);
-    // InitializeListPenyakit(&lPenyakit);
-    // InitializeListObat(&lObat);
-    // InitializeListFormula(&lFormula);
-    // InitializeInventory(&inventory);
+    InitializeListUser(&accounts);
+    CreateUser(&cur_user);
+    InitializeRumahSakit(&rs);
+    InitializeListPenyakit(&lPenyakit);
+    InitializeListObat(&lObat);
+    InitializeListFormula(&lFormula);
+    InitializeInventory(&inventory);
 
     // PARSING
     const char* user_csv_path = "file/user.csv";
     const char* obat_csv_path = "file/obat.csv";
-    const char* penyakit_csv_path = "file/penyait.csv";
+    const char* penyakit_csv_path = "file/penyakit.csv";
     const char* obatpenyakit_csv_path = "file/obat_penyakit.csv";
     parse_user_csv(user_csv_path, &accounts);
     parse_obat_csv(obat_csv_path, &lObat);
@@ -124,107 +120,110 @@ int main() {
         fgets(ans, MAX_FIELD, stdin);
         ans[strcspn(ans, "\n")] = 0;
 
-        // //kasus khusus untuk LIHAT_RUANGAN
-        // if(strncmp(ans, "LIHAT_RUANGAN ", 14) == 0 && strlen(ans) >= 16){
-        //     lihatRuangan(rs, ans + 14 /* kode diambil secara otomatis dari character ke-15 string ans */, accounts);
-        // }
-        // else{
-        //     selected_option = GetValue(options, ans);
-        //     printf("%d", selected_option);
-        //     switch(selected_option){
-        //         case 0: print_case("LOGIN", cur_user);
-        //             login(&accounts,&cur_user); 
-        //         break;
-        //         case 1: print_case("REGISTER, cur_user");
-        //             User new_user;
-        //             CreateUser(&new_user);
-        //             register_pasien(&accounts, &new_user);
-        //             break;
-        //         case 2: print_case("LOGOUT", cur_user); 
-        //             logout(&SudahLogin, &cur_user);
-        //             break;
-        //         case 3: print_case("LUPA_PASSWORD, cur_user"); 
-        //             lupa_password(&accounts);
-        //             tulis_user_csv("src/file/user.csv", &accounts);
-        //             break;
-        //         case 4: print_case("HELP, cur_user"); break;
-        //         case 5: print_case("LIHAT_DENAH, cur_user");
-        //             printDenah(rs);
-        //             break;
-        //         case 6: print_case("LIHAT_USER, cur_user"); 
-        //             if(!accessCheck("manager", cur_user)); break; 
-        //             lihatUser(&accounts, 0);
-        //             break;
-        //         case 7: print_case("LIHAT_PASIEN, cur_user"); 
-        //             if(!accessCheck("manager", cur_user)); break;
-        //             lihatUser(&accounts, 1);
-        //             break;
-        //         case 8: print_case("LIHAT_DOKTER, cur_user");
-        //             if(!accessCheck("manager", cur_user)); break;
-        //             lihatUser(&accounts, 2);
-        //             break;
-        //         case 9: print_case("CARI_USER, cur_user"); 
-        //             if(!accessCheck("manager", cur_user)); break;
-        //             cariUser(&accounts);
-        //             break;
-        //         case 10: print_case("CARI_PASIEN, cur_user"); 
-        //             if(!accessCheck("manager", cur_user)); break;
-        //             cariPasien(&accounts);
-        //             break;
-        //         case 11: print_case("CARI_DOKTER, cur_user"); 
-        //             if(!accessCheck("manager", cur_user)); break;
-        //             cariDokter(&accounts);
-        //             break;
-        //         case 12: print_case("LIHAT_SEMUA_ANTRIAN, cur_user"); 
-        //             if(!accessCheck("manager", cur_user)); break;
-        //             lihatSemuaAntrian(rs, accounts);
-        //             break;
-        //         case 13: print_case("TAMBAH_DOKTER, cur_user"); 
-        //             if(!accessCheck("manager", cur_user)); break;
-        //             tambahDokter(&accounts);
-        //             break;
-        //         case 14: print_case("ASSIGN_DOKTER, cur_user"); 
-        //             if(!accessCheck("manager", cur_user)); break;
-        //             assignDokter(&rs, &accounts);
-        //             break;
-        //         case 15: print_case("DIAGNOSIS, cur_user");
-        //             if(!accessCheck("dokter", cur_user)); break;
-        //             diagnosis(&cur_user,&rs,&accounts,&lPenyakit, &SudahDiagnosis);
-        //             break;
-        //         case 16: print_case("NGOBATIN, cur_user"); 
-        //             if(!accessCheck("dokter", cur_user)); break;
-        //             TambahObatKeInventory(inventory);
-        //             ngobatin(cur_user, &rs, &accounts,&lObat,&lFormula,&lPenyakit, &inventory);
-        //             break;
-        //         case 17: print_case("PULANGDOK, cur_user"); 
-        //             if(!accessCheck("pasien", cur_user)); break;
-        //             bolehPulang(cur_user, &inventory, &lObat, &lFormula, &lPenyakit, &rs);
-        //             break;
-        //         case 18: print_case("DAFTAR_CHECKUP, cur_user");
-        //             if(!accessCheck("pasien", cur_user)); break;
-        //             tampilkanDokterTersedia(accounts,rs);
-        //             DaftarCheckUp(&accounts, &rs, USERNAME(cur_user));
-        //             break;
-        //         case 19: print_case("ANTRIAN, cur_user"); 
-        //             if(!accessCheck("pasien", cur_user)); break;
-        //             antrianSaya(cur_user, rs);
-        //             break;
-        //         case 20: print_case("MINUM_OBAT, cur_user"); 
-        //             if(!accessCheck("pasien", cur_user)); break;
-        //             minumObat(cur_user, &inventory, &rs, &lObat);
-        //             break;
-        //         case 21: print_case("PENAWAR, cur_user"); 
-        //             if(!accessCheck("pasien", cur_user)); break;
-        //             minumPenawar(cur_user, &inventory, &lObat);
-        //             break;
-        //         case 22: print_case("EXIT, cur_user"); break;
-        //         case 23: print_case("SAVE, cur_user"); break;
-        //         default: print_color("INPUT TIDAK VALID", MERAH);
-        //                  printf("Tekan enter untuk kembali ke main menu");
-        //                  char empty;
-        //                  scanf("%c", &empty);
-        //     }
+        //kasus khusus untuk LIHAT_RUANGAN
+        if(strncmp(ans, "LIHAT_RUANGAN ", 14) == 0 && strlen(ans) >= 16){
+            print_case("LIHAT_RUANGAN", cur_user);
+            lihatRuangan(rs, ans + 14 /* kode diambil secara otomatis dari character ke-15 string ans */, accounts);
+        }
+        else{
+            selected_option = GetValue(options, ans);
+            // printf("%d", selected_option);
+            switch(selected_option){
+                case 0: print_case("LOGIN", cur_user);
+                    login(&accounts,&cur_user); 
+                    SudahLogin = true;
+                break;
+                case 1: print_case("REGISTER", cur_user);
+                    User new_user;
+                    CreateUser(&new_user);
+                    register_pasien(&accounts, &new_user);
+                    break;
+                case 2: print_case("LOGOUT", cur_user); 
+                    logout(&SudahLogin, &cur_user);
+                    break;
+                case 3: print_case("LUPA_PASSWORD", cur_user); 
+                    lupa_password(&accounts);
+                    tulis_user_csv("src/file/user.csv", &accounts);
+                    break;
+                case 4: print_case("HELP", cur_user); break;
+                case 5: print_case("LIHAT_DENAH", cur_user);
+                    printDenah(rs);
+                    break;
+                case 6: print_case("LIHAT_USER", cur_user); 
+                    if(!accessCheck("manager", cur_user)) break; 
+                    lihatUser(&accounts, 0);
+                    break;
+                case 7: print_case("LIHAT_PASIEN", cur_user); 
+                    if(!accessCheck("manager", cur_user)) break;
+                    lihatUser(&accounts, 1);
+                    break;
+                case 8: print_case("LIHAT_DOKTER", cur_user);
+                    if(!accessCheck("manager", cur_user)) break;
+                    lihatUser(&accounts, 2);
+                    break;
+                case 9: print_case("CARI_USER", cur_user); 
+                    if(!accessCheck("manager", cur_user)) break;
+                    cariUser(&accounts);
+                    break;
+                case 10: print_case("CARI_PASIEN", cur_user); 
+                    if(!accessCheck("manager", cur_user)) break;
+                    cariPasien(&accounts);
+                    break;
+                case 11: print_case("CARI_DOKTER", cur_user); 
+                    if(!accessCheck("manager", cur_user)) break;
+                    cariDokter(&accounts);
+                    break;
+                case 12: print_case("LIHAT_SEMUA_ANTRIAN", cur_user); 
+                    if(!accessCheck("manager", cur_user)) break;
+                    lihatSemuaAntrian(rs, accounts);
+                    break;
+                case 13: print_case("TAMBAH_DOKTER", cur_user); 
+                    if(!accessCheck("manager", cur_user)) break;
+                    tambahDokter(&accounts);
+                    break;
+                case 14: print_case("ASSIGN_DOKTER", cur_user); 
+                    if(!accessCheck("manager", cur_user)) break;
+                    assignDokter(&rs, &accounts);
+                    break;
+                case 15: print_case("DIAGNOSIS", cur_user);
+                    if(!accessCheck("dokter", cur_user)) break;
+                    diagnosis(&cur_user,&rs,&accounts,&lPenyakit, &SudahDiagnosis);
+                    break;
+                case 16: print_case("NGOBATIN", cur_user); 
+                    if(!accessCheck("dokter", cur_user)) break;
+                    TambahObatKeInventory(inventory);
+                    ngobatin(cur_user, &rs, &accounts,&lObat,&lFormula,&lPenyakit, &inventory);
+                    break;
+                case 17: print_case("PULANGDOK", cur_user); 
+                    if(!accessCheck("pasien", cur_user)) break;
+                    bolehPulang(cur_user, &inventory, &lObat, &lFormula, &lPenyakit, &rs);
+                    break;
+                case 18: print_case("DAFTAR_CHECKUP", cur_user);
+                    if(!accessCheck("pasien", cur_user)) break;
+                    tampilkanDokterTersedia(accounts,rs);
+                    DaftarCheckUp(&accounts, &rs, USERNAME(cur_user));
+                    break;
+                case 19: print_case("ANTRIAN", cur_user); 
+                    if(!accessCheck("pasien", cur_user)) break;
+                    antrianSaya(cur_user, rs);
+                    break;
+                case 20: print_case("MINUM_OBAT", cur_user); 
+                    if(!accessCheck("pasien", cur_user)) break;
+                    minumObat(cur_user, &inventory, &rs, &lObat);
+                    break;
+                case 21: print_case("PENAWAR", cur_user); 
+                    if(!accessCheck("pasien", cur_user)) break;
+                    minumPenawar(cur_user, &inventory, &lObat);
+                    break;
+                case 22: print_case("EXIT", cur_user); break;
+                case 23: print_case("SAVE", cur_user); break;
+                default: print_color("INPUT TIDAK VALID", MERAH);
+                         printf("Tekan enter untuk kembali ke main menu");
+                         while (getchar() != '\n');
+                         break;
+            }
         printf("\n");
         }
-        return 0;
     }
+    return 0;
+}
