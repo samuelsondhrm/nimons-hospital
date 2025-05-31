@@ -1,6 +1,4 @@
 #include "../header/ngobatin.h"
-#include <string.h>
-#include <stdio.h>
 
 // cari ruangan dokter berdasarkan ID
 
@@ -80,5 +78,5 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
     if (count == 1) {
     printf("Tidak ada obat yang cocok untuk penyakit %s.\n", RIWAYAT_PENYAKIT(pasien));
     }
-    
+
 }
