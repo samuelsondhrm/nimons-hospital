@@ -1,9 +1,17 @@
 #include "../header/checkUp.h"
 
 int pasienAntri[CAPACITY] = {0};
+LinkedList pasienCheckUpList;
 
 char to_upper(char c) {
     return (c >= 'a' && c <= 'z') ? c - ('a' - 'A') : c;
+}
+
+boolean isPasienSudahAntri(Queue q, int pasienId) {
+    for (int i = 0, idx = q.idxHead; i < lengthQueue(q); i++, idx = (idx + 1) % CAPACITY_QUEUE) {
+        if (q.buffer[idx] == pasienId) return true;
+    }
+    return false;
 }
 
 // tampilkan dokter tersedia dari room.h
@@ -33,10 +41,7 @@ void DaftarCheckUp(ListUser *listUser, RumahSakit *rs, const char *username) {
             break;
         }
     }
-    if (!pasien || pasienAntri[pasien->id]) { //apakah sudah terdaftar
-        printf("Anda sudah terdaftar dalam antrian check-up! Silakan selesaikan check-up yang sudah terdaftar terlebih dahulu.");
-        return; 
-    }
+  
     // Input data medis
      printf("Masukkan suhu tubuh (32.0 - 42.0): ");
     do {
@@ -136,14 +141,19 @@ void DaftarCheckUp(ListUser *listUser, RumahSakit *rs, const char *username) {
         }
     }
 
-    Queue antrian = rs->data[rowRuangan][colRuangan].antrianPasienIds;
-    if (lengthQueue(antrian) >= rs->kapasitasBaris) {
+    Queue *antrian = &rs->data[rowRuangan][colRuangan].antrianPasienIds;
+    if (isPasienSudahAntri(*antrian, pasien->id)) {
+    printf("Anda sudah terdaftar dalam antrian check-up! Silakan selesaikan check-up yang sudah terdaftar terlebih dahulu.\n");
+    return;
+}
+    if (lengthQueue(*antrian) >= rs->kapasitasBaris) {
      printf("Antrian untuk ruangan ini sudah penuh.\n");
         return;
     }
 
     if (dokterId != -1 && rowRuangan != -1 && colRuangan != -1) { // masuk antrian
         enqueue(&rs->data[rowRuangan][colRuangan].antrianPasienIds, pasien->id);
+        insertAtTail(&pasienCheckUpList, pasien->id); 
         printf("Pasien berhasil masuk ke antrian check up.\n");
     } else { // tidak valid
         printf("pilihan anda tidak valid");
