@@ -1,7 +1,7 @@
 #include "../header/login.h"
 #include <ctype.h>
 
-User *current_user = NULL;
+User current_user = {0};;
 boolean SudahLogin = false; 
 
 void login(ListUser *users) {
@@ -35,9 +35,9 @@ void login(ListUser *users) {
         while (getchar() != '\n'); // Bersihkan buffer
 
         if (strcmp(user->password, password) == 0) {
-            current_user = user;
+            current_user = *user;
             SudahLogin = true;
-            printf("Login berhasil! Selamat datang, %s.\n", current_user->username);
+            printf("Login berhasil! Selamat datang, %s.\n", current_user.username);
             return;
         }
 
