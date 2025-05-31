@@ -130,7 +130,7 @@ int main() {
             // printf("%d", selected_option);
             switch(selected_option){
                 case 0: print_case("LOGIN", cur_user);
-                    login(&accounts,&cur_user); 
+                    login(&accounts); 
                     SudahLogin = true;
                 break;
                 case 1: print_case("REGISTER", cur_user);
@@ -187,11 +187,11 @@ int main() {
                     break;
                 case 15: print_case("DIAGNOSIS", cur_user);
                     if(!accessCheck("dokter", cur_user)) break;
-                    diagnosis(&cur_user,&rs,&accounts,&lPenyakit, &SudahDiagnosis);
+                    diagnosis(&cur_user,&rs,&accounts,&lPenyakit);
                     break;
                 case 16: print_case("NGOBATIN", cur_user); 
                     if(!accessCheck("dokter", cur_user)) break;
-                    TambahObatKeInventory(inventory);
+                    TambahObatKeInventory(&inventory);
                     ngobatin(cur_user, &rs, &accounts,&lObat,&lFormula,&lPenyakit, &inventory);
                     break;
                 case 17: print_case("PULANGDOK", cur_user); 
@@ -200,7 +200,7 @@ int main() {
                     break;
                 case 18: print_case("DAFTAR_CHECKUP", cur_user);
                     if(!accessCheck("pasien", cur_user)) break;
-                    tampilkanDokterTersedia(accounts,rs);
+                    tampilkanDokterTersedia(&accounts, &rs);
                     DaftarCheckUp(&accounts, &rs, USERNAME(cur_user));
                     break;
                 case 19: print_case("ANTRIAN", cur_user); 
@@ -213,7 +213,6 @@ int main() {
                     break;
                 case 21: print_case("PENAWAR", cur_user); 
                     if(!accessCheck("pasien", cur_user)) break;
-                    minumPenawar(*current_user, &inventory, &lObat);
                     minumPenawar(cur_user, &inventory, &lObat);
                     break;
                 case 22: print_case("EXIT", cur_user); break;
