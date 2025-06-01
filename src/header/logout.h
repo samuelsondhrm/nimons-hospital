@@ -7,6 +7,6 @@
 Mengubah status login dan menghapus current_user aktif
 */
 
-void logout(boolean *SudahLogin, User **current_user);
+void logout(boolean *SudahLogin, User *current_user);
 
 #endif
