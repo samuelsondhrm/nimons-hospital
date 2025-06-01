@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "..\header\save.h"
+#include "../header/save.h"
 
 
 // Validasi keberadaan akun manajer
