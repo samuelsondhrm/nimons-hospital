@@ -11,7 +11,7 @@
 #include "../header/parser_config_txt.h"
 
 
-void exitProgram(ListUser listuser, ListObat Listobat, ListPenyakit Listpenyakit, ListFormula listformula);
+void exitProgram(ListUser listuser, ListObat Listobat, ListPenyakit Listpenyakit, ListFormula listformula , RumahSakit rs , Inventory *inventory);
 // Prosedur untuk menyimpan data ke dalam file
 
 #endif

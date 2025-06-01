@@ -13,8 +13,8 @@ int create_directory_recursive(const char *path);
 
 // Mengecek apakah folder ada
 int folder_exists(const char *path);
-
+void simpanConfigTxt(const char *filename, RumahSakit rs, Inventory *invntry);
 // Prosedur utama save
-void save_data(ListUser listuser, ListObat listobat, ListPenyakit listpenyakit, ListFormula listformula);
+void save_data(ListUser listuser, ListObat listobat, ListPenyakit listpenyakit, ListFormula listformula, RumahSakit rs, Inventory *inventory);
 
 #endif

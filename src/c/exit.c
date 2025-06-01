@@ -1,7 +1,7 @@
 #include "../header/exit.h"
 
 
-void exitProgram(ListUser listuser, ListObat Listobat, ListPenyakit Listpenyakit, ListFormula listformula) {
+void exitProgram(ListUser listuser, ListObat Listobat, ListPenyakit Listpenyakit, ListFormula listformula , RumahSakit rs , Inventory *inventory) {
     char input[10];
     printf("Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n) ");
     
@@ -14,7 +14,7 @@ void exitProgram(ListUser listuser, ListObat Listobat, ListPenyakit Listpenyakit
             // Example: save_data(rumahSakit);
             // Replace 'rumahSakit' with the actual variable of type RumahSakit you have.
             // If save_data expects different arguments, adjust accordingly.
-            save_data(listuser, Listobat, Listpenyakit, listformula); // old call
+            save_data(listuser, Listobat, Listpenyakit, listformula , rs, inventory); // old call
         }
     }
     

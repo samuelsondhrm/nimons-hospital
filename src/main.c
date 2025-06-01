@@ -216,10 +216,10 @@ int main() {
                     minumPenawar(cur_user, &inventory, &lObat);
                     break;
                 case 22: print_case("EXIT", cur_user);
-                    exitProgram(accounts, lObat, lPenyakit, lFormula);
+                    exitProgram(accounts, lObat, lPenyakit, lFormula, rs, &inventory);
                     break;
                 case 23: print_case("SAVE", cur_user);
-                    save_data(accounts, lObat, lPenyakit, lFormula);
+                    save_data(accounts, lObat, lPenyakit, lFormula, rs, &inventory);
                     break;
                 default: print_color("INPUT TIDAK VALID", MERAH);
                          printf("\n");

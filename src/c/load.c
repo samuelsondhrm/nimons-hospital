@@ -14,7 +14,7 @@
 
 
 // Prosedur utama load
-int load_data(const char *folder, ListUser *listUser, ListObat *listObat, ListPenyakit *listPenyakit, ListFormula *listFormula) {
+int load_data(const char *folder, ListUser *listUser, ListObat *listObat, ListPenyakit *listPenyakit, ListFormula *listFormula, RumahSakit *rs, Inventory *inventory) {
     char path[256];
 
     // Cek folder
@@ -41,8 +41,15 @@ int load_data(const char *folder, ListUser *listUser, ListObat *listObat, ListPe
     snprintf(path, sizeof(path), "%s%cobat_penyakit.csv", folder, SEPARATOR);
     parse_obatpenyakit_csv(path, listFormula);
 
-    // (Jika ada file lain, tambahkan di sini)
+    char config_path[512];
+    int maxAntrianLuar;
+    snprintf(config_path, sizeof(config_path), "%s%cconfig.txt", folder, SEPARATOR);
+    if (!loadConfig(config_path, rs, inventory, &maxAntrianLuar)) {
+        printf("Gagal membaca config.txt\n");
+        return 0;
+    }
 
     printf("Selamat datang kembali di rumah sakit Nimons !\n");
+    return 1;
     return 1;
 }

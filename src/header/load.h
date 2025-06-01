@@ -12,7 +12,7 @@
 
 
 // Validasi keberadaan akun manajer
-int load_data(const char *folder, ListUser *listUser, ListObat *listObat, ListPenyakit *listPenyakit, ListFormula *listFormula);
+int load_data(const char *folder, ListUser *listUser, ListObat *listObat, ListPenyakit *listPenyakit, ListFormula *listFormula , RumahSakit *rs, Inventory *inventory);
 
 // Prosedur utama untuk load data
 
