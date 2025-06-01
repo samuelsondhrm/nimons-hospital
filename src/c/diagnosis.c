@@ -4,6 +4,7 @@ boolean SudahDiagnosis[CAPACITY_QUEUE];
 
 // cari ruangan dari ID dokter
 static Ruangan* cariRuanganDokter(RumahSakit *rs, int dokterId) {
+    printf("Mencari ruangan untuk dokter dengan ID: %d\n", dokterId);
     for (int i = 0; i < rs->rows; i++) {
         for (int j = 0; j < rs->cols; j++) {
             if (rs->data[i][j].dokterId == dokterId) {
@@ -11,21 +12,32 @@ static Ruangan* cariRuanganDokter(RumahSakit *rs, int dokterId) {
             }
         }
     }
+    printf("Tidak ditemukan ruangan untuk dokter dengan ID: %d\n", dokterId);
     return NULL;
 }
 
 void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit *lPenyakit) {
+    printf("Memulai proses diagnosis...\n");
+
     if (strcmp(ROLE(*current_user), "Dokter") != 0) {
-        return; // cuman dokter yang bisa
+        printf("Akses ditolak: hanya dokter yang bisa melakukan diagnosis.\n");
+        return;
     }
 
     Ruangan *ruang = cariRuanganDokter(rs, USER_ID(*current_user));
-    if (ruang == NULL || isEmptyQueue(ruang->antrianPasienIds)) {
-        return; // tidak ada pasien
+    if (ruang == NULL) {
+        printf("Dokter tidak terdaftar dalam ruangan manapun.\n");
+        return;
     }
 
-    // ambil baris queue paling pertama
-    int pasienId =  ruang->antrianPasienIds.buffer[ruang->antrianPasienIds.idxHead];
+    if (isEmptyQueue(ruang->antrianPasienIds)) {
+        printf("Tidak ada pasien dalam antrian.\n");
+        return;
+    }
+
+    int pasienId = ruang->antrianPasienIds.buffer[ruang->antrianPasienIds.idxHead];
+    printf("Mengambil pasien dengan ID: %d dari antrian.\n", pasienId);
+
     User *pasien = NULL;
     for (int i = 0; i < JUMLAHUSER(*lUser); i++) {
         if (USER_ID(USERS(*lUser, i)) == pasienId) {
@@ -35,12 +47,15 @@ void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit
     }
 
     if (pasien == NULL) {
-        return; // pasien tidak ada
+        printf("Pasien dengan ID %d tidak ditemukan.\n", pasienId);
+        return;
     }
 
-    // Diagnosis penyakit 
+    printf("Melakukan pemeriksaan terhadap pasien: %s\n", USERNAME(*pasien));
+
     for (int i = 0; i < JUMLAH_PENYAKIT(*lPenyakit); i++) {
         Penyakit p = PENYAKIT_LIST(*lPenyakit, i);
+        printf("Mengecek kemungkinan penyakit: %s\n", NAMA_PENYAKIT(p));
 
         if (SUHU_TUBUH(*pasien) >= SUHU_MIN(p) && SUHU_TUBUH(*pasien) <= SUHU_MAX(p) &&
             TEKANAN_SISTOLIK(*pasien) >= SYS_MIN(p) && TEKANAN_SISTOLIK(*pasien) <= SYS_MAX(p) &&
@@ -53,17 +68,16 @@ void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit
             KOLESTEROL(*pasien) >= KOLESTEROL_MIN(p) && KOLESTEROL(*pasien) <= KOLESTEROL_MAX(p) &&
             TROMBOSIT(*pasien) >= TROMBOSIT_MIN(p) && TROMBOSIT(*pasien) <= TROMBOSIT_MAX(p)) {
 
-            // Diagnosis bisa didapatkan
             strcpy(RIWAYAT_PENYAKIT(*pasien), NAMA_PENYAKIT(p));
             SudahDiagnosis[pasienId] = true;
-            printf("Pasien %s di-diagnosiskan dengan penyakit: %s\n", USERNAME(*pasien), NAMA_PENYAKIT(p));
+            printf("Diagnosis berhasil! Pasien %s didiagnosis dengan: %s\n", USERNAME(*pasien), NAMA_PENYAKIT(p));
             return;
+        } else {
+            printf("Kriteria tidak cocok untuk penyakit: %s\n", NAMA_PENYAKIT(p));
         }
     }
 
-    // tidak ada diagnosis cocok
     strcpy(RIWAYAT_PENYAKIT(*pasien), "-"); 
     SudahDiagnosis[pasienId] = false;
-    printf("Tidak ada diagnosis yang cocok untuk pasien!");
-    return;
+    printf("Diagnosis gagal: Tidak ada penyakit yang cocok untuk pasien %s.\n", USERNAME(*pasien));
 }
