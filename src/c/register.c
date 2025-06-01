@@ -30,7 +30,7 @@ void register_pasien(ListUser *lUser, User *new_user) {
     }
 
     if (!is_username_valid(username)) {
-        //printf("Format username tidak valid.\n");
+        printf("Format username tidak valid.\n");
         return;
     }
 
@@ -44,7 +44,7 @@ void register_pasien(ListUser *lUser, User *new_user) {
     // Cek username unik
     for (int i = 0; i < lUser->jumlahuser; i++) {
         if (compare_case_insensitive(lUser->users[i].username, username)) {
-           // printf("Username sudah digunakan.\n");
+            printf("Username sudah digunakan.\n");
             return;
         }
     }

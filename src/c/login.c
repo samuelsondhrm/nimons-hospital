@@ -8,9 +8,9 @@ void login(ListUser *users, User *current_user, boolean *SudahLogin) {
 
     *SudahLogin = false;
 
-    //printf("Username: ");
+    printf("Username: ");
     scanf("%127s", username);
-    //printf("Password: ");
+    printf("Password: ");
     scanf("%127s", password);
 
     while (getchar() != '\n'); // Bersihkan buffer
@@ -25,12 +25,12 @@ void login(ListUser *users, User *current_user, boolean *SudahLogin) {
     }
 
     if (user == NULL) { // nama salah
-        //printf("username tidak ditemukan!")
+        printf("username tidak ditemukan!");
         return;
     }
 
    while (1) {
-        //printf("Password: ");
+        printf("Password: ");
         scanf("%127s", password);
         while (getchar() != '\n'); // Bersihkan buffer
 
@@ -42,12 +42,12 @@ void login(ListUser *users, User *current_user, boolean *SudahLogin) {
         }
 
         // Password salah
-        //printf("Password salah!\n");
-        //printf("Pilih aksi:\n");
-        //printf("1. Coba lagi\n");
-        //printf("2. Keluar dari login\n");
-        //printf("3. Lupa password\n");
-        //printf("Masukkan pilihan (1/2/3): ");
+        printf("Password salah!\n");
+        printf("Pilih aksi:\n");
+        printf("1. Coba lagi\n");
+        printf("2. Keluar dari login\n");
+        printf("3. Lupa password\n");
+        printf("Masukkan pilihan (1/2/3): ");
         int pilihan;
         scanf("%d", &pilihan);
 
@@ -61,7 +61,7 @@ void login(ListUser *users, User *current_user, boolean *SudahLogin) {
             lupaPassword(&users); 
             return;
         } else {
-            //printf("Pilihan tidak valid. Keluar dari login.\n");
+            printf("Pilihan tidak valid. Keluar dari login.\n");
             return;
         }
     }
