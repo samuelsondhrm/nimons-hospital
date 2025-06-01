@@ -59,6 +59,7 @@ void print_header(User active_user) {
     printf(" ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠐⠐⠐⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡿⡥⡬⣟⡉⢠⣥⣾⣽⣿⡁⠀⠀⠒⣾⠧⢸⡇⠐⠀⠱⡀⠀⢦⠀⣼⣯⡎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");
     printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢧⢡⣯⠀⠉⠉⠀⣿⢹⡿⠰⠀⠀⠀⣾⠁⡿⢋⠄⠀⠀⠱⣄⣸⣿⠟⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");
     printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡌⢻⠷⠦⠀⣠⡇⢸⣧⠛⠉⠉⢳⣏⢸⡿⠭⡈⠀⠀⢀⠘⢹⢿⣾⡃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");
+    printf("===========================================================================================\n");
     print_color("ACTIVE USER:\t", HIJAU);
     if(active_user.id <= 0){
         print_color("NOT SIGNED IN", MERAH);
@@ -78,4 +79,23 @@ void print_case(const char *func_name, User active_user){
     print_header(active_user);
     animate_text(func_name, 100);
     printf("\n");
+}
+
+boolean accessCheck(const char* required_role, User request) {
+    if (strcmp(required_role, ROLE(request)) != 0) {
+        printf("Hanya bisa diakses: ");
+        if(strcmp(required_role, "pasien") == 0) print_color("PASIEN", KUNING);
+        else if(strcmp(required_role, "dokter") == 0) print_color("DOKTER", BIRU);
+        else if(strcmp(required_role, "manager") == 0) print_color("MANAGER", UNGU);
+        printf("\n");
+        printf("Sementara kamu adalah: ", ROLE(request));
+        if(strcmp(ROLE(request), "pasien") == 0) print_color("PASIEN", KUNING);
+        else if(strcmp(ROLE(request), "dokter") == 0) print_color("DOKTER", BIRU);
+        else if(strcmp(ROLE(request), "manaager") == 0) print_color("MANAGER", UNGU);
+        else print_color("AKUN TIDAK VALID", MERAH);
+        printf("\n");   
+        while (getchar() != '\n');
+        return false;
+    }
+    return true;
 }
