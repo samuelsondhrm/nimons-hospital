@@ -1,4 +1,6 @@
-#include "../header/ngobatin.h"
+#include "ngobatin.h"
+#include <string.h>
+#include <stdio.h>
 
 // cari ruangan dokter berdasarkan ID
 
@@ -39,7 +41,6 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
     // Cari ruangan dokter
     Ruangan *ruang = cariRuanganDokter(rs, USER_ID(current_user));
      if (ruang == NULL || isEmptyQueue(ruang->antrianPasienIds)) {
-        
         return; // tidak ada pasien
     }
 
@@ -47,11 +48,10 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
     int pasienId =  ruang->antrianPasienIds.buffer[ruang->antrianPasienIds.idxHead];
     User pasien = GetUser(*lUser, pasienId);
 
-    printf("Dokter sedang mengobati pasien!\n");
+    //printf("Dokter sedang mengobati pasien!\n");
 
     // Cek apakah sudah ada diagnosis
-    if (!SudahDiagnosis[pasienId]) {
-        printf("anda belum di diagnosis");
+    if ( SudahDiagnosis[current_user.id] =  false) {
         return;
     }
 
@@ -66,19 +66,13 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
             Penyakit p = PENYAKIT_LIST(*lPenyakit, j);
 
             // tampilkan obat kalau cocok
-            if (strcmp(NAMA_PENYAKIT(p), RIWAYAT_PENYAKIT(pasien)) == 0 || ID_PENYAKIT(p) == f.penyakit_id) {
-                 printf("-> obat cocok, dan akan ditambahkan ke inventory pasien.\n");
+            if (ID_PENYAKIT(p) == f.penyakit_id && strcmp(NAMA_PENYAKIT(p), RIWAYAT_PENYAKIT(pasien)) == 0) {
                 Obat o = GetObat(*lObat, f.obat_id);
 
-                printf("%d. %s\n", count++, NAMA_OBAT(o));
+                //printf("%d. %s\n", count++, NAMA_OBAT(o));
 
                 TambahObatKeInventory(inv, pasienId, f.obat_id);
             }
         }
     }
-
-    if (count == 1) {
-    printf("Tidak ada obat yang cocok untuk penyakit %s.\n", RIWAYAT_PENYAKIT(pasien));
-    }
-
 }

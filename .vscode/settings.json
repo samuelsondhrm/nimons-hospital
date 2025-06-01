@@ -1,4 +1,17 @@
 {
+    "files.associations": {
+        "user.h": "c",
+        "cariuser.h": "c",
+        "denah.h": "c",
+        "tambahdokter.h": "c",
+<<<<<<< HEAD
+        "login.h": "c",
+        "register.h": "c",
+        "diagnosis.h": "c"
+=======
+        "save.h": "c"
+>>>>>>> dev-migu
+    }
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
   "C_Cpp_Runner.debuggerPath": "gdb",

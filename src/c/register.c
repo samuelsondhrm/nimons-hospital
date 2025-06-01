@@ -1,15 +1,5 @@
 #include "../header/register.h"
 
-int compare_case_insensitive(const char* a, const char* b) {
-    while (*a && *b) {
-        char ca = (*a >= 'A' && *a <= 'Z') ? *a + 32 : *a;
-        char cb = (*b >= 'A' && *b <= 'Z') ? *b + 32 : *b;
-        if (ca != cb) return 0;
-        a++;
-        b++;
-    }
-    return *a == *b;
-}
 
 boolean is_username_valid(const char* username) {
     if (!username || !username[0]) return false;
@@ -26,32 +16,15 @@ void register_pasien(ListUser *lUser, User *new_user) {
     char username[MAX_FIELD];
     char password[MAX_FIELD];
 
-     while (1) {
-        printf("Masukkan username: ");
-        if (scanf("%127s", username) != 1) {
-            while (getchar() != '\n');
-            continue;
-        }
+    // Input username
+    if (scanf("%127s", username) != 1) {
+        while (getchar() != '\n');
+        return;
+    }
 
-        // Cek format
-        if (!is_username_valid(username)) {
-            printf("Format username tidak valid. Hanya boleh Huruf!\n");
-            continue;
-        }
-
-        // Cek unik
-        int i;
-        for (i = 0; i < lUser->jumlahuser; i++) {
-            if (compare_case_insensitive(lUser->users[i].username, username)) {
-                printf("Username sudah digunakan.\n");
-                break;
-            }
-        }
-
-        if (i == lUser->jumlahuser) {
-            // Username valid dan unik
-            break;
-        }
+    if (!is_username_valid(username)) {
+        //printf("Format username tidak valid.\n");
+        return;
     }
 
     // Input password
@@ -60,6 +33,14 @@ void register_pasien(ListUser *lUser, User *new_user) {
         return;
     }
     while (getchar() != '\n');
+
+    // Cek username unik
+    for (int i = 0; i < lUser->jumlahuser; i++) {
+        if (compare_case_insensitive(lUser->users[i].username, username)) {
+           // printf("Username sudah digunakan.\n");
+            return;
+        }
+    }
 
     // Buat user baru
     CreateUser(new_user);
