@@ -56,7 +56,7 @@ void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit
             // Diagnosis bisa didapatkan
             strcpy(RIWAYAT_PENYAKIT(*pasien), NAMA_PENYAKIT(p));
             SudahDiagnosis[pasienId] = true;
-            //printf("Pasien %s di-diagnosiskan dengan penyakit: %s\n", USERNAME(*pasien) NAMA-PENYAKIT(p))
+            printf("Pasien %s di-diagnosiskan dengan penyakit: %s\n", USERNAME(*pasien), NAMA_PENYAKIT(p));
             return;
         }
     }
@@ -64,6 +64,6 @@ void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit
     // tidak ada diagnosis cocok
     strcpy(RIWAYAT_PENYAKIT(*pasien), "-"); 
     SudahDiagnosis[pasienId] = false;
-    //printf("Tidak ada diagnosis yang cocok untuk pasien!")
+    printf("Tidak ada diagnosis yang cocok untuk pasien!");
     return;
 }

@@ -46,7 +46,7 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
     int pasienId =  ruang->antrianPasienIds.buffer[ruang->antrianPasienIds.idxHead];
     User pasien = GetUser(*lUser, pasienId);
 
-    //printf("Dokter sedang mengobati pasien!\n");
+    printf("Dokter sedang mengobati pasien!\n");
 
     // Cek apakah sudah ada diagnosis
     if ( SudahDiagnosis[current_user.id] =  false) {
@@ -67,7 +67,7 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
             if (ID_PENYAKIT(p) == f.penyakit_id && strcmp(NAMA_PENYAKIT(p), RIWAYAT_PENYAKIT(pasien)) == 0) {
                 Obat o = GetObat(*lObat, f.obat_id);
 
-                //printf("%d. %s\n", count++, NAMA_OBAT(o));
+                printf("%d. %s\n", count++, NAMA_OBAT(o));
 
                 TambahObatKeInventory(inv, pasienId, f.obat_id);
             }
