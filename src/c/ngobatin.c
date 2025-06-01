@@ -4,6 +4,8 @@
 
 // cari ruangan dokter berdasarkan ID
 
+ extern boolean SudahDiagnosis[CAPACITY_QUEUE];
+
 static Ruangan* cariRuanganDokter(RumahSakit *rs, int dokterId) {
     for (int i = 0; i < rs->rows; i++) {
         for (int j = 0; j < rs->cols; j++) {

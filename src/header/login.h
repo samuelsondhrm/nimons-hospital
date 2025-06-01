@@ -5,12 +5,8 @@
 #include "ADT/set.h"
 #include "lupaPassword.h"
 
-
-// Variabel global
-User *current_user = NULL;  
-boolean SudahLogin = false;  
-
 // Deklarasi fungsi login
-void login(ListUser *users, User *current_user);
+void login(ListUser *users, User *current_user, boolean *SudahLogin);
+void lupaPassword(ListUser *LU);
 
 #endif 

@@ -2,11 +2,11 @@
 #include <ctype.h>
 
 
-void login(ListUser *users, User *current_user) {
+void login(ListUser *users, User *current_user, boolean *SudahLogin) {
     char username[MAX_FIELD];
     char password[MAX_FIELD];
 
-    SudahLogin = false;
+    *SudahLogin = false;
 
     //printf("Username: ");
     scanf("%127s", username);
@@ -35,9 +35,9 @@ void login(ListUser *users, User *current_user) {
         while (getchar() != '\n'); // Bersihkan buffer
 
         if (strcmp(user->password, password) == 0) {
-            current_user = user;
-            SudahLogin = true;
-            //printf("Login berhasil! Selamat datang, %s.\n", current_user->username);
+            *current_user = *user;
+            *SudahLogin = true;
+            printf("Login berhasil! Selamat datang, %s.\n", *current_user->username);
             return;
         }
 

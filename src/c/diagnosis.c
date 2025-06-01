@@ -12,7 +12,7 @@ static Ruangan* cariRuanganDokter(RumahSakit *rs, int dokterId) {
     return NULL;
 }
 
-void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit *lPenyakit, boolean SudahDiagnosis[CAPACITY_QUEUE]) {
+void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit *lPenyakit) {
     if (strcmp(ROLE(*current_user), "Dokter") != 0) {
         return; // cuman dokter yang bisa
     }

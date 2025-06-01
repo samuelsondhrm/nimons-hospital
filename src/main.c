@@ -90,7 +90,9 @@ int main() {
     ListPenyakit lPenyakit;
     ListObat lObat; 
     ListFormula lFormula; 
-    Inventory inventory; 
+    Inventory inventory;
+    boolean SudahDiagnosis[CAPACITY_QUEUE];
+    boolean SudahLogin = false;
 
     // // INISIALISASI VARIABEL GLOBAL
     InitializeListUser(&accounts);
@@ -130,7 +132,7 @@ int main() {
             // printf("%d", selected_option);
             switch(selected_option){
                 case 0: print_case("LOGIN", cur_user);
-                    login(&accounts); 
+                    login(&accounts, &cur_user, &SudahLogin ); 
                     SudahLogin = true;
                 break;
                 case 1: print_case("REGISTER", cur_user);
@@ -191,7 +193,6 @@ int main() {
                     break;
                 case 16: print_case("NGOBATIN", cur_user); 
                     if(!accessCheck("dokter", cur_user)) break;
-                    TambahObatKeInventory(&inventory);
                     ngobatin(cur_user, &rs, &accounts,&lObat,&lFormula,&lPenyakit, &inventory);
                     break;
                 case 17: print_case("PULANGDOK", cur_user); 
