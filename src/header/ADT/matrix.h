@@ -1,5 +1,5 @@
-/* File: listdin.h */
-/* Deklarasi ADT List Dinamis */
+/* File: matrix.h */
+/* Deklarasi ADT Matrix */
 
 #ifndef MATRIX_H
 #define MATRIX_H
