@@ -24,6 +24,7 @@ void register_pasien(ListUser *lUser, User *new_user) {
     char password[MAX_FIELD];
 
     // Input username
+    printf("masukkan username: \n");
     if (scanf("%127s", username) != 1) {
         while (getchar() != '\n');
         return;
@@ -35,6 +36,7 @@ void register_pasien(ListUser *lUser, User *new_user) {
     }
 
     // Input password
+    printf("masukkan password: \n");
     if (scanf("%127s", password) != 1) {
         while (getchar() != '\n');
         return;
@@ -58,4 +60,11 @@ void register_pasien(ListUser *lUser, User *new_user) {
 
     // Tambah ke list 
     InsUser(lUser, *new_user);
+
+    printf("Data user berhasil ditambahkan:\n");
+    printf("Username: %s\n", new_user->username);
+    printf("Password: %s\n", new_user->password);
+    printf("Role: %s\n", new_user->role);
+    printf("ID: %d\n", new_user->id);
 }
+
