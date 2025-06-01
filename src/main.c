@@ -38,7 +38,20 @@
 #include "header/load.h"
 #include "header/save.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        printf("Tidak ada nama folder yang diberikan!\n");
+        printf("Usage : %s <<nama_folder>>\n", argv[0]);
+        return 1;
+    }
+    
+    /* KAMUS */
+    // Definisi konstanta
+    #define MAX_FIELD 128 // Maksimal panjang field untuk input
+    #define MAX_BARIS_RUANGAN 10 // Maksimal jumlah baris ruangan
+    #define MAX_KOLOM_RUANGAN 10 // Maksimal jumlah kolom ruangan
+    #define CAPACITY_QUEUE 100 // Kapasitas antrian pasien
+    #define CAPACITY_MAP 50 // Kapasitas map untuk opsi
 /* INITIALIZATION */
     char ans[MAX_FIELD]; 
     boolean ON = true;
@@ -99,6 +112,19 @@ int main() {
     parse_obat_csv(obat_csv_path, &lObat);
     parse_penyakit_csv(penyakit_csv_path, &lPenyakit);
     parse_obatpenyakit_csv(obatpenyakit_csv_path, &lFormula);
+    
+    char folder_path[512];
+    #ifdef _WIN32
+    #define SEPARATOR '\\'
+    #else
+    #define SEPARATOR '/'
+    #endif
+    snprintf(folder_path, sizeof(folder_path), "data%c%s", SEPARATOR, argv[1]);
+
+    // Try to load data
+    if (!load_data(folder_path, &accounts, &lObat, &lPenyakit, &lFormula, &rs, &inventory)) {
+        return 1;  // Exit if load fails
+    }
 
 /* MAIN LOOP */
 
