@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "ADT/user.h"
-#incldeu "Boolean.h"
+#include "Boolean.h"
 #ifdef _WIN32
 #include <windows.h>  // buat Sleep()
 #else
