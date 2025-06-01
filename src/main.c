@@ -38,18 +38,6 @@
 #include "header/load.h"
 #include "header/save.h"
 
-
-
-boolean accessCheck(const char* required_role, User request) {
-    if (strcmp(required_role, ROLE(request)) != 0) {
-        printf(" hanya bisa diakses: %s\n", required_role);
-        printf("Sementara kamu adalah: %s\n", ROLE(request));
-        return false;
-    }
-    return true;
-}
-
-
 int main() {
 /* INITIALIZATION */
     char ans[MAX_FIELD]; 
@@ -218,6 +206,8 @@ int main() {
                 case 22: print_case("EXIT", cur_user); break;
                 case 23: print_case("SAVE", cur_user); break;
                 default: print_color("INPUT TIDAK VALID", MERAH);
+                         printf("\n");
+                         printf("Masukkan HELP untuk melihat input valid\n");
                          printf("Tekan enter untuk kembali ke main menu");
                          while (getchar() != '\n');
                          break;
