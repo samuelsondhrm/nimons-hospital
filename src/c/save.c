@@ -95,22 +95,22 @@ void save_data(ListUser listuser, ListObat listobat, ListPenyakit listpenyakit, 
     }
 
     // Tulis user.csv
-    char user_csv_path[256];
+    char user_csv_path[512];
     snprintf(user_csv_path, sizeof(user_csv_path), "%s%cuser.csv", full_path, SEPARATOR);
     tulis_user_csv(user_csv_path, &listuser);
 
     // Tulis obat.csv
-    char obat_csv_path[256];
+    char obat_csv_path[512];
     snprintf(obat_csv_path, sizeof(obat_csv_path), "%s%cobat.csv", full_path, SEPARATOR);
     tulis_obat_csv(obat_csv_path, listobat);
 
     // Tulis penyakit.csv
-    char penyakit_csv_path[256];
+    char penyakit_csv_path[512];
     snprintf(penyakit_csv_path, sizeof(penyakit_csv_path), "%s%cpenyakit.csv", full_path, SEPARATOR);
     tulis_penyakit_csv(penyakit_csv_path, listpenyakit);
 
     // Tulis obat_penyakit.csv
-    char obatpenyakit_csv_path[256];
+    char obatpenyakit_csv_path[512];
     snprintf(obatpenyakit_csv_path, sizeof(obatpenyakit_csv_path), "%s%cobat_penyakit.csv", full_path, SEPARATOR);
     tulis_obatpenyakit_csv(obatpenyakit_csv_path, listformula);
 
