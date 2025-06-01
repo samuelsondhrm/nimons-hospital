@@ -1,4 +1,4 @@
-#include "../header/csv_parser.h"
+#include "..\header\load.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,18 +11,7 @@
 #endif
 #include <sys/stat.h>
 
-// Mengecek apakah folder ada
-int folder_exists(const char *path) {
-#ifdef _WIN32
-    struct _stat info;
-    if (_stat(path, &info) != 0) return 0;
-    return (info.st_mode & _S_IFDIR) != 0;
-#else
-    struct stat info;
-    if (stat(path, &info) != 0) return 0;
-    return S_ISDIR(info.st_mode);
-#endif
-}
+
 
 // Prosedur utama load
 int load_data(const char *folder, ListUser *listUser, ListObat *listObat, ListPenyakit *listPenyakit, ListFormula *listFormula) {

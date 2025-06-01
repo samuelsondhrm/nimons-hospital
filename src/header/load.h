@@ -8,9 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "..\header\save.h"
 
-// Validasi folder
-int folder_exist(const char *path);
 
 // Validasi keberadaan akun manajer
 int load_data(const char *folder, ListUser *listUser, ListObat *listObat, ListPenyakit *listPenyakit, ListFormula *listFormula);
