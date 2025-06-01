@@ -112,7 +112,7 @@ int main() {
         tampilkan_penyakit(lPenyakit);
         tampilkan_user(accounts);
 
-        
+        printf("%s", ROLE(cur_user));
         animate_text("Enter input > > > ", 100);
         fgets(ans, MAX_FIELD, stdin);
         ans[strcspn(ans, "\n")] = 0;
@@ -144,7 +144,7 @@ int main() {
                 case 4: print_case("HELP", cur_user);
                     if(strcmp(ROLE(cur_user), "manager") == 0) helpManager(cur_user);
                     else if(strcmp(ROLE(cur_user), "dokter") == 0) helpDokter(cur_user);
-                    else if(strcmp(ROLE(cur_user), "manager") == 0) helpManager(cur_user);
+                    else if(strcmp(ROLE(cur_user), "pasien") == 0) helpPasien(cur_user);
                     else notLogin();
                 break;
                 case 5: print_case("LIHAT_DENAH", cur_user);
