@@ -60,7 +60,7 @@ void InsObat(ListObat *l, Obat buffer) {
 void tampilkan_obat(ListObat l) {
     for (int i = 0; i < JUMLAH_OBAT(l); i++) {
         Obat o = OBAT_LIST(l, i);
-        printf("Penyakit %d:\n", i + 1);
+        printf("Obat %d:\n", i + 1);
         printf("   ID: %d\n", ID_OBAT(o));
         printf("   Nama: %s\n", NAMA_OBAT(o));
     }
@@ -214,7 +214,7 @@ void InsFormula(ListFormula *l, Formula buffer) {
     }
 }
 
-void tampilkan_obatpenyakit(ListFormula l) {
+void tampilkan_formula(ListFormula l) {
     for (int i = 0; i < JUMLAH_FORMULA(l); i++) {
         Formula op = FORMULA_LIST(l,i);
         printf("Relasi %d:\n", i + 1);

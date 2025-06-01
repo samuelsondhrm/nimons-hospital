@@ -326,7 +326,7 @@ void parse_user_csv(const char *filename, ListUser *ListUser) {
                 case 14: ListUser->users[row].kadar_kolesterol_ldl = string_to_int(field); break;
                 case 15: ListUser->users[row].trombosit = string_to_int(field); break;
             }
-
+            printf("%d", col);
             field_pos = 0;
             col++;
 

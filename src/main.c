@@ -21,7 +21,7 @@
 #include "header/register.h"
 #include "header/logout.h"
 #include "header/lupaPassword.h"
-// #include "header/help.h"
+#include "header/help.h"
 #include "header/denah.h"
 #include "header/lihatuser.h"
 #include "header/cariuser.h"
@@ -91,10 +91,10 @@ int main() {
     InitializeInventory(&inventory);
 
     // PARSING
-    const char* user_csv_path = "file/user.csv";
-    const char* obat_csv_path = "file/obat.csv";
-    const char* penyakit_csv_path = "file/penyakit.csv";
-    const char* obatpenyakit_csv_path = "file/obat_penyakit.csv";
+    const char* user_csv_path = "../src/file/user.csv";
+    const char* obat_csv_path = "../src/file/obat.csv";
+    const char* penyakit_csv_path = "../src/file/penyakit.csv";
+    const char* obatpenyakit_csv_path = "../src/file/obat_penyakit.csv";
     parse_user_csv(user_csv_path, &accounts);
     parse_obat_csv(obat_csv_path, &lObat);
     parse_penyakit_csv(penyakit_csv_path, &lPenyakit);
@@ -105,6 +105,14 @@ int main() {
     // PrintMap(options);
     while(ON){
         print_header(cur_user);
+        
+        // CLEARSCREEN LAGI DI DISABLE, JADI BISA DEBUG YE
+        tampilkan_formula(lFormula);
+        tampilkan_obat(lObat);
+        tampilkan_penyakit(lPenyakit);
+        tampilkan_user(accounts);
+
+        
         animate_text("Enter input > > > ", 100);
         fgets(ans, MAX_FIELD, stdin);
         ans[strcspn(ans, "\n")] = 0;
@@ -116,7 +124,6 @@ int main() {
         }
         else{
             selected_option = GetValue(options, ans);
-            // printf("%d", selected_option);
             switch(selected_option){
                 case 0: print_case("LOGIN", cur_user);
                     login(&accounts, &cur_user, &SudahLogin ); 
@@ -134,7 +141,12 @@ int main() {
                     lupaPassword(&accounts);
                     tulis_user_csv("src/file/user.csv", &accounts);
                     break;
-                case 4: print_case("HELP", cur_user); break;
+                case 4: print_case("HELP", cur_user);
+                    if(strcmp(ROLE(cur_user), "manager") == 0) helpManager(cur_user);
+                    else if(strcmp(ROLE(cur_user), "dokter") == 0) helpDokter(cur_user);
+                    else if(strcmp(ROLE(cur_user), "manager") == 0) helpManager(cur_user);
+                    else notLogin();
+                break;
                 case 5: print_case("LIHAT_DENAH", cur_user);
                     printDenah(rs);
                     break;
@@ -209,11 +221,11 @@ int main() {
                          printf("\n");
                          printf("Masukkan HELP untuk melihat input valid\n");
                          printf("Tekan enter untuk kembali ke main menu");
-                         while (getchar() != '\n');
                          break;
             }
         printf("\n");
         }
+        while (getchar() != '\n');
     }
     return 0;
 }
