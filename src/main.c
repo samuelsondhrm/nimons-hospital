@@ -215,8 +215,12 @@ int main() {
                     if(!accessCheck("pasien", cur_user)) break;
                     minumPenawar(cur_user, &inventory, &lObat);
                     break;
-                case 22: print_case("EXIT", cur_user); break;
-                case 23: print_case("SAVE", cur_user); break;
+                case 22: print_case("EXIT", cur_user);
+                    exitProgram(accounts, lObat, lPenyakit, lFormula);
+                    break;
+                case 23: print_case("SAVE", cur_user);
+                    save_data(accounts, lObat, lPenyakit, lFormula);
+                    break;
                 default: print_color("INPUT TIDAK VALID", MERAH);
                          printf("\n");
                          printf("Masukkan HELP untuk melihat input valid\n");
