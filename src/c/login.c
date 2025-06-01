@@ -58,7 +58,7 @@ void login(ListUser *users, User *current_user, boolean *SudahLogin) {
         } else if (pilihan == 2) {
             return;
         } else if (pilihan == 3) {
-            lupaPass(); 
+            lupaPassword(&users); 
             return;
         } else {
             //printf("Pilihan tidak valid. Keluar dari login.\n");

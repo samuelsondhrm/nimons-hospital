@@ -1,6 +1,4 @@
-#include "ngobatin.h"
-#include <string.h>
-#include <stdio.h>
+#include "../header/ngobatin.h"
 
 // cari ruangan dokter berdasarkan ID
 

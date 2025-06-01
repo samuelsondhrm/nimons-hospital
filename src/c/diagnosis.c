@@ -1,4 +1,4 @@
-#include "diagnosis.h"
+#include "../header/diagnosis.h"
 
 boolean SudahDiagnosis[CAPACITY_QUEUE];
 
