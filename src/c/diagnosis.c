@@ -1,5 +1,7 @@
 #include "diagnosis.h"
 
+boolean SudahDiagnosis[CAPACITY_QUEUE];
+
 // cari ruangan dari ID dokter
 static Ruangan* cariRuanganDokter(RumahSakit *rs, int dokterId) {
     for (int i = 0; i < rs->rows; i++) {

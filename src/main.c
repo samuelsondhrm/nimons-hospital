@@ -92,7 +92,7 @@ int main() {
     ListFormula lFormula; 
     Inventory inventory;
     boolean SudahLogin = false;
-
+    
     // // INISIALISASI VARIABEL GLOBAL
     InitializeListUser(&accounts);
     CreateUser(&cur_user);

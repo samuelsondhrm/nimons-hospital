@@ -110,7 +110,7 @@ void bolehPulang(User current_user, Inventory *inv, const ListObat *lObat, const
                 int idx = (q->idxHead + k) % CAPACITY_QUEUE;
                 if (q->buffer[idx] == pasienId && k == 0) {
                     int pasienKeluar;
-                    Dequeue(q, &pasienKeluar);
+                    dequeue(q, &pasienKeluar);
                     return;
                 }
             }

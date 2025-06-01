@@ -60,7 +60,7 @@ void print_header(User active_user) {
     printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢧⢡⣯⠀⠉⠉⠀⣿⢹⡿⠰⠀⠀⠀⣾⠁⡿⢋⠄⠀⠀⠱⣄⣸⣿⠟⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");
     printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡌⢻⠷⠦⠀⣠⡇⢸⣧⠛⠉⠉⢳⣏⢸⡿⠭⡈⠀⠀⢀⠘⢹⢿⣾⡃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");
     print_color("ACTIVE USER:\t", HIJAU);
-    if(ID(active_user) <= 0){
+    if(active_user.id <= 0){
         print_color("NOT SIGNED IN", MERAH);
     }
     else{
