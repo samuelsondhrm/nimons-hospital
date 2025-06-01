@@ -68,9 +68,9 @@ void print_header(User active_user) {
     else{
     print_color(USERNAME(active_user), BIRU_M);
     printf(" (");
-    if(ROLE(active_user) == "pasien") print_color("pasien", KUNING);
-    else if(ROLE(active_user) == "dokter") print_color("dokter", BIRU);
-    else if(ROLE(active_user) == "manager") print_color("MANAGER", UNGU);
+    if(strcmp(ROLE(active_user), "pasien") == 0) print_color("PASIEN", KUNING);
+    else if(strcmp(ROLE(active_user), "dokter") == 0) print_color("DOKTER", BIRU);
+    else if(strcmp(ROLE(active_user), "manager") == 0) print_color("MANAGER", UNGU);
     else print_color("INVALID ROLE", MERAH);
     printf(")\n");
     }
