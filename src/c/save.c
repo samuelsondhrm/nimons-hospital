@@ -1,5 +1,5 @@
 #include "../header/save.h"
-
+#include "../header/csv_parser.h"
 
 #ifdef _WIN32
 #include <direct.h>
@@ -11,7 +11,7 @@
 
 #define BASE_FOLDER "data"
 
-// Fungsi rekursif untuk membuat direktori
+// Membuat folder secara rekursif
 int create_directory_recursive(const char *path) {
     char tmp[256];
     char *p = NULL;
@@ -26,13 +26,9 @@ int create_directory_recursive(const char *path) {
         if (*p == SEPARATOR) {
             *p = '\0';
 #ifdef _WIN32
-            if (_mkdir(tmp) != 0 && errno != EEXIST) {
-                return -1;
-            }
+            _mkdir(tmp);
 #else
-            if (mkdir(tmp, 0755) != 0 && errno != EEXIST) {
-                return -1;
-            }
+            mkdir(tmp, 0755);
 #endif
             *p = SEPARATOR;
         }
@@ -44,14 +40,21 @@ int create_directory_recursive(const char *path) {
 #endif
 }
 
-// Cek apakah folder ada
+// Mengecek apakah folder ada
 int folder_exists(const char *path) {
-    struct stat st;
-    return (stat(path, &st) == 0 && S_ISDIR(st.st_mode));
+#ifdef _WIN32
+    struct _stat info;
+    if (_stat(path, &info) != 0) return 0;
+    return (info.st_mode & _S_IFDIR) != 0;
+#else
+    struct stat info;
+    if (stat(path, &info) != 0) return 0;
+    return S_ISDIR(info.st_mode);
+#endif
 }
 
 // Prosedur utama save
-void save_data(ListUser listUser, RumahSakit rs, Pasien pasienData[]) {
+void save_data(ListUser listuser, ListObat listobat, ListPenyakit listpenyakit, ListFormula listformula) {
     char folder_name[128];
     printf("Masukkan nama folder: ");
     if (fgets(folder_name, sizeof(folder_name), stdin) == NULL) {
@@ -94,14 +97,22 @@ void save_data(ListUser listUser, RumahSakit rs, Pasien pasienData[]) {
     // Tulis user.csv
     char user_csv_path[256];
     snprintf(user_csv_path, sizeof(user_csv_path), "%s%cuser.csv", full_path, SEPARATOR);
-    tulis_user_csv(user_csv_path, &listUser);
+    tulis_user_csv(user_csv_path, &listuser);
 
-    // Tulis config.txt
-    char config_path[256];
-    snprintf(config_path, sizeof(config_path), "%s%cconfig.txt", full_path, SEPARATOR);
-    simpanKonfigurasi(config_path, rs, pasienData);
+    // Tulis obat.csv
+    char obat_csv_path[256];
+    snprintf(obat_csv_path, sizeof(obat_csv_path), "%s%cobat.csv", full_path, SEPARATOR);
+    tulis_obat_csv(obat_csv_path, listobat);
 
-    // (Tambahkan tulis file lain jika perlu)
+    // Tulis penyakit.csv
+    char penyakit_csv_path[256];
+    snprintf(penyakit_csv_path, sizeof(penyakit_csv_path), "%s%cpenyakit.csv", full_path, SEPARATOR);
+    tulis_penyakit_csv(penyakit_csv_path, listpenyakit);
+
+    // Tulis obat_penyakit.csv
+    char obatpenyakit_csv_path[256];
+    snprintf(obatpenyakit_csv_path, sizeof(obatpenyakit_csv_path), "%s%cobat_penyakit.csv", full_path, SEPARATOR);
+    tulis_obatpenyakit_csv(obatpenyakit_csv_path, listformula);
 
     printf("Berhasil menyimpan data di folder %s!\n", full_path);
 }

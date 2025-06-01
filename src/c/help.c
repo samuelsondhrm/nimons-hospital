@@ -50,7 +50,7 @@ void notLogin(){
 }
 void templateHelp(User u){
     printf("=========== HELP ===========\n\n");
-    if(!SudahLogin){
+    if(&u == NULL){
         notLogin();
     } 
     else{

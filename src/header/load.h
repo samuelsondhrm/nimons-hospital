@@ -10,12 +10,12 @@
 #include <string.h>
 
 // Validasi folder
-int validate_folder(const char *path);
+int folder_exist(const char *path);
 
 // Validasi keberadaan akun manajer
-void check_manager_account(ListUser *listUser);
+int load_data(const char *folder, ListUser *listUser, ListObat *listObat, ListPenyakit *listPenyakit, ListFormula *listFormula);
 
 // Prosedur utama untuk load data
-void load_data(const char *folder_name, ListUser *listUser, RumahSakit *rs, Pasien pasienData[]);
+
 
 #endif

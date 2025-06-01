@@ -15,6 +15,6 @@ int create_directory_recursive(const char *path);
 int folder_exists(const char *path);
 
 // Prosedur utama save
-void save_data(ListUser listUser, RumahSakit rs, Pasien pasienData[]);
+void save_data(ListUser listuser, ListObat listobat, ListPenyakit listpenyakit, ListFormula listformula);
 
 #endif
