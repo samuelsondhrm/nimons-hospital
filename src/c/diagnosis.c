@@ -19,7 +19,7 @@ static Ruangan* cariRuanganDokter(RumahSakit *rs, int dokterId) {
 void diagnosis(User *current_user, RumahSakit *rs, ListUser *lUser, ListPenyakit *lPenyakit) {
     printf("Memulai proses diagnosis...\n");
 
-    if (strcmp(ROLE(*current_user), "Dokter") != 0) {
+    if (strcmp(ROLE(*current_user), "dokter") != 0) {
         printf("Akses ditolak: hanya dokter yang bisa melakukan diagnosis.\n");
         return;
     }

@@ -1,7 +1,8 @@
 #include "../header/ngobatin.h"
-#include "../header/ngobatin.h"
 
 // cari ruangan dokter berdasarkan ID
+
+ extern boolean SudahDiagnosis[CAPACITY_QUEUE];
 
 static Ruangan* cariRuanganDokter(RumahSakit *rs, int dokterId) {
     for (int i = 0; i < rs->rows; i++) {
@@ -31,14 +32,13 @@ void TambahObatKeInventory(Inventory *inv, int pasienId, int id_obat) {
 }
 
 void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lObat, ListFormula *lFormula, ListPenyakit *lPenyakit, Inventory *inv) {
-    if (strcmp(ROLE(current_user), "Dokter") != 0) { // cuma dokter yang bisa
+    if (strcmp(ROLE(current_user), "dokter") != 0) { // cuma dokter yang bisa
         return;
     }
 
     // Cari ruangan dokter
     Ruangan *ruang = cariRuanganDokter(rs, USER_ID(current_user));
      if (ruang == NULL || isEmptyQueue(ruang->antrianPasienIds)) {
-        
         return; // tidak ada pasien
     }
 
@@ -49,8 +49,7 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
     printf("Dokter sedang mengobati pasien!\n");
 
     // Cek apakah sudah ada diagnosis
-    if (!SudahDiagnosis[pasienId]) {
-        printf("anda belum di diagnosis");
+    if ( SudahDiagnosis[current_user.id] =  false) {
         return;
     }
 
@@ -65,8 +64,7 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
             Penyakit p = PENYAKIT_LIST(*lPenyakit, j);
 
             // tampilkan obat kalau cocok
-            if (strcmp(NAMA_PENYAKIT(p), RIWAYAT_PENYAKIT(pasien)) == 0 || ID_PENYAKIT(p) == f.penyakit_id) {
-                 printf("-> obat cocok, dan akan ditambahkan ke inventory pasien.\n");
+            if (ID_PENYAKIT(p) == f.penyakit_id && strcmp(NAMA_PENYAKIT(p), RIWAYAT_PENYAKIT(pasien)) == 0) {
                 Obat o = GetObat(*lObat, f.obat_id);
 
                 printf("%d. %s\n", count++, NAMA_OBAT(o));
@@ -75,9 +73,4 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
             }
         }
     }
-
-    if (count == 1) {
-    printf("Tidak ada obat yang cocok untuk penyakit %s.\n", RIWAYAT_PENYAKIT(pasien));
-    }
-
 }
