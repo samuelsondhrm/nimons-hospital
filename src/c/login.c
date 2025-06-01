@@ -35,7 +35,7 @@ void login(ListUser *users, User *current_user, boolean *SudahLogin) {
         if (strcmp(user->password, password) == 0) {
             *current_user = *user;
             *SudahLogin = true;
-            printf("Login berhasil! Selamat datang, %s.\n", current_user->username);
+            printf("Login berhasil! Selamat datang, %s. (Role: %s)\n", current_user->username, current_user->role);
             return;
         }
 
