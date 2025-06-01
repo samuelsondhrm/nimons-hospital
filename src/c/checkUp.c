@@ -7,6 +7,14 @@ char to_upper(char c) {
     return (c >= 'a' && c <= 'z') ? c - ('a' - 'A') : c;
 }
 
+boolean isPasienSudahAntri(Queue q, int pasienId) {
+    for (int i = 0, idx = q.idxHead; i < lengthQueue(q); i++, idx = (idx + 1) % CAPACITY_QUEUE) {
+        if (q.buffer[idx] == pasienId) return true;
+    }
+    return false;
+}
+
+
 // tampilkan dokter tersedia dari room.h
 // loop seluruh ruangan di rumah sakit, jika id !- 0, cari dokter di ListUser, print
 void tampilkanDokterTersedia(ListUser *listUser, RumahSakit *rs) {
@@ -34,10 +42,7 @@ void DaftarCheckUp(ListUser *listUser, RumahSakit *rs, const char *username) {
             break;
         }
     }
-    if (!pasien || pasienAntri[pasien->id]) { //apakah sudah terdaftar
-        printf("Anda sudah terdaftar dalam antrian check-up! Silakan selesaikan check-up yang sudah terdaftar terlebih dahulu.");
-        return; 
-    }
+
     // Input data medis
       printf("Masukkan suhu tubuh (32.0 - 42.0): ");
     do {
