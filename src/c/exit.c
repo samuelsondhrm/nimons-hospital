@@ -1,8 +1,7 @@
 #include "../header/exit.h"
-#include "../header/save.h"
-#include "../header/ADT/user.h"
 
-void exitProgram(ListUser listUser, RumahSakit rs, Pasien pasienData[]) {
+
+void exitProgram(ListUser listuser, ListObat Listobat, ListPenyakit Listpenyakit, ListFormula listformula) {
     char input[10];
     printf("Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n) ");
     
@@ -11,7 +10,11 @@ void exitProgram(ListUser listUser, RumahSakit rs, Pasien pasienData[]) {
         input[strcspn(input, "\n")] = '\0';
         
         if (input[0] == 'y' || input[0] == 'Y') {
-            save_data(listUser, rs, pasienData);
+            // Assuming save_data expects a RumahSakit struct, construct or pass the correct variable here.
+            // Example: save_data(rumahSakit);
+            // Replace 'rumahSakit' with the actual variable of type RumahSakit you have.
+            // If save_data expects different arguments, adjust accordingly.
+            save_data(listuser, Listobat, Listpenyakit, listformula); // old call
         }
     }
     

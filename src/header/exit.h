@@ -7,12 +7,11 @@
 #include "../header/save.h"
 #include "../header/ADT/user.h"
 
+#include "../header/csv_parser.h"
+#include "../header/parser_config_txt.h"
 
 
-void exitProgram(ListUser listUser, RumahSakit rs, Pasien pasienData[]);
-// Prosedur untuk keluar dari program, dengan opsi untuk menyimpan data yang telah diubah
-
-void save_data(ListUser listUser, RumahSakit rs, Pasien pasienData[]);
+void exitProgram(ListUser listuser, ListObat Listobat, ListPenyakit Listpenyakit, ListFormula listformula);
 // Prosedur untuk menyimpan data ke dalam file
 
 #endif
