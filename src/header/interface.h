@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "ADT/user.h"
+#incldeu "Boolean.h"
 #ifdef _WIN32
 #include <windows.h>  // buat Sleep()
 #else
@@ -37,6 +38,9 @@ void print_header(User active_user);
 
 // Fungsi untuk print fungsi
 void print_case(const char *func_name, User active_user);
+
+// Fungsi untuk periksa permission
+boolean accessCheck(const char* required_role, User request);
 
 
 #endif
