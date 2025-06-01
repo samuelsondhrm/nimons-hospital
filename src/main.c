@@ -21,7 +21,7 @@
 #include "header/register.h"
 #include "header/logout.h"
 #include "header/lupaPassword.h"
-#include "header/help.h"
+// #include "header/help.h"
 #include "header/denah.h"
 #include "header/lihatuser.h"
 #include "header/cariuser.h"
@@ -91,7 +91,6 @@ int main() {
     ListObat lObat; 
     ListFormula lFormula; 
     Inventory inventory;
-    boolean SudahDiagnosis[CAPACITY_QUEUE];
     boolean SudahLogin = false;
 
     // // INISIALISASI VARIABEL GLOBAL
@@ -144,7 +143,7 @@ int main() {
                     logout(&SudahLogin, &cur_user);
                     break;
                 case 3: print_case("LUPA_PASSWORD", cur_user); 
-                    lupa_password(&accounts);
+                    lupaPassword(&accounts);
                     tulis_user_csv("src/file/user.csv", &accounts);
                     break;
                 case 4: print_case("HELP", cur_user); break;
