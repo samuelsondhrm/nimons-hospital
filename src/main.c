@@ -112,7 +112,7 @@ int main() {
         tampilkan_penyakit(lPenyakit);
         tampilkan_user(accounts);
 
-        
+        printf("%s", ROLE(cur_user));
         animate_text("Enter input > > > ", 100);
         fgets(ans, MAX_FIELD, stdin);
         ans[strcspn(ans, "\n")] = 0;
@@ -144,7 +144,7 @@ int main() {
                 case 4: print_case("HELP", cur_user);
                     if(strcmp(ROLE(cur_user), "manager") == 0) helpManager(cur_user);
                     else if(strcmp(ROLE(cur_user), "dokter") == 0) helpDokter(cur_user);
-                    else if(strcmp(ROLE(cur_user), "manager") == 0) helpManager(cur_user);
+                    else if(strcmp(ROLE(cur_user), "pasien") == 0) helpPasien(cur_user);
                     else notLogin();
                 break;
                 case 5: print_case("LIHAT_DENAH", cur_user);
@@ -215,8 +215,12 @@ int main() {
                     if(!accessCheck("pasien", cur_user)) break;
                     minumPenawar(cur_user, &inventory, &lObat);
                     break;
-                case 22: print_case("EXIT", cur_user); break;
-                case 23: print_case("SAVE", cur_user); break;
+                case 22: print_case("EXIT", cur_user);
+                    exitProgram(accounts, lObat, lPenyakit, lFormula);
+                    break;
+                case 23: print_case("SAVE", cur_user);
+                    save_data(accounts, lObat, lPenyakit, lFormula);
+                    break;
                 default: print_color("INPUT TIDAK VALID", MERAH);
                          printf("\n");
                          printf("Masukkan HELP untuk melihat input valid\n");
