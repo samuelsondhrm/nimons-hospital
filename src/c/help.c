@@ -1,8 +1,5 @@
-#include <stdio.h>
-#include "..\header\ADT\user.h"
-#include <stdlib.h>
-#include "..\header\login.h"
 
+#include "../header/help.h"
 void helpManager(User u){
     printf("Halo manager %s." , u.username);
     printf(" Kenapa kamu memanggil command HELP? Kan kamu manager, tapi\nyasudahlah kamu pasti sedang kebingungan. Berikut adalah hal-hal yang dapat kamu lakukan\nsekarang: \n");

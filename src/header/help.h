@@ -2,9 +2,9 @@
 #define HELP_H
 
 #include <stdio.h>
-#include "login.h"
+#include "..\header\ADT\user.h"
 #include <stdlib.h>
-#include "user.h"
+#include "..\header\login.h"
 
 void helpManager(User u);
 // Print fitur apa saja yang bisa diakses oleh Manager
