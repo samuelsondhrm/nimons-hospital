@@ -29,7 +29,7 @@ IdxType getListFirstIdx(ListStatik l) {
 }
 
 IdxType getListLastIdx(ListStatik l) {
-    IdxType first = getFirstIdx(l);
+    IdxType first = getListFirstIdx(l);
     for (int i = first; i < CAPACITY_LIST; i++) {
         if (ELMT_LIST(l, i) == MARK) {
             return i - 1;
@@ -44,7 +44,7 @@ boolean isIdxValidList(ListStatik l, IdxType i) {
 }
 
 boolean isIdxEffList(ListStatik l, IdxType i) {
-    return (i >= getFirstIdx(l) && i <= getLastIdx(l));
+    return (i >= getListFirstIdx(l) && i <= getListLastIdx(l));
 }
 
 /* ********** TEST KOSONG/PENUH ********** */

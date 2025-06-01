@@ -225,7 +225,7 @@ void tulis_penyakit_csv(const char *filename, ListPenyakit l) {
 
 // ==================== BAGIAN OBATPENYAKIT ====================
 void parse_obatpenyakit_csv(const char *filename, ListFormula *l) {
-    l->jumlahobatpenyakit = 0;
+    l->jumlahformula = 0;
     FILE *file = fopen(filename, "r");
     if (!file) {
         printf("Gagal membuka %s\n", filename);
@@ -240,13 +240,13 @@ void parse_obatpenyakit_csv(const char *filename, ListFormula *l) {
     while (ch != EOF && ch != '\n') {
         ch = fgetc(file);
     }
-    while ((ch = fgetc(file)) != EOF && row < MAX_OBAT_PENYAKIT) {
+    while ((ch = fgetc(file)) != EOF && row < MAX_FORMULA) {
         if (ch == ',' || ch == '\n' || ch == ';') {
             field[field_pos] = '\0';
             switch (col) {
-                case 0: l->Formulas[row].obat_id = string_to_int(field); break;
-                case 1: l->Formulas[row].penyakit_id = string_to_int(field); break;
-                case 2: l->Formulas[row].urutan = string_to_int(field); break;
+                case 0: l->formulas[row].obat_id = string_to_int(field); break;
+                case 1: l->formulas[row].penyakit_id = string_to_int(field); break;
+                case 2: l->formulas[row].urutan = string_to_int(field); break;
             }
             field_pos = 0;
             col++;
@@ -263,13 +263,13 @@ void parse_obatpenyakit_csv(const char *filename, ListFormula *l) {
     if (field_pos > 0 && col > 0) {
         field[field_pos] = '\0';
         switch (col) {
-            case 0: l->Formulas[row].obat_id = string_to_int(field); break;
-            case 1: l->Formulas[row].penyakit_id = string_to_int(field); break;
-            case 2: l->Formulas[row].urutan = string_to_int(field); break;
+            case 0: l->formulas[row].obat_id = string_to_int(field); break;
+            case 1: l->formulas[row].penyakit_id = string_to_int(field); break;
+            case 2: l->formulas[row].urutan = string_to_int(field); break;
         }
         row++;
     }
-    l->jumlahobatpenyakit = row;
+    l->jumlahformula = row;
     fclose(file);
 }
 void tulis_obatpenyakit_csv(const char *filename, ListFormula l) {
@@ -371,7 +371,8 @@ void parse_user_csv(const char *filename, ListUser *ListUser) {
 
 // ==================== BAGIAN USER ====================
 // Menulis data user ke file CSV
-void tulis_user_csv(const char *filename, ListUser ListUser) {
+void tulis_user_csv(const char *filename, ListUser *l) {
+    ListUser tulis = *l;
     FILE *file = fopen(filename, "w");
     if (!file) {
         printf("Gagal membuka %s\n", filename);
@@ -384,8 +385,8 @@ void tulis_user_csv(const char *filename, ListUser ListUser) {
         "saturasi_oksigen,kadar_gula_darah,berat_badan,tinggi_badan,"
         "kadar_kolesterol,kadar_kolesterol_ldl,trombosit\n");
 
-    for (int i = 0; i < ListUser.jumlahuser; i++) {
-        User u = ListUser.users[i];
+    for (int i = 0; i < tulis.jumlahuser; i++) {
+        User u = tulis.users[i];
         fprintf(file,
             "%d,%s,%s,%s,%s,%.1f,%d,%d,%d,%.1f,%d,%.1f,%d,%d,%d,%d\n",
             u.id, u.username, u.password, u.role, u.riwayat_penyakit,
