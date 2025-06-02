@@ -128,17 +128,18 @@ void DaftarCheckUp(ListUser *listUser, RumahSakit *rs, const char *username) {
 
     // temukan ruangan sesuai pilihan
     // current adalah dokter yang dpilih, 
-    int current = 1, dokterId = -1, rowRuangan = -1, colRuangan = -1; // inisialisasi belum ketemu
-    for (int i = 0; i < rs->rows && dokterId == -1; i++) {
-        for (int j = 0; j < rs->cols && dokterId == -1; j++) {
+    int current = 1, dokterId = -1, rowRuangan = -1, colRuangan = -1;
+    boolean found = false;
+    for (int i = 0; i < rs->rows && !found; i++) {
+        for (int j = 0; j < rs->cols && !found; j++) {
             if (rs->data[i][j].dokterId != 0) {
                 if (current == pilihan) {
-                     dokterId = rs->data[i][j].dokterId;
-                     rowRuangan = i;
-                     colRuangan = j;
+                    dokterId = rs->data[i][j].dokterId;
+                    rowRuangan = i;
+                    colRuangan = j;
+                    found = true;
                 }
                 current++;
-              
             }
         }
     }
