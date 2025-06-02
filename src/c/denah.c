@@ -8,7 +8,7 @@ lihatRuangan(&rs, input + 14, users, 3);
 #include "../header/denah.h"
 
 void printDenah(const RumahSakit rs) {
-    printf("    ");
+    printf("  ");
     for (int j = 0; j < rs.cols; j++) printf("  %d ", j + 1);
     printf("\n");
 

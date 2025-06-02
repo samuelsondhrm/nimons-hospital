@@ -13,16 +13,18 @@ void tambahDokter(ListUser *lUser) {
 
     printf("Username: ");
     scanf("%s", username);
-    printf("Password: ");
-    scanf("%s", password);
 
     // Cek apakah username sudah dipakai oleh dokter lain
     for (int i = 0; i < lUser->jumlahuser; i++) {
         if (strcmp(lUser->users[i].role, "dokter") == 0 && strcmp(lUser->users[i].username, username) == 0) {
             printf("Sudah ada Dokter bernama %s!\n", username);
+            while (getchar() != '\n');
             return;
         }
     }
+
+    printf("Password: ");
+    scanf("%s", password);
 
     // Tambahkan user baru
     User newUser;
@@ -35,6 +37,7 @@ void tambahDokter(ListUser *lUser) {
     lUser->users[lUser->jumlahuser-1] = newUser;
 
     printf("Dokter %s berhasil ditambahkan!\n", username);
+    while (getchar() != '\n');
 }
 
 void assignDokter(RumahSakit *rs, ListUser *lUser) {
@@ -42,8 +45,6 @@ void assignDokter(RumahSakit *rs, ListUser *lUser) {
 
     printf("Username: ");
     scanf("%s", username);
-    printf("Ruangan: ");
-    scanf("%s", ruangan);
 
     // Cari ID dokter berdasarkan username
     int dokterId = -1;
@@ -56,14 +57,19 @@ void assignDokter(RumahSakit *rs, ListUser *lUser) {
 
     if (dokterId == -1) {
         printf("Dokter dengan username %s tidak ditemukan.\n", username);
+        while (getchar() != '\n');
         return;
     }
+
+    printf("Ruangan: ");
+    scanf("%s", ruangan);
 
     int row = ruangan[0] - 'A';
     int col = ruangan[1] - '1';
 
     if (row < 0 || row >= rs->rows || col < 0 || col >= rs->cols) {
         printf("Ruangan tidak valid.\n");
+        while (getchar() != '\n');
         return;
     }
 
@@ -83,6 +89,7 @@ void assignDokter(RumahSakit *rs, ListUser *lUser) {
                     }
                     printf("Silakan cari ruangan lain untuk dokter %s.\n", username);
                 }
+                while (getchar() != '\n');
                 return;
             }
         }
@@ -94,6 +101,7 @@ void assignDokter(RumahSakit *rs, ListUser *lUser) {
             if (lUser->users[i].id == rs->data[row][col].dokterId) {
                 printf("Dokter %s sudah menempati ruangan %c%d!\n", lUser->users[i].username, row + 'A', col + 1);
                 printf("Ruangan %c%d juga sudah ditempati dokter %s!\n", row + 'A', col + 1, lUser->users[i].username);
+                while (getchar() != '\n');
                 return;
             }
         }

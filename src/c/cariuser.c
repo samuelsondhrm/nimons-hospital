@@ -9,6 +9,34 @@
 
 #include "../header/cariuser.h"
 
+int getIntInput(const char *prompt, int min, int max) {
+    char buffer[100];
+    int value;
+
+    while (1) {
+        printf("%s", prompt);
+        if (fgets(buffer, sizeof(buffer), stdin)) {
+            if (sscanf(buffer, "%d", &value) == 1 && value >= min && value <= max) {
+                return value;
+            } else {
+                printf("Masukan salah, mohon input hanya integer dari %d sampai %d!\n", min, max);
+            }
+        } else {
+            printf("Terjadi kesalahan saat membaca input.\n");
+        }
+    }
+}
+
+void getStringInput(const char *prompt, char *dest, int maxLen) {
+    printf("%s", prompt);
+    if (fgets(dest, maxLen, stdin)) {
+        size_t len = strlen(dest);
+        if (len > 0 && dest[len - 1] == '\n') {
+            dest[len - 1] = '\0';
+        }
+    }
+}
+
 void toLowerCase(char *dest, const char *src) {
     int i;
     for (i = 0; src[i] && i < MAX_FIELD - 1; i++) {
@@ -61,38 +89,34 @@ int searchPatientsByDisease(User arr[], int n, const char *disease, int result[]
 }
 void displayHeader(int mode) {
     if (mode == 0) {
-        printf("ID | Nama     | Role     | Penyakit\n");
-        printf("-------------------------------------\n");
+        printf("%3s | %-10s | %-8s | %-20s\n", "ID", "Nama", "Role", "Penyakit");
+        printf("----+------------+----------+----------------------\n");
     } else if (mode == 1) {
-        printf("ID | Nama     | Penyakit\n");
-        printf("-------------------------\n");
+        printf("%3s | %-10s | %-20s\n", "ID", "Nama", "Penyakit");
+        printf("----+------------+----------------------\n");
     } else {
-        printf("ID | Nama     \n");
-        printf("--------------\n");
+        printf("%3s | %-10s\n", "ID", "Nama");
+        printf("----+------------\n");
     }
 }
 void displayUser(const User *u, int mode) {
+    const char* penyakit = (strcasecmp(u->role, "pasien") == 0) ? u->riwayat_penyakit : "-";
+
     if (mode == 0) {
-        printf("%d  | %-8s | %-8s | %s\n", u->id, u->username, u->role,
-               (strcasecmp(u->role, "pasien") == 0 ? u->riwayat_penyakit : "-"));
+        printf("%3d | %-10s | %-8s | %-20s\n", u->id, u->username, u->role, penyakit);
     } else if (mode == 1) {
-        printf("%d  | %-8s | %s\n", u->id, u->username, u->riwayat_penyakit);
+        printf("%3d | %-10s | %-20s\n", u->id, u->username, u->riwayat_penyakit);
     } else {
-        printf("%d  | %-8s\n", u->id, u->username);
+        printf("%3d | %-10s\n", u->id, u->username);
     }
 }
 
 // Procedures for each command
 void cariUser(ListUser *lu) {
-    int choice;
-    printf("Cari berdasarkan?\n1. ID\n2. Nama\n>>> Pilihan: "); scanf("%d", &choice);
-    while(choice != 1 && choice != 2){
-        printf("\nMasukan salah, pilih antara 1/2!\nCari berdasarkan?\n1. ID\n2. Nama\n>> Pilihan: ");
-        scanf("%d", &choice);
-    }
+    int choice = getIntInput("Cari berdasarkan?\n1. ID\n2. Nama\n>>> Pilihan: ", 1, 2);
+
     if (choice == 1) {
-        int id;
-        printf("\n>>> Masukkan nomor ID user: "); scanf("%d", &id);
+        int id = getIntInput("\n>>> Masukkan nomor ID user: ", 1, lu->jumlahuser);
         int idx = binarySearchById(lu->users, lu->jumlahuser, id);
         if (idx == -1) printf("\nTidak ditemukan pengguna dengan ID %d!\n", id);
         else {
@@ -102,7 +126,7 @@ void cariUser(ListUser *lu) {
         }
     } else {
         char name[MAX_FIELD];
-        printf("\n>>> Masukkan nama user: "); scanf("%s", name);
+        getStringInput("\n>>> Masukkan nama user: ", name, MAX_FIELD);
         int idx = sequentialSearchByName(lu->users, lu->jumlahuser, name);
         if (idx == -1) printf("\nTidak ditemukan pengguna dengan nama %s!\n", name);
         else {
@@ -114,22 +138,18 @@ void cariUser(ListUser *lu) {
 }
 
 void cariPasien(ListUser *lu) {
-    int choice;
-    printf("Cari berdasarkan?\n1. ID\n2. Nama\n3. Penyakit\n>>> Pilihan: "); scanf("%d", &choice);
-    while(choice != 1 && choice != 2 && choice != 3){
-        printf("\nMasukan salah, pilih antara 1/2/3!\nCari berdasarkan?\n1. ID\n2. Nama\n3. Penyakit\n>> Pilihan: ");
-        scanf("%d", &choice);
-    }
+    int choice = getIntInput("Cari berdasarkan?\n1. ID\n2. Nama\n3. Penyakit\n>>> Pilihan: ", 1, 3);
+
     if (choice == 3) {
         char disease[MAX_FIELD];
-        printf("\n>>> Masukkan nama penyakit: "); scanf("%s", disease);
+        getStringInput("\n>>> Masukkan nama penyakit: ", disease, MAX_FIELD);
         int results[MAX_FIELD];
         int count = searchPatientsByDisease(lu->users, lu->jumlahuser, disease, results);
-        if (count == 0) printf("\nTidak ditemukan pasien dengan penyakit %s!\n", disease);
-        else {
-            int sortBy, asc;
-            printf("\nUrutkan berdasarkan?\n1. ID\n2. Nama\n>>> Pilihan: "); scanf("%d", &sortBy);
-            printf("\nUrutan sort?\n1. ASC (A-Z)\n2. DESC (Z-A)\n>>> Pilihan: "); scanf("%d", &asc);
+        if (count == 0) {
+            printf("\nTidak ditemukan pasien dengan penyakit %s!\n", disease);
+        } else {
+            int sortBy = getIntInput("\nUrutkan berdasarkan?\n1. ID\n2. Nama\n>>> Pilihan: ", 1, 2);
+            int asc = getIntInput("\nUrutan sort?\n1. ASC (A-Z)\n2. DESC (Z-A)\n>>> Pilihan: ", 1, 2);
             User temp[MAX_FIELD];
             for (int i = 0; i < count; i++) temp[i] = lu->users[results[i]];
             sortUsers(temp, count, sortBy == 1, asc == 1);
@@ -139,8 +159,7 @@ void cariPasien(ListUser *lu) {
             for (int i = 0; i < count; i++) displayUser(&temp[i], 1);
         }
     } else if (choice == 1) {
-        int id;
-        printf("\n>>> Masukkan nomor ID pasien: "); scanf("%d", &id);
+        int id = getIntInput("\n>>> Masukkan nomor ID pasien: ", 1, lu->jumlahuser);
         int idx = binarySearchById(lu->users, lu->jumlahuser, id);
         if (idx == -1 || strcasecmp(lu->users[idx].role, "pasien") != 0)
             printf("\nTidak ditemukan pasien dengan ID %d!\n", id);
@@ -149,9 +168,9 @@ void cariPasien(ListUser *lu) {
             displayHeader(1);
             displayUser(&lu->users[idx], 1);
         }
-    } else if (choice == 2) {
+    } else {
         char name[MAX_FIELD];
-        printf("\n>>> Masukkan nama pasien: "); scanf("%s", name);
+        getStringInput("\n>>> Masukkan nama pasien: ", name, MAX_FIELD);
         int idx = sequentialSearchByName(lu->users, lu->jumlahuser, name);
         if (idx == -1 || strcasecmp(lu->users[idx].role, "pasien") != 0)
             printf("\nTidak ditemukan pasien dengan nama %s!\n", name);
@@ -164,15 +183,10 @@ void cariPasien(ListUser *lu) {
 }
 
 void cariDokter(ListUser *lu) {
-    int choice;
-    printf("Cari berdasarkan?\n1. ID\n2. Nama\n>>> Pilihan: "); scanf("%d", &choice);
-    while(choice != 1 && choice != 2){
-        printf("\nMasukan salah, pilih antara 1/2!\nCari berdasarkan?\n1. ID\n2. Nama\n>> Pilihan: ");
-        scanf("%d", &choice);
-    }
+    int choice = getIntInput("Cari berdasarkan?\n1. ID\n2. Nama\n>>> Pilihan: ", 1, 2);
+
     if (choice == 1) {
-        int id;
-        printf("\n>>> Masukkan nomor ID dokter: "); scanf("%d", &id);
+        int id = getIntInput("\n>>> Masukkan nomor ID dokter: ", 1, lu->jumlahuser);
         int idx = binarySearchById(lu->users, lu->jumlahuser, id);
         if (idx == -1 || strcasecmp(lu->users[idx].role, "dokter") != 0)
             printf("\nTidak ditemukan dokter dengan ID %d!\n", id);
@@ -181,9 +195,9 @@ void cariDokter(ListUser *lu) {
             displayHeader(2);
             displayUser(&lu->users[idx], 2);
         }
-    } else if (choice == 2){
+    } else {
         char name[MAX_FIELD];
-        printf("\n>>> Masukkan nama dokter: "); scanf("%s", name);
+        getStringInput("\n>>> Masukkan nama dokter: ", name, MAX_FIELD);
         int idx = sequentialSearchByName(lu->users, lu->jumlahuser, name);
         if (idx == -1 || strcasecmp(lu->users[idx].role, "dokter") != 0)
             printf("\nTidak ditemukan dokter dengan nama %s!\n", name);
