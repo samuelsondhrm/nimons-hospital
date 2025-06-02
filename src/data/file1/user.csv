@@ -4,3 +4,4 @@ id,username,password,role,riwayat_penyakit,suhu_tubuh,tekanan_darah_sistolik,tek
 3,citra,citralove,pasien,migraine,36.9,115,75,65,98.0,95,48.3,158,180,110,230
 4,dian,dianDokter,dokter,asma,37.2,125,85,70,96.5,100,62.0,170,200,130,210
 5,elvin,elvman123,manager,,36.5,0,0,0,0.0,0,0.0,0,0,0,0
+6,mercury,mercuryy,dokter,,0.0,0,0,0,0.0,0,0.0,0,0,0,0
