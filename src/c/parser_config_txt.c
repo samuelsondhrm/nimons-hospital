@@ -64,12 +64,12 @@ void parsePasienObatLine(char *line, Inventory *invntry, int idx) {
     }   
 }
 
-int loadConfig(const char *filename, RumahSakit *rs, Inventory *invntry, int *maxAntrianLuar) {
+int loadConfig(const char *filename, RumahSakit *rs, Inventory *invntry) {
     InitializeRumahSakit(rs);
     InitializeInventory(invntry);
     FILE *fp = fopen(filename, "r");
     if (!fp) {
-        perror("Gagal membuka file");
+        printf("Gagal membuka %s", filename);
         return 0;
     }
     char line[MAX_LINE_LENGTH];
@@ -87,7 +87,6 @@ int loadConfig(const char *filename, RumahSakit *rs, Inventory *invntry, int *ma
     p = line;
     rs->kapasitasPerRuangan = nextInt(&p);
     rs->kapasitasBaris = nextInt(&p);
-    *maxAntrianLuar = rs->kapasitasBaris;
     if (totalRuangan > MAX_BARIS_RUANGAN * MAX_KOLOM_RUANGAN) { // Lewat batasan define
         printf("Ukuran denah terlalu besar\n");
         fclose(fp);
@@ -156,4 +155,3 @@ int loadConfig(const char *filename, RumahSakit *rs, Inventory *invntry, int *ma
     fclose(fp);
     return 1;
 }
-
