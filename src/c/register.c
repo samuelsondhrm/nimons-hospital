@@ -55,7 +55,7 @@ void register_pasien(ListUser *lUser, User *new_user) {
     // Buat user baru
     CreateUser(new_user);
     int max_id_saat_ini = 0;
-    for (int k = 1; k < lUser->jumlahuser; k++) {
+    for (int k = 0; k < lUser->jumlahuser; k++) {
         if (lUser->users[k].id > max_id_saat_ini) {
             max_id_saat_ini = lUser->users[k].id;
         }
@@ -71,13 +71,14 @@ void register_pasien(ListUser *lUser, User *new_user) {
 
     int jumlahUserSebelumInsert = lUser->jumlahuser;
     InsUser(lUser, *new_user);
-    
+
  if (lUser->jumlahuser > jumlahUserSebelumInsert || lUser->jumlahuser == MAX_FIELD && jumlahUserSebelumInsert < MAX_FIELD) {
         printf("Data user berhasil ditambahkan:\n");
         printf("Username: %s\n", new_user->username);
         printf("Role: %s\n", new_user->role);
         printf("ID: %d\n", new_user->id);
-    } else if (lUser->jumlahuser == jumlahUserSebelumInsert && lUser->jumlahuser == MAX_FIELD) {
+    } else {
+        printf("Gagal menambahkan user baru");
 
     }
 }
