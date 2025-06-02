@@ -149,8 +149,8 @@ void DaftarCheckUp(ListUser *listUser, RumahSakit *rs, const char *username) {
     printf("Anda sudah terdaftar dalam antrian check-up! Silakan selesaikan check-up yang sudah terdaftar terlebih dahulu.\n");
     return;
     }
-    if (lengthQueue(*antrian) >= rs->kapasitasBaris) {
-     printf("Antrian untuk ruangan ini sudah penuh.\n");
+    if (lengthQueue(*antrian) >= rs->kapasitasBaris + rs->kapasitasPerRuangan) {
+        printf("Antrian untuk ruangan ini sudah penuh.\n");
         return;
     }
 
