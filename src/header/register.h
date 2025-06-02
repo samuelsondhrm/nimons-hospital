@@ -8,7 +8,7 @@
 
 #define MAX_FIELD 128
 
-void InsUser(ListUser *lUser, User userBaru);
+void InsUser(ListUser *l, User buffer);
 int compare_case_insensitive(const char* a, const char* b);
 boolean is_username_valid(const char* username);
 void register_pasien(ListUser *lUser, User *new_user);

@@ -20,12 +20,24 @@ boolean is_username_valid(const char* username) {
     
 }
 
-void InsUser(ListUser *lUser, User userBaru) { 
-    if (lUser->jumlahuser < MAX_FIELD) {
-        lUser->users[lUser->jumlahuser++] = userBaru;
-    } else {
-        printf("Gagal menambahkan pengguna. Kapasitas list pengguna sudah penuh.\n");
+void InsUser(ListUser *l, User buffer) {
+    // Pengecekan kapasitas list 
+    if (l->jumlahuser >= MAX_FIELD) {
+        printf("Registrasi gagal: Kapasitas pengguna sudah penuh.\n");
     }
+    int i;
+    for (i = 0; i < l->jumlahuser; i++) {
+        if (l->users[i].id < buffer.id) {
+            for (int j = l->jumlahuser; j > i; j--) {
+                l->users[j] = l->users[j - 1];
+            }
+            break; 
+        }
+    }
+
+    l->users[i] = buffer;
+    l->jumlahuser++; 
+
 }
 
 void register_pasien(ListUser *lUser, User *new_user) {
@@ -62,12 +74,21 @@ void register_pasien(ListUser *lUser, User *new_user) {
 
     // Buat user baru
     CreateUser(new_user);
-    new_user->id = (lUser->jumlahuser == 0) ? 1 : (lUser->users[lUser->jumlahuser - 1].id + 1); // ID baru
+    int max_id_saat_ini = 0;
+    for (int k = 1; k < lUser->jumlahuser; k++) {
+        if (lUser->users[k].id > max_id_saat_ini) {
+            max_id_saat_ini = lUser->users[k].id;
+        }
+    }
+    
+    new_user->id = max_id_saat_ini + 1;
+
     strncpy(new_user->username, username, MAX_FIELD);
     strncpy(new_user->password, password, MAX_FIELD);
     strncpy(new_user->role, "pasien", MAX_FIELD);
 
     // Tambah ke list 
+    
     int jumlahUserSebelumInsert = lUser->jumlahuser;
     InsUser(lUser, *new_user);
  if (lUser->jumlahuser > jumlahUserSebelumInsert || lUser->jumlahuser == MAX_FIELD && jumlahUserSebelumInsert < MAX_FIELD) {
