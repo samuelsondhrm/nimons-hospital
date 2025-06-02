@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
     parse_obat_csv(obat_csv_path, &lObat);
     parse_penyakit_csv(penyakit_csv_path, &lPenyakit);
     parse_obatpenyakit_csv(obatpenyakit_csv_path, &lFormula);
-    if(!loadConfig(config_txt_path, &rs, &inventory)) printf("CONFIG.TXT ERROR");
+    if(!loadConfig(config_txt_path, &rs, &inventory, accounts)) printf("CONFIG.TXT ERROR");
     
     char folder_path[512];
     #ifdef _WIN32
