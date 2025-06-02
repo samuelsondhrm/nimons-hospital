@@ -167,6 +167,6 @@ void DaftarCheckUp(ListUser *listUser, RumahSakit *rs, const char *username) {
                 break;
             }
         }
-    idx = (idx + 1) % CAPACITY_QUEUE;
+        idx = (idx + 1) % CAPACITY_QUEUE;
     }
 }
