@@ -9,7 +9,7 @@ CC = gcc
 # -Wall : untuk menampilkan semua warning
 # -Iheader : menambah direktori 'header' sebagai search path untuk #include "file.h"
 # -Iheader/ADT : menambah direktori 'header/ADT' sebagai search path
-CFLAGS = -g -Wall -Iheader -Iheader/ADT
+CFLAGS = -g -w -Wno-format-truncation -Iheader -Iheader/ADT
 
 # Flag untuk linker (jika ada library tambahan, tambahkan di sini, misal -lm untuk math library)
 LDFLAGS =
