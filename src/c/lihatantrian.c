@@ -33,6 +33,7 @@ void lihatSemuaAntrian(RumahSakit rs, ListUser lUser) {
                 if (dalamRuangan == 0) {
                     printf("  Tidak ada pasien di dalam ruangan saat ini.\n");
                 } else {
+                    int printCount = 0;
                     int index = IDX_HEAD(r.antrianPasienIds);
                     for (int k = 0; k < dalamRuangan; k++) {
                         int id = r.antrianPasienIds.buffer[index];
@@ -43,9 +44,13 @@ void lihatSemuaAntrian(RumahSakit rs, ListUser lUser) {
                                 break;
                             }
                         }
-                        printf("  %d. %s\n", k + 1, namaPasien);
-                        index = (index + 1) % CAPACITY_QUEUE;
+                        if(namaPasien != "-"){
+                            printf("  %d. %s\n", k + 1, namaPasien);
+                            index = (index + 1) % CAPACITY_QUEUE;
+                            printCount++;
+                        }
                     }
+                    if (printCount == 0) printf("  Tidak ada pasien di dalam ruangan saat ini.\n");
                 }
 
                 // Tampilkan pasien di antrian
@@ -53,6 +58,7 @@ void lihatSemuaAntrian(RumahSakit rs, ListUser lUser) {
                 if (dalamAntrian == 0) {
                     printf("  Tidak ada pasien di antrian saat ini.\n");
                 } else {
+                    int printCount = 0;
                     int index = (IDX_HEAD(r.antrianPasienIds) + dalamRuangan) % CAPACITY_QUEUE;
                     for (int k = 0; k < dalamAntrian; k++) {
                         int id = r.antrianPasienIds.buffer[index];
@@ -63,9 +69,14 @@ void lihatSemuaAntrian(RumahSakit rs, ListUser lUser) {
                                 break;
                             }
                         }
-                        printf("  %d. %s\n", k + 1, namaPasien);
-                        index = (index + 1) % CAPACITY_QUEUE;
+                        
+                        if(namaPasien != "-"){
+                            printf("  %d. %s\n", k + 1, namaPasien);
+                            index = (index + 1) % CAPACITY_QUEUE;
+                            printCount++;
+                        }   
                     }
+                    if (printCount == 0) printf("  Tidak ada pasien di dalam antrian saat ini.\n");
                 }
             }
         }
