@@ -71,14 +71,18 @@ void simpanConfigTxt(const char *filename, RumahSakit rs, Inventory *invntry) {
             Ruangan ruang = rs.data[i][j];
             fprintf(file, "%d", ruang.dokterId);
             
-            // Tulis ID pasien dalam ruangan
-            Queue temp = ruang.antrianPasienIds;
-            int len = lengthQueue(temp);
-            for (int k = 0; k < len; k++) {
-                int id;
-                dequeue(&temp, &id);
-                fprintf(file, " %d", id);
-                enqueue(&temp, id); // Kembalikan ke queue
+            if (ruang.dokterId != 0) {  // Hanya tulis antrian jika ada dokter
+                // Tulis ID pasien dalam ruangan dan antrian luar
+                Queue temp = ruang.antrianPasienIds;
+                int len = lengthQueue(temp);
+                
+                // Tulis semua ID pasien dengan spasi
+                for (int k = 0; k < len; k++) {
+                    int id;
+                    dequeue(&temp, &id);
+                    fprintf(file, " %d", id);
+                    enqueue(&temp, id);
+                }
             }
             fprintf(file, "\n");
         }
@@ -91,7 +95,7 @@ void simpanConfigTxt(const char *filename, RumahSakit rs, Inventory *invntry) {
     }
     fprintf(file, "%d\n", countPasienObat);
 
-    // Baris 10-11: data obat di inventory tiap pasien
+    // Baris 10+: data obat di inventory tiap pasien
     for (int i = 0; i < invntry->jumlahPasienwObat; i++) {
         Pasien p = invntry->data[i];
         if (p.jumlahobat > 0) {
@@ -103,30 +107,29 @@ void simpanConfigTxt(const char *filename, RumahSakit rs, Inventory *invntry) {
         }
     }
 
-    // Baris 12: jumlah pasien dengan obat di perut
+    // Baris setelah inventory: jumlah pasien dengan obat di perut
     int countPasienPerut = 0;
     for (int i = 0; i < invntry->jumlahPasienwObat; i++) {
         if (!IsEmptyStack(invntry->data[i].perut)) countPasienPerut++;
     }
     fprintf(file, "%d\n", countPasienPerut);
 
-    // Baris 13+: data obat di perut tiap pasien
+    // Data obat di perut tiap pasien
     for (int i = 0; i < invntry->jumlahPasienwObat; i++) {
         Pasien p = invntry->data[i];
         if (!IsEmptyStack(p.perut)) {
             fprintf(file, "%d", p.id);
             Stack tempStack = p.perut;
-            int tempArray[100];
-            int idx = 0;
             
-            // Ambil semua dari stack ke array
+            // Simpan obat dalam array sementara (untuk membalik urutan)
+            int tempArray[100], idx = 0;
             while (!IsEmptyStack(tempStack)) {
                 int val;
                 Pop(&tempStack, &val);
                 tempArray[idx++] = val;
             }
             
-            // Tulis dari array (urutan terbalik)
+            // Cetak dari belakang ke depan untuk mendapatkan urutan yang benar
             for (int j = idx - 1; j >= 0; j--) {
                 fprintf(file, " %d", tempArray[j]);
             }
@@ -136,7 +139,6 @@ void simpanConfigTxt(const char *filename, RumahSakit rs, Inventory *invntry) {
 
     fclose(file);
 }
-
 // Prosedur utama save
 void save_data(ListUser listuser, ListObat listobat, ListPenyakit listpenyakit, ListFormula listformula, RumahSakit rs, Inventory *inventory) {
     char folder_name[128];

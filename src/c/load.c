@@ -49,7 +49,7 @@ int load_data(const char *folder, ListUser *listuser, ListObat *listobat,
     parse_obatpenyakit_csv(obatpenyakit_csv_path, listformula);
 
     int maxAntrianLuar;
-    if (!loadConfig(config_path, rs, inventory)) {
+    if (!loadConfig(config_path, rs, inventory, *listuser)) {
         printf("Gagal membaca config.txt\n");
         return 0;
     }
