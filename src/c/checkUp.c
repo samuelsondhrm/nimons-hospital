@@ -108,8 +108,22 @@ void DaftarCheckUp(ListUser *listUser, RumahSakit *rs, const char *username) {
     // Tampilkan pilihan dokter (user.h & room.h)
       tampilkanDokterTersedia(listUser, rs);
     printf("pilih dokter yang tersedia: \n");
+    int totalDokter = 0;
+    for (int i = 0; i < rs->rows; i++) {
+        for (int j = 0; j < rs->cols; j++) {
+            if (rs->data[i][j].dokterId != 0) {
+                totalDokter++;
+            }
+        }
+    }
+
     int pilihan;
-    scanf("%d", &pilihan);
+    do {
+        printf("Pilih dokter yang tersedia (1 - %d): ", totalDokter);
+    } while (scanf("%d", &pilihan) != 1 || pilihan < 1 || pilihan > totalDokter);
+
+    // flush buffer
+    while (getchar() != '\n');
 
 
     // temukan ruangan sesuai pilihan
