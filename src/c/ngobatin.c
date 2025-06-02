@@ -49,7 +49,8 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
     printf("Dokter sedang mengobati pasien!\n");
 
     // Cek apakah sudah ada diagnosis
-    if ( SudahDiagnosis[current_user.id] =  false) {
+    if ( SudahDiagnosis[current_user.id] ==  false) {
+        printf("Kamu belum melakukan proses diagnosis oleh dokter, silahkan melakukan pendaftaran terlebih dahulu!");
         return;
     }
 
@@ -65,6 +66,7 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
 
             // tampilkan obat kalau cocok
             if (ID_PENYAKIT(p) == f.penyakit_id && strcmp(NAMA_PENYAKIT(p), RIWAYAT_PENYAKIT(pasien)) == 0) {
+                printf("-> obat cocok, dan akan ditambahkan ke inventory pasien.\n");
                 Obat o = GetObat(*lObat, f.obat_id);
 
                 printf("%d. %s\n", count++, NAMA_OBAT(o));
@@ -72,5 +74,10 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
                 TambahObatKeInventory(inv, pasienId, f.obat_id);
             }
         }
+    }
+
+    if (count == 1) {
+    printf("Tidak ada obat yang cocok untuk penyakit %s.\n", RIWAYAT_PENYAKIT(pasien));
+    
     }
 }
