@@ -47,6 +47,15 @@ void DaftarCheckUp(ListUser *listUser, RumahSakit *rs, const char *username) {
         return;
     }
 
+    for (int i = 0; i < rs->rows; i++) {
+        for (int j = 0; j < rs->cols; j++) {
+            if (isPasienSudahAntri(rs->data[i][j].antrianPasienIds, pasien->id)) {
+                printf("Anda sudah terdaftar dalam antrian check-up di ruangan %c%d!\n", 'A' + i, j + 1);
+                return;
+            }
+        }
+    }
+
     // Input data medis
     printf("Masukkan suhu tubuh (32.0 - 42.0): ");
     while (scanf("%f", &pasien->suhu_tubuh) != 1 || pasien->suhu_tubuh < 32.0 || pasien->suhu_tubuh > 42.0) {
