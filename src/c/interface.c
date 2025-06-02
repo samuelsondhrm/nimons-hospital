@@ -34,7 +34,7 @@ void print_color(const char *text, const char *color_code) {
 
 // Fungsi untuk print header dengan ASCII art dan judul
 void print_header(User active_user) {
-    // clear_screen();
+    clear_screen();
     printf("					⠀⢐⠰⠠⠆⠀⠄⡆⠂⠴⠔⢢⠀⠢⠠⠠⠔⠂⡶⠐⠰⠠⠀⠆⠂⠦⠠⠂⠂⠀⠀⠰⠰⠐⠀⠠⠀⠒⠄⠠⠐⠀⠴⠰⠰⠀⠀⠆⠀⠀⢀⢀⠀⣀⡀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");
     printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⡾⢯⣿⣿⣿⣿⣿⢿⣿⣶⣶⣦⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");
     printf("	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⢠⣴⣿⣿⡿⣾⣭⣷⣶⡿⠿⠿⠿⢿⣿⣯⣿⣻⡿⣿⣿⣷⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀\n");
@@ -58,10 +58,9 @@ void print_header(User active_user) {
     printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠈⡇⡾⠀⡀⣠⡾⢃⡴⣿⡟⣿⡆⠀⠄⢰⡿⠀⡾⠓⠀⠀⠀⠀⠀⠀⢀⣾⢣⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");
     printf(" ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠐⠐⠐⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡿⡥⡬⣟⡉⢠⣥⣾⣽⣿⡁⠀⠀⠒⣾⠧⢸⡇⠐⠀⠱⡀⠀⢦⠀⣼⣯⡎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");
     printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢧⢡⣯⠀⠉⠉⠀⣿⢹⡿⠰⠀⠀⠀⣾⠁⡿⢋⠄⠀⠀⠱⣄⣸⣿⠟⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");
-    printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡌⢻⠷⠦⠀⣠⡇⢸⣧⠛⠉⠉⢳⣏⢸⡿⠭⡈⠀⠀⢀⠘⢹⢿⣾⡃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⡾⢯⣿⣿⣿⣿⣿⢿⣿⣶⣶⣦⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");
+    printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡌⢻⠷⠦⠀⣠⡇⢸⣧⠛⠉⠉⢳⣏⢸⡿⠭⡈⠀⠀⢀⠘⢹⢿⣾⡃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");
     printf("===========================================================================================\n");
     print_color("ACTIVE USER: ", HIJAU);
-    printf("\n");
     if(active_user.id <= 0){
         print_color("NOT SIGNED IN\n", MERAH);
     }
@@ -94,8 +93,6 @@ boolean accessCheck(const char* required_role, User request) {
         else if(strcmp(ROLE(request), "dokter") == 0) print_color("DOKTER", BIRU);
         else if(strcmp(ROLE(request), "manaager") == 0) print_color("MANAGER", UNGU);
         else print_color("AKUN TIDAK VALID", MERAH);
-        printf("\n");   
-        while (getchar() != '\n');
         return false;
     }
     return true;
