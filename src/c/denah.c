@@ -79,12 +79,13 @@ void lihatRuangan(RumahSakit rs, char* kode, ListUser lUser) {
                     break;
                 }
             }
-            printf("  %d. %s\n", printedCount + 1, pasienName);
-            printedCount++;
+            if(pasienName != "-"){
+                printf("  %d. %s\n", printedCount + 1, pasienName);
+                printedCount++;
+            }
         }
 
-        if (printedCount == 0)
-            printf("  Tidak ada pasien di dalam ruangan saat ini.\n");
+        if (printedCount == 0) printf("  Tidak ada pasien di dalam ruangan saat ini.\n");
     }
 
     // Pemisah akhir seperti di gambar
