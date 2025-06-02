@@ -53,4 +53,5 @@ void lihatUser(ListUser *lUser, int mode) {
     for (int i = 0; i < count; i++) {
         displayUser(&temp[i], mode);
     }
+    while (getchar() != '\n');
 }
