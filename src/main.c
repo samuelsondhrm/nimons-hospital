@@ -104,14 +104,30 @@ int main(int argc, char *argv[]) {
     InitializeInventory(&inventory);
 
     // PARSING
-    const char* user_csv_path = "../src/file/user.csv";
-    const char* obat_csv_path = "../src/file/obat.csv";
-    const char* penyakit_csv_path = "../src/file/penyakit.csv";
-    const char* obatpenyakit_csv_path = "../src/file/obat_penyakit.csv";
+    const char* data_path = "../src/file/";
+
+    char user_csv_path[100];
+    char obat_csv_path[100];
+    char penyakit_csv_path[100];
+    char obatpenyakit_csv_path[100];
+    char config_txt_path[100];
+
+    strcpy(user_csv_path, data_path);
+    strcat(user_csv_path, "user.csv");
+    strcpy(obat_csv_path, data_path);
+    strcat(obat_csv_path, "obat.csv");
+    strcpy(penyakit_csv_path, data_path);
+    strcat(penyakit_csv_path, "penyakit.csv");
+    strcpy(obatpenyakit_csv_path, data_path);
+    strcat(obatpenyakit_csv_path, "obat_penyakit.csv");
+    strcpy(config_txt_path, data_path);
+    strcat(config_txt_path, "config.txt");
+    
     parse_user_csv(user_csv_path, &accounts);
     parse_obat_csv(obat_csv_path, &lObat);
     parse_penyakit_csv(penyakit_csv_path, &lPenyakit);
     parse_obatpenyakit_csv(obatpenyakit_csv_path, &lFormula);
+    if(!loadConfig(config_txt_path, &rs, &inventory)) printf("CONFIG.TXT ERROR");
     
     char folder_path[512];
     #ifdef _WIN32
@@ -132,13 +148,6 @@ int main(int argc, char *argv[]) {
     while(ON){
         print_header(cur_user);
         
-        // CLEARSCREEN LAGI DI DISABLE, JADI BISA DEBUG YE
-        tampilkan_formula(lFormula);
-        tampilkan_obat(lObat);
-        tampilkan_penyakit(lPenyakit);
-        tampilkan_user(accounts);
-
-        printf("%s", ROLE(cur_user));
         animate_text("Enter input > > > ", 100);
         fgets(ans, MAX_FIELD, stdin);
         ans[strcspn(ans, "\n")] = 0;
@@ -253,8 +262,8 @@ int main(int argc, char *argv[]) {
                          printf("Tekan enter untuk kembali ke main menu");
                          break;
             }
-        printf("\n");
         }
+        printf("\n(Klik enter untuk lanjut)");
         while (getchar() != '\n');
     }
     return 0;
