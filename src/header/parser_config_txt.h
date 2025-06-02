@@ -9,7 +9,7 @@
 // Membaca file konfigurasi rumah sakit dan mengisi data RumahSakit dan Inventory
 // maxAntrianLuar akan diisi dengan kapasitas antrian baris
 // Return 1 jika berhasil, 0 jika gagal
-int loadConfig(const char *filename, RumahSakit *rs, Inventory *invntry, int *maxAntrianLuar);
+int loadConfig(const char *filename, RumahSakit *rs, Inventory *invntry);
 
 // Membaca satu baris dari file ke buffer, return 0 jika EOF, 1 jika berhasil baca
 int readLine(FILE *fp, char *buffer, int maxLen);
