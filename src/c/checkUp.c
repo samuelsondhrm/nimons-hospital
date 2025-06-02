@@ -78,7 +78,7 @@ void DaftarCheckUp(ListUser *listUser, RumahSakit *rs, const char *username) {
     printf("Masukkan kadar gula darah (71 - 139): ");
     while (scanf("%d", &pasien->kadar_gula_darah) != 1 || pasien->kadar_gula_darah <= 70 || pasien->kadar_gula_darah >= 140) {
         printf("Kadar gula tidak valid. Masukkan ulang: ");
-     while (getchar() != '\n');
+        while (getchar() != '\n');
     }
 
     printf("Masukkan berat badan (11.0 - 199.0): ");
@@ -140,33 +140,34 @@ void DaftarCheckUp(ListUser *listUser, RumahSakit *rs, const char *username) {
     }
 
     if (dokterId != -1 && rowRuangan != -1 && colRuangan != -1) {
-    enqueue(&rs->data[rowRuangan][colRuangan].antrianPasienIds, pasien->id);
-    insertAtTail(&pasienCheckUpList, pasien->id); 
+        enqueue(&rs->data[rowRuangan][colRuangan].antrianPasienIds, pasien->id);
+        insertAtTail(&pasienCheckUpList, pasien->id); 
 
-    int nomorAntrian = lengthQueue(rs->data[rowRuangan][colRuangan].antrianPasienIds); // nomor pasien sekarang
+        int nomorAntrian = lengthQueue(rs->data[rowRuangan][colRuangan].antrianPasienIds); // nomor pasien sekarang
 
-    printf("Pasien berhasil masuk ke antrian check up.\n");
-    printf("Dokter: Dr. ");
-    for (int i = 0; i < listUser->jumlahuser; i++) {
-        if (listUser->users[i].id == dokterId) {
-            printf("%s\n", listUser->users[i].username);
-            break;
-        }
-    }
-
-    printf("Nomor antrian Anda: %d\n", nomorAntrian);
-
-    // Tampilkan seluruh antrian 
-    printf("Daftar antrian saat ini:\n");
-    int idx = antrian->idxHead;
-    for (int i = 0; i < lengthQueue(*antrian); i++) {
-        int pasienId = antrian->buffer[idx];
-        for (int j = 0; j < listUser->jumlahuser; j++) {
-            if (listUser->users[j].id == pasienId) {
-                printf("%d. %s\n", i + 1, listUser->users[j].username);
+        printf("Pasien berhasil masuk ke antrian check up.\n");
+        printf("Dokter: Dr. ");
+        for (int i = 0; i < listUser->jumlahuser; i++) {
+            if (listUser->users[i].id == dokterId) {
+                printf("%s\n", listUser->users[i].username);
                 break;
             }
         }
-        idx = (idx + 1) % CAPACITY_QUEUE;
+
+        printf("Nomor antrian Anda: %d\n", nomorAntrian);
+
+        // Tampilkan seluruh antrian 
+        printf("Daftar antrian saat ini:\n");
+        int idx = antrian->idxHead;
+        for (int i = 0; i < lengthQueue(*antrian); i++) {
+            int pasienId = antrian->buffer[idx];
+            for (int j = 0; j < listUser->jumlahuser; j++) {
+                if (listUser->users[j].id == pasienId) {
+                    printf("%d. %s\n", i + 1, listUser->users[j].username);
+                    break;
+                }
+            }
+            idx = (idx + 1) % CAPACITY_QUEUE;
+        }
     }
 }
