@@ -49,7 +49,7 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
     printf("Dokter sedang mengobati pasien!\n");
 
     // Cek apakah sudah ada diagnosis
-    if ( SudahDiagnosis[current_user.id] ==  false) {
+    if ( SudahDiagnosis[pasienId] ==  false) {
         printf("Kamu belum melakukan proses diagnosis oleh dokter, silahkan melakukan pendaftaran terlebih dahulu!");
         return;
     }
@@ -78,6 +78,6 @@ void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lOba
 
     if (count == 1) {
     printf("Tidak ada obat yang cocok untuk penyakit %s.\n", RIWAYAT_PENYAKIT(pasien));
-    
+
     }
 }
