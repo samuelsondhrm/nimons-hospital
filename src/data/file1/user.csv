@@ -1,16 +1,18 @@
-id;username;password;role;riwayat_penyakit;suhu_tubuh;tekanan_darah_sistolik;tekanan_darah_diastolik;detak_jantung;saturasi_oksigen;kadar_gula_darah;berat_badan;tinggi_badan;kadar_kolesterol;kadar_kolesterol_ldl;trombosit
-1;alexa;alexaSecure1;pasien;Influenza;38.2;120;80;75;97.5;110;55.0;165;190;120;240
-2;budi;budikeren21;pasien;COVID-19;39.0;110;70;90;95.0;140;50.5;160;220;150;180
-3;citra;citralove;pasien;Hipertensi;36.9;115;75;65;98.0;95;48.3;158;180;110;230
-4;dian;dianDokter;dokter;;37.2;125;85;70;96.5;100;62.0;170;200;130;210
-5;elvin;elvman123;manager;;36.5;0;0;0;0.0;0;0.0;0;0;0;0
-6;fajar;fajar321;pasien;COVID-19;38.4;118;78;88;96.2;135;53.1;168;210;140;200
-7;gina;ginagirl;pasien;Diabetes Mellitus;37.8;112;76;70;97.0;160;60.2;172;230;145;220
-8;hari;harihari;pasien;Hipertensi;36.7;130;90;72;95.5;105;66.0;180;190;125;250
-9;irene;irene123;pasien;Influenza;38.0;122;82;74;98.5;100;54.0;163;195;115;235
-10;joko;jokodoc;dokter;;36.6;120;80;69;97.5;98;60.0;175;185;110;215
-11;kiki;kikipasien;pasien;COVID-19;39.1;115;77;85;94.0;145;58.3;166;205;130;190
-12;lina;linadoc;dokter;;37.0;125;85;71;96.8;102;63.0;178;200;135;205
-13;maya;mayamedic;dokter;;36.8;118;80;68;97.3;99;59.0;172;190;120;198
-14;nino;ninopasien;pasien;Diabetes Mellitus;37.9;110;75;80;96.0;155;57.2;170;225;150;210
-15;oscar;oscardoctor;dokter;;37.3;123;83;73;97.6;101;61.5;174;195;125;212
+id,username,password,role,riwayat_penyakit,suhu_tubuh,tekanan_darah_sistolik,tekanan_darah_diastolik,detak_jantung,saturasi_oksigen,kadar_gula_darah,berat_badan,tinggi_badan,kadar_kolesterol,kadar_kolesterol_ldl,trombosit
+1,alexa,alexaSecure1,pasien,Influenza,38.2,120,80,75,97.5,110,55.0,165,190,120,240
+2,budi,budikeren21,pasien,COVID-19,39.0,110,70,90,95.0,140,50.5,160,220,150,180
+3,citra,citralove,pasien,Hipertensi,36.9,115,75,65,98.0,95,48.3,158,180,110,230
+4,dian,dianDokter,dokter,,37.2,125,85,70,96.5,100,62.0,170,200,130,210
+5,elvin,elvman123,manager,,36.5,0,0,0,0.0,0,0.0,0,0,0,0
+6,fajar,fajar321,pasien,COVID-19,38.4,118,78,88,96.2,135,53.1,168,210,140,200
+7,gina,ginagirl,pasien,Diabetes Mellitus,37.8,112,76,70,97.0,160,60.2,172,230,145,220
+8,hari,harihari,pasien,Hipertensi,36.7,130,90,72,95.5,105,66.0,180,190,125,250
+9,irene,irene123,pasien,Influenza,38.0,122,82,74,98.5,100,54.0,163,195,115,235
+10,joko,jokodoc,dokter,,36.6,120,80,69,97.5,98,60.0,175,185,110,215
+11,kiki,kikipasien,pasien,COVID-19,39.1,115,77,85,94.0,145,58.3,166,205,130,190
+12,lina,linadoc,dokter,,37.0,125,85,71,96.8,102,63.0,178,200,135,205
+13,maya,mayamedic,dokter,,36.8,118,80,68,97.3,99,59.0,172,190,120,198
+14,nino,ninopasien,pasien,Diabetes Mellitus,37.9,110,75,80,96.0,155,57.2,170,225,150,210
+15,oscar,oscardoctor,dokter,,37.3,123,83,73,97.6,101,61.5,174,195,125,212
+16,miguh,miguganteng,dokter,,0.0,0,0,0,0.0,0,0.0,0,0,0,0
+17,fazaboba,yes,dokter,,0.0,0,0,0,0.0,0,0.0,0,0,0,0
