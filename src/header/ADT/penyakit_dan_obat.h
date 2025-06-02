@@ -6,6 +6,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include "user.h"
 
 #define MAX_OBAT 100
 #define MAX_PENYAKIT 100

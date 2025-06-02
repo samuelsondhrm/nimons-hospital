@@ -1,10 +1,5 @@
-#include <stdio.h>
-#include "login.h"
-#include <stdlib.h>
-#include "parser_user_csv.h"
-#include "user.h"
-#include "help.h"
 
+#include "../header/help.h"
 void helpManager(User u){
     printf("Halo manager %s." , u.username);
     printf(" Kenapa kamu memanggil command HELP? Kan kamu manager, tapi\nyasudahlah kamu pasti sedang kebingungan. Berikut adalah hal-hal yang dapat kamu lakukan\nsekarang: \n");
@@ -52,7 +47,7 @@ void notLogin(){
 }
 void templateHelp(User u){
     printf("=========== HELP ===========\n\n");
-    if(!SudahLogin){
+    if(&u == NULL){
         notLogin();
     } 
     else{

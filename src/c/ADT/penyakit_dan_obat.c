@@ -11,14 +11,14 @@ void InitializeListObat(ListObat *l) {
     l->jumlahobat = 0;
 }
 
-Obat GetUser(ListObat l, int id){
+Obat GetObat(ListObat l, int id){
     for(int i = 0; i<JUMLAH_OBAT(l); i++){
         if(ID_OBAT(OBAT_LIST(l, i)) == id){
             return OBAT_LIST(l,i);
         }
     }
     Obat ERR_MSG;
-    CreateUser(&ERR_MSG);
+    CreateObat(&ERR_MSG);
     ID_OBAT(ERR_MSG) = -1;
     return ERR_MSG; // Kalau id Obat -1, bearti error
 }
@@ -60,7 +60,7 @@ void InsObat(ListObat *l, Obat buffer) {
 void tampilkan_obat(ListObat l) {
     for (int i = 0; i < JUMLAH_OBAT(l); i++) {
         Obat o = OBAT_LIST(l, i);
-        printf("Penyakit %d:\n", i + 1);
+        printf("Obat %d:\n", i + 1);
         printf("   ID: %d\n", ID_OBAT(o));
         printf("   Nama: %s\n", NAMA_OBAT(o));
     }
@@ -214,7 +214,7 @@ void InsFormula(ListFormula *l, Formula buffer) {
     }
 }
 
-void tampilkan_obatpenyakit(ListFormula l) {
+void tampilkan_formula(ListFormula l) {
     for (int i = 0; i < JUMLAH_FORMULA(l); i++) {
         Formula op = FORMULA_LIST(l,i);
         printf("Relasi %d:\n", i + 1);

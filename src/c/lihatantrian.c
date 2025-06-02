@@ -23,42 +23,60 @@ void lihatSemuaAntrian(RumahSakit rs, ListUser lUser) {
                 }
                 printf("Dokter     : Dr. %s\n", namaDokter);
 
-                // Tampilkan pasien dalam ruangan
+                // Hitung panjang antrian
+                int len = lengthQueue(r.antrianPasienIds);
+                int dalamRuangan = (len < rs.kapasitasPerRuangan) ? len : rs.kapasitasPerRuangan;
+                int dalamAntrian = len - dalamRuangan;
+
+                // Tampilkan pasien di dalam ruangan
                 printf("Pasien di dalam ruangan:\n");
-                if (r.jumlahPasien == 0) {
+                if (dalamRuangan == 0) {
                     printf("  Tidak ada pasien di dalam ruangan saat ini.\n");
                 } else {
-                    for (int k = 0; k < r.jumlahPasien; k++) {
-                        for (int u = 0; u < lUser.jumlahuser; u++) {
-                            if (lUser.users[u].id == r.pasienIds[k]) {
-                                printf("  %d. %s\n", k + 1, lUser.users[u].username);
+                    int printCount = 0;
+                    int index = IDX_HEAD(r.antrianPasienIds);
+                    for (int k = 0; k < dalamRuangan; k++) {
+                        int id = r.antrianPasienIds.buffer[index];
+                        const char* namaPasien = "-";
+                        for (int l = 0; l < lUser.jumlahuser; l++) {
+                            if (lUser.users[l].id == id) {
+                                namaPasien = lUser.users[l].username;
                                 break;
                             }
                         }
+                        if(namaPasien != "-"){
+                            printf("  %d. %s\n", k + 1, namaPasien);
+                            index = (index + 1) % CAPACITY_QUEUE;
+                            printCount++;
+                        }
                     }
+                    if (printCount == 0) printf("  Tidak ada pasien di dalam ruangan saat ini.\n");
                 }
 
                 // Tampilkan pasien di antrian
                 printf("Pasien di antrian:\n");
-                if (isEmptyQueue(r.baris)) {
+                if (dalamAntrian == 0) {
                     printf("  Tidak ada pasien di antrian saat ini.\n");
                 } else {
-                    int nomor = 1;
-                    int i = IDX_HEAD(r.baris);
-                    while (1) {
-                        // Cari nama pasien berdasarkan ID
-                        const char* pasienName = "-";
-                        for (int j = 0; j < lUser.jumlahuser; j++) {
-                            if (lUser.users[j].id == r.baris.buffer[i]) {
-                                pasienName = lUser.users[j].username;
+                    int printCount = 0;
+                    int index = (IDX_HEAD(r.antrianPasienIds) + dalamRuangan) % CAPACITY_QUEUE;
+                    for (int k = 0; k < dalamAntrian; k++) {
+                        int id = r.antrianPasienIds.buffer[index];
+                        const char* namaPasien = "-";
+                        for (int l = 0; l < lUser.jumlahuser; l++) {
+                            if (lUser.users[l].id == id) {
+                                namaPasien = lUser.users[l].username;
                                 break;
                             }
                         }
-                        printf("  %d. %s\n", nomor, pasienName);
-                        if (i == IDX_TAIL(r.baris)) break;
-                        i = (i + 1) % CAPACITY_QUEUE;
-                        nomor++;
+                        
+                        if(namaPasien != "-"){
+                            printf("  %d. %s\n", k + 1, namaPasien);
+                            index = (index + 1) % CAPACITY_QUEUE;
+                            printCount++;
+                        }   
                     }
+                    if (printCount == 0) printf("  Tidak ada pasien di dalam antrian saat ini.\n");
                 }
             }
         }

@@ -1,20 +1,12 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
-#include "../header/user.h"
-#include "../header/set.h"
-#include "../header/parser_user_csv.h"
-#include <stdbool.h>
-#include <stdio.h>
-#include <string.h>
-
-// Variabel global
-extern User* current_user;
-extern bool SudahLogin;
-extern bool PasswordSalah;
+#include "ADT/user.h"
+#include "ADT/set.h"
+#include "lupaPassword.h"
 
 // Deklarasi fungsi login
-User* find_user_by_username(User users[], int count, const char* username);
-bool login(User users[], int user_count);
+void login(ListUser *users, User *current_user, boolean *SudahLogin);
+void lupaPassword(ListUser *LU);
 
 #endif 

@@ -1,77 +1,88 @@
-# This is a makefile for compiling your whole project.
-# It is used to compile all the source files in the src directory and link them together.
-# It is also used to clean up the build directory and remove all the object files and the executable.
-# The makefile is used to compile the project using the gcc compiler.
+# Lokasi Makefile: src/makefile
 
-# Things to explore:
-# - Linux, MacOS, WSL for Windows
-# - Makefile variables
-# - Makefile rules
-# - Makefile targets
-# - Makefile dependencies
-# - Makefile commands
-
-# ---------------------- Example makefile for a C project ----------------------
-
-# This is variable that specifies the compiler to use.
+# ---------------------- Variabel Konfigurasi ----------------------
+# Kompiler yang digunakan
 CC = gcc
-# This is variable that specifies the compiler flags to use.
-CFLAGS = -g -Wall 
-# This is variable that specifies the source files to compile.
-SRCS = $(wildcard c/*.c)
-# This is variable that specifies the object files to create.
-OBJS = $(patsubst c/%.c, build/%.o, $(SRCS))
-# This is variable that specifies the name of the executable file.
-TARGET = main
-# This is variable that specifies target compile directory.
-TARGET_DIR = build
 
+# Flag untuk kompiler:
+# -g : untuk informasi debug
+# -Wall : untuk menampilkan semua warning
+# -Iheader : menambah direktori 'header' sebagai search path untuk #include "file.h"
+# -Iheader/ADT : menambah direktori 'header/ADT' sebagai search path
+CFLAGS = -g -w -Wno-format-truncation -Iheader -Iheader/ADT
 
-# TODO: Explore best practices for makefiles
-# HINT: Do step by step compilation and linking (e.g. compile all .c files to .o files, then link them together to create the executable)
-# HINT: Specify output directory for object files and executable (e.g. build/) and ignore the build directory in the git repository
+# Flag untuk linker (jika ada library tambahan, tambahkan di sini, misal -lm untuk math library)
+LDFLAGS =
 
+# Flag untuk menghasilkan dependensi otomatis (file .d)
+# -MMD : Membuat file dependensi tanpa dependensi sistem
+# -MP  : Membuat target fiktif untuk header agar make tidak error jika header dihapus
+DEPFLAGS = -MMD -MP
 
-# This is default target that is used to compile the project.
-main: main.c
-	@echo "Compiling the project..."
-	@echo "Compiling source files..."
-	@$(MAKE) compile
-	@echo "Linking object files..."
-	@$(MAKE) link
-	@echo "Build complete."
+# Direktori output untuk hasil build (file objek, executable)
+# Karena Makefile ada di 'src/', '../build' akan menempatkan direktori 'build' di root proyek
+BUILD_DIR = ../build
 
-# This target is used to compile all the source files in the src directory.
-# The -g option is used to generate debug information.
-# The -Wall option is used to enable all compiler warnings.
-# The -c option is used to compile the source files without linking them.
-# *.c: compile all C source files in the current directory
-compile: $(OBJS)
+# Nama executable target
+TARGET_NAME = main
+TARGET_EXEC = $(BUILD_DIR)/$(TARGET_NAME)
 
-$(TARGET_DIR):
-	mkdir -p $(TARGET_DIR)
+# ---------------------- Mendefinisikan File Sumber dan Objek ----------------------
+# File sumber utama (main.c)
+MAIN_SRC = main.c
 
-build/%.o: c/%.c | $(TARGET_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-	
-# This target is used to link the object files and create the executable.
-# The -o option specifies the output file name.
-link: $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+# File sumber dari direktori 'c/' dan 'c/ADT/'
+# $(wildcard pattern) akan mencari semua file yang cocok dengan pattern
+C_FILES = $(wildcard c/*.c)
+ADT_FILES = $(wildcard c/ADT/*.c)
 
-# This target is used to compile all the source files in the src directory and link them together.
+# Gabungkan semua file sumber .c
+SRCS = $(MAIN_SRC) $(C_FILES) $(ADT_FILES)
+
+# Membuat daftar file objek (.o) dari file sumber (.c)
+# Semua file objek akan ditempatkan di dalam $(BUILD_DIR) dengan struktur direktori yang sama
+# Contoh:
+#   main.c -> $(BUILD_DIR)/main.o
+#   c/foo.c -> $(BUILD_DIR)/c/foo.o
+#   c/ADT/bar.c -> $(BUILD_DIR)/c/ADT/bar.o
+OBJS = $(SRCS:%.c=$(BUILD_DIR)/%.o)
+
+# Membuat daftar file dependensi (.d) dari file objek (.o)
+DEPS = $(OBJS:.o=.d)
+
+# ---------------------- Aturan (Rules) ----------------------
+
+# Target default: 'all'. Akan dijalankan jika Anda hanya mengetik 'make'
+# Target ini bergantung pada executable utama.
+.PHONY: all
+all: $(TARGET_EXEC)
+	@echo "Build complete. Executable: $(TARGET_EXEC)"
+
+# Aturan untuk linking:
+# Membuat executable utama ($(TARGET_EXEC)) dari semua file objek ($(OBJS)).
+$(TARGET_EXEC): $(OBJS)
+	@echo "LD $^ -> $@"
+	@mkdir -p $(@D) # Pastikan direktori untuk executable ada (@D adalah direktori dari $@)
+	$(CC) $(LDFLAGS) $^ -o $@
+
+# Aturan pola untuk kompilasi:
+# Mengompilasi setiap file sumber (.c) menjadi file objek (.o) yang sesuai di $(BUILD_DIR).
+# %.c : file sumber yang cocok
+# $(BUILD_DIR)/%.o : file objek target
+# $< : nama prerequisite pertama (file .c)
+# $@ : nama target (file .o)
+$(BUILD_DIR)/%.o: %.c
+	@echo "CC $< -> $@"
+	@mkdir -p $(@D) # Pastikan direktori untuk file objek ada
+	$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
+
+# Target untuk membersihkan hasil build
+.PHONY: clean
 clean:
-	rm -rf build
-	rm -f $(TARGET)
-	rm -f *.o
-	rm -f *.out
-	rm -f *.exe
-	rm -f *.a
-	rm -f *.so
-	rm -f *.dll
-	rm -f *.dSYM
-	rm -f *.pdb
-	rm -f *.ilk
-	rm -f *.idb
-	rm -f *.lib
-	rm -f *.exp
+	@echo "Cleaning build files..."
+	rm -rf $(BUILD_DIR) # Hapus seluruh direktori build
+	@echo "Clean complete."
+
+# Menyertakan file-file dependensi yang telah dibuat secara otomatis.
+# Tanda '-' di depan 'include' berarti make akan melanjutkan meskipun file dependensi tidak ditemukan (misalnya saat build pertama kali).
+-include $(DEPS)

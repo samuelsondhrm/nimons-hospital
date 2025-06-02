@@ -1,4 +1,5 @@
 #include "../header/parser_config_txt.h"
+#include "stdio.h"
 
 #define MAX_LINE_LENGTH 256
 int nextInt(const char **p) {
@@ -33,75 +34,60 @@ int readLine(FILE *fp, char *buffer, int maxLen) {
     if (ch == EOF && i == 0) return 0;
     return 1;
 }
-void parseRuanganLine(char *line, Ruangan *ruangan, int kapasitasPerRuangan, int kapasitasBaris) {
+
+void parseRuanganLine(char *line, Ruangan *ruangan, int kapasitasPerRuangan, int kapasitasBaris, ListUser accounts) {
     const char *p = line;
     int dokterId = nextInt(&p);
     ruangan->dokterId = dokterId;
-    ruangan->jumlahPasien = 0;
     if (dokterId == 0) {
         return;
     }
     int countPasien = 0;
     int val = nextInt(&p);
-    while (val != -1 && countPasien < kapasitasPerRuangan){
-        ruangan->pasienIds[countPasien] = val;
+    while (val > 0 && countPasien < kapasitasPerRuangan + kapasitasBaris){
+        enqueue(&ruangan->antrianPasienIds, val);
         val = nextInt(&p);
         countPasien++;
     }
-    ruangan->jumlahPasien = countPasien;
-    int countBaris = 0;
-    while(val != -1 && countBaris < kapasitasBaris){
-        enqueue(&ruangan->baris, val);
-        val = nextInt(&p);
-        countBaris++;
-    }
 }
 
-void parsePasienObatLine(char *line, Inventory *invntry) {
+void parsePasienObatLine(char *line, Inventory *invntry, int idx) {
     const char *p = line;
     int idPasien = nextInt(&p);
-    Pasien *psn = &invntry->data[idPasien];
-    psn->id = idPasien;
-    psn->jumlahobat = 0;
+    Pasien *psn = &invntry->data[idx];
     InitializePasien(psn);
-
+    psn->id = idPasien;
     int obatId = nextInt(&p);
-    while (obatId != -1 && psn->jumlahobat < MAX_OBAT) {
+    while (obatId > 0 && psn->jumlahobat < MAX_OBAT) {
         psn->obat[psn->jumlahobat++] = obatId;
         obatId = nextInt(&p);
-    }
-
-    if (idPasien >= invntry->jumlahPasienwObat) {
-        invntry->jumlahPasienwObat = idPasien + 1;
-    }
+    }   
 }
 
-int loadConfig(const char *filename, RumahSakit *rs, Inventory *invntry, int *maxAntrianLuar) {
+int loadConfig(const char *filename, RumahSakit *rs, Inventory *invntry, ListUser accounts) {
     InitializeRumahSakit(rs);
     InitializeInventory(invntry);
     FILE *fp = fopen(filename, "r");
     if (!fp) {
-        perror("Gagal membuka file");
+        printf("Gagal membuka %s", filename);
         return 0;
     }
-
     char line[MAX_LINE_LENGTH];
+    int totalRuangan;
 
     // Baris 1: ukuran denah
     if (!readLine(fp, line, MAX_LINE_LENGTH)) return 0;
     const char *p = line;
     rs->rows = nextInt(&p);
     rs->cols = nextInt(&p);
+    totalRuangan = rs->rows*rs->cols;
 
     // Baris 2: kapasitas per ruangan & kapasitas baris
     if (!readLine(fp, line, MAX_LINE_LENGTH)) return 0;
     p = line;
     rs->kapasitasPerRuangan = nextInt(&p);
     rs->kapasitasBaris = nextInt(&p);
-    *maxAntrianLuar = rs->kapasitasBaris;
-
-    int totalRuangan = rs->rows * rs->cols;
-    if (totalRuangan > MAX_BARIS_RUANGAN * MAX_KOLOM_RUANGAN) {
+    if (totalRuangan > MAX_BARIS_RUANGAN * MAX_KOLOM_RUANGAN) { // Lewat batasan define
         printf("Ukuran denah terlalu besar\n");
         fclose(fp);
         return 0;
@@ -112,7 +98,7 @@ int loadConfig(const char *filename, RumahSakit *rs, Inventory *invntry, int *ma
         if (!readLine(fp, line, MAX_LINE_LENGTH)) return 0;
         int r = i / rs->cols;
         int c = i % rs->cols;
-        parseRuanganLine(line, &rs->data[r][c], rs->kapasitasPerRuangan, rs->kapasitasBaris);
+        parseRuanganLine(line, &rs->data[r][c], rs->kapasitasPerRuangan, rs->kapasitasBaris , accounts);
     }
 
     // Baris berikutnya: jumlah pasien dengan obat
@@ -124,32 +110,46 @@ int loadConfig(const char *filename, RumahSakit *rs, Inventory *invntry, int *ma
     // Baris berikutnya: data pasien
     for (int i = 0; i < jumlah; i++) {
         if (!readLine(fp, line, MAX_LINE_LENGTH)) return 0;
-        parsePasienObatLine(line, invntry);
+        parsePasienObatLine(line, invntry, i);
     }
-     // Baris berikutnya: jumlah pasien dengan stack obat di perut
+    // Baris berikutnya: jumlah pasien dengan stack obat di perut
     if (!readLine(fp, line, MAX_LINE_LENGTH)) return 0;
     p = line;
     int jumlahPasienPunyaPerut = nextInt(&p);
 
     // Data stack obat tiap pasien
-    for (int i = 0; i < jumlahPasienPunyaPerut; i++) {
+    for (int i = 0; i < jumlahPasienPunyaPerut; i++) { // ngisi stack
         if (!readLine(fp, line, MAX_LINE_LENGTH)) return 0;
+        boolean found = false;
         p = line;
         int idPasien = nextInt(&p);
-        Pasien *psn = &invntry->data[idPasien];
-        InitializePasien(psn); // kalau belum diinisialisasi
-
-        int jumlahObatDalamPerut = nextInt(&p);
-
-        // Untuk memasukkan dari bawah ke atas stack
+        Pasien *psn; 
+        for(int j = 0; j < invntry->jumlahPasienwObat;j++){
+            psn = &invntry->data[j];
+            if(idPasien == psn->id){ // id sudah ada, tinggal ngisi stack
+                found = true;
+                break;
+            }
+        }
+        if(!found){ // masukin id baru
+            psn = &invntry->data[invntry->jumlahPasienwObat];
+            invntry->jumlahPasienwObat++;
+            InitializePasien(psn);
+            psn->id = idPasien;
+        }
+        int ObatdiPerut = 0;
         int obatSementara[MAX_OBAT];
-        for (int j = 0; j < jumlahObatDalamPerut && j < MAX_OBAT; j++) {
-            obatSementara[j] = nextInt(&p);
+
+        // Loop ambil semua obat di baris ini
+        int temp = nextInt(&p);
+        while (temp != -1 && ObatdiPerut < MAX_OBAT) {
+            obatSementara[ObatdiPerut++] = temp;
+            temp = nextInt(&p);
         }
 
-        // Masukkan ke stack (dari bawah ke atas)
-        for (int j = 0; j < jumlahObatDalamPerut && j < MAX_OBAT; j++) {
-            Push(&psn->perut, obatSementara[j]);
+        // Push ke stack (dari belakang ke depan)
+        for (int k = ObatdiPerut - 1; k >= 0; k--) {
+            Push(&psn->perut, obatSementara[k]);
         }
     }
     fclose(fp);
