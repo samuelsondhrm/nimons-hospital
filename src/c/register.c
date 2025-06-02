@@ -17,6 +17,15 @@ boolean is_username_valid(const char* username) {
         }
     }
     return true;
+    
+}
+
+void InsUser(ListUser *lUser, User userBaru) { 
+    if (lUser->jumlahuser < MAX_FIELD) {
+        lUser->users[lUser->jumlahuser++] = userBaru;
+    } else {
+        printf("Gagal menambahkan pengguna. Kapasitas list pengguna sudah penuh.\n");
+    }
 }
 
 void register_pasien(ListUser *lUser, User *new_user) {
@@ -59,12 +68,16 @@ void register_pasien(ListUser *lUser, User *new_user) {
     strncpy(new_user->role, "pasien", MAX_FIELD);
 
     // Tambah ke list 
+    int jumlahUserSebelumInsert = lUser->jumlahuser;
     InsUser(lUser, *new_user);
+ if (lUser->jumlahuser > jumlahUserSebelumInsert || lUser->jumlahuser == MAX_FIELD && jumlahUserSebelumInsert < MAX_FIELD) {
+        printf("Data user berhasil ditambahkan:\n");
+        printf("Username: %s\n", new_user->username);
+        printf("Role: %s\n", new_user->role);
+        printf("ID: %d\n", new_user->id);
+    } else if (lUser->jumlahuser == jumlahUserSebelumInsert && lUser->jumlahuser == MAX_FIELD) {
 
-    printf("Data user berhasil ditambahkan:\n");
-    printf("Username: %s\n", new_user->username);
-    printf("Password: %s\n", new_user->password);
-    printf("Role: %s\n", new_user->role);
-    printf("ID: %d\n", new_user->id);
+    }
 }
+
 
