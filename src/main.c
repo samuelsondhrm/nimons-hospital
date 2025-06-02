@@ -259,7 +259,6 @@ int main(int argc, char *argv[]) {
                 default: print_color("INPUT TIDAK VALID", MERAH);
                          printf("\n");
                          printf("Masukkan HELP untuk melihat input valid\n");
-                         printf("Tekan enter untuk kembali ke main menu");
                          break;
             }
         }
