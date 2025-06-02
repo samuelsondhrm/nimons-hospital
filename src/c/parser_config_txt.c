@@ -35,7 +35,7 @@ int readLine(FILE *fp, char *buffer, int maxLen) {
     return 1;
 }
 
-void parseRuanganLine(char *line, Ruangan *ruangan, int kapasitasPerRuangan, int kapasitasBaris) {
+void parseRuanganLine(char *line, Ruangan *ruangan, int kapasitasPerRuangan, int kapasitasBaris, ListUser accounts) {
     const char *p = line;
     int dokterId = nextInt(&p);
     ruangan->dokterId = dokterId;
@@ -64,7 +64,7 @@ void parsePasienObatLine(char *line, Inventory *invntry, int idx) {
     }   
 }
 
-int loadConfig(const char *filename, RumahSakit *rs, Inventory *invntry) {
+int loadConfig(const char *filename, RumahSakit *rs, Inventory *invntry, ListUser accounts) {
     InitializeRumahSakit(rs);
     InitializeInventory(invntry);
     FILE *fp = fopen(filename, "r");
@@ -98,7 +98,7 @@ int loadConfig(const char *filename, RumahSakit *rs, Inventory *invntry) {
         if (!readLine(fp, line, MAX_LINE_LENGTH)) return 0;
         int r = i / rs->cols;
         int c = i % rs->cols;
-        parseRuanganLine(line, &rs->data[r][c], rs->kapasitasPerRuangan, rs->kapasitasBaris);
+        parseRuanganLine(line, &rs->data[r][c], rs->kapasitasPerRuangan, rs->kapasitasBaris , accounts);
     }
 
     // Baris berikutnya: jumlah pasien dengan obat
