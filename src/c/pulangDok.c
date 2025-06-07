@@ -113,16 +113,16 @@ void bolehPulang(User current_user, Inventory *inv, const ListObat *lObat, const
         printf("\n");
 
         printf("Urutan obat yang kamu minum:\n");
-        for (int i = countValid - 1; i >= 0; i--) {
+        for (int i = 0; i < countValid; i++) {
             Obat o = GetObat(*lObat, stackValid[i]);
             char nama[100];
             strncpy(nama, NAMA_OBAT(o), sizeof(nama) - 1);
             nama[sizeof(nama) - 1] = '\0';
             strip_newline(nama);
-            if (i < countValid - 1) printf(" -> ");
+            if (i > 0) printf(" -> ");
             printf("%s", nama);
-        }
-
+            }
+            
         printf("\nSilahkan kunjungi dokter untuk meminta penawar yang sesuai!\n");
         return;
     }
