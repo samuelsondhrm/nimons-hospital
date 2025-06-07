@@ -10,7 +10,7 @@ static void strip_newline(char *str) {
     }
 }
 
-void bolehPulang(User current_user, Inventory *inv, const ListObat *lObat, const ListFormula *lFormula, const ListPenyakit *lPenyakit, RumahSakit *rs) {
+void bolehPulang(User current_user, Inventory *inv, const ListObat *lObat, const ListFormula *lFormula, const ListPenyakit *lPenyakit, RumahSakit *rs, ListUser *lUser) {
     int pasienId = USER_ID(current_user);
 
     // Kasus 1: Belum menerima diagnosis
@@ -161,6 +161,14 @@ void bolehPulang(User current_user, Inventory *inv, const ListObat *lObat, const
     SudahDiagnosis[pasienId] = false;
     inv->data[idxInv].jumlahobat = 0;
     CreateEmptyStack(perut);
+    
+    // Reset riwayat penyakit pasien
+    for (int i = 0; i < JUMLAHUSER(*lUser); i++) {
+        if (USER_ID(USERS(*lUser, i)) == pasienId) {
+            strcpy(RIWAYAT_PENYAKIT(USERS(*lUser, i)), "-");
+            break;
+        }
+    }
 
     for (int i = 0; i < rs->rows; i++) {
         for (int j = 0; j < rs->cols; j++) {
