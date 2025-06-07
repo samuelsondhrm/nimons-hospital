@@ -164,7 +164,7 @@ void parse_penyakit_csv(const char *filename,  ListPenyakit *l) {
         }
     }
     // Handle jika baris terakhir tidak diakhiri newline
-    if (field_pos > 0 && col > 0) {
+    if (col > 0) {
         field[field_pos] = '\0';
         switch (col) {
             case 0: l->penyakits[row].id = string_to_int(field); break;
@@ -342,7 +342,7 @@ void parse_user_csv(const char *filename, ListUser *ListUser) {
     }
 
     // Handle jika baris terakhir tidak diakhiri newline
-    if (field_pos > 0 && col > 0) {
+    if (col > 0) {
         field[field_pos] = '\0';
         switch (col) {
             case 0: ListUser->users[row].id = string_to_int(field); break;
