@@ -61,7 +61,7 @@ void register_pasien(ListUser *lUser, User *new_user) {
         }
     }
     
-    new_user->id = max_id_saat_ini + 1;
+    new_user->id = idTerkecil(*lUser);
 
     strncpy(new_user->username, username, MAX_FIELD);
     strncpy(new_user->password, password, MAX_FIELD);

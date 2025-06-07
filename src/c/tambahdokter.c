@@ -8,6 +8,31 @@ assignDokter(&rs, &listUser)
 
 #include "../header/tambahdokter.h"
 
+int idTerkecil(ListUser list) {
+    // Anggap jumlah user tidak lebih dari MAX_FIELD
+    // Kita buat array penanda apakah suatu id sudah digunakan
+    boolean used[MAX_FIELD * 2] = {false}; // Boleh 2x MAX_FIELD untuk aman
+
+    // Tandai semua ID yang digunakan
+    for (int i = 0; i < list.jumlahuser; i++) {
+        int id = list.users[i].id;
+        if (id > 0 && id < MAX_FIELD * 2) {
+            used[id] = true;
+        }
+    }
+
+    // Cari ID terkecil yang belum digunakan, dimulai dari 1
+    for (int i = 1; i < MAX_FIELD * 2; i++) {
+        if (!used[i]) {
+            return i;
+        }
+    }
+
+    // Kalau semua id dari 1 sampai MAX_FIELD*2 sudah dipakai, tidak kembalikan apa-apa
+    return;
+}
+
+
 void tambahDokter(ListUser *lUser) {
     char username[MAX_FIELD], password[MAX_FIELD];
 
@@ -30,7 +55,7 @@ void tambahDokter(ListUser *lUser) {
     User newUser;
     lUser->jumlahuser++;
     CreateUser(&newUser);
-    newUser.id = lUser->jumlahuser;
+    newUser.id = idTerkecil(*lUser);
     strcpy(newUser.username, username);
     strcpy(newUser.password, password);
     strcpy(newUser.role, "dokter");

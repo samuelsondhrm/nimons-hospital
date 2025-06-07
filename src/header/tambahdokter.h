@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 
+int idTerkecil(ListUser list);
+
 void tambahDokter(ListUser *lUser);
 /**
  * Prosedur untuk menambahkan dokter dan menyimpan di ListUser

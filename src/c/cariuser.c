@@ -9,6 +9,15 @@
 
 #include "../header/cariuser.h"
 
+void minmaxID(ListUser lUser, int *minID, int *maxID){
+    *minID = lUser.users[0].id;
+    *maxID = lUser.users[0].id;
+    for(int i=1; i<lUser.jumlahuser; i++){
+        if(lUser.users[i].id < *minID) *minID = lUser.users[i].id;
+        if(lUser.users[i].id > *maxID) *maxID = lUser.users[i].id;
+    }
+}
+
 int getIntInput(const char *prompt, int min, int max) {
     char buffer[100];
     int value;
@@ -100,12 +109,12 @@ void displayHeader(int mode) {
     }
 }
 void displayUser(const User *u, int mode) {
-    const char* penyakit = (strcasecmp(u->role, "pasien") == 0) ? u->riwayat_penyakit : "-";
+    const char* penyakit = (strcasecmp(u->role, "pasien") == 0 && strcasecmp(u->riwayat_penyakit, "") != 0) ? u->riwayat_penyakit : "-";
 
     if (mode == 0) {
         printf("%3d | %-10s | %-8s | %-20s\n", u->id, u->username, u->role, penyakit);
     } else if (mode == 1) {
-        printf("%3d | %-10s | %-20s\n", u->id, u->username, u->riwayat_penyakit);
+        printf("%3d | %-10s | %-20s\n", u->id, u->username, penyakit);
     } else {
         printf("%3d | %-10s\n", u->id, u->username);
     }
@@ -114,9 +123,10 @@ void displayUser(const User *u, int mode) {
 // Procedures for each command
 void cariUser(ListUser *lu) {
     int choice = getIntInput("Cari berdasarkan?\n1. ID\n2. Nama\n>>> Pilihan: ", 1, 2);
-
+    int maxID, minID;
+    minmaxID(*lu, &minID, &maxID);
     if (choice == 1) {
-        int id = getIntInput("\n>>> Masukkan nomor ID user: ", 1, lu->jumlahuser);
+        int id = getIntInput("\n>>> Masukkan nomor ID user: ", minID, maxID);
         int idx = binarySearchById(lu->users, lu->jumlahuser, id);
         if (idx == -1) printf("\nTidak ditemukan pengguna dengan ID %d!\n", id);
         else {
@@ -139,7 +149,8 @@ void cariUser(ListUser *lu) {
 
 void cariPasien(ListUser *lu) {
     int choice = getIntInput("Cari berdasarkan?\n1. ID\n2. Nama\n3. Penyakit\n>>> Pilihan: ", 1, 3);
-
+    int maxID, minID;
+    minmaxID(*lu, &minID, &maxID);
     if (choice == 3) {
         char disease[MAX_FIELD];
         getStringInput("\n>>> Masukkan nama penyakit: ", disease, MAX_FIELD);
@@ -159,7 +170,7 @@ void cariPasien(ListUser *lu) {
             for (int i = 0; i < count; i++) displayUser(&temp[i], 1);
         }
     } else if (choice == 1) {
-        int id = getIntInput("\n>>> Masukkan nomor ID pasien: ", 1, lu->jumlahuser);
+        int id = getIntInput("\n>>> Masukkan nomor ID pasien: ", minID, maxID);
         int idx = binarySearchById(lu->users, lu->jumlahuser, id);
         if (idx == -1 || strcasecmp(lu->users[idx].role, "pasien") != 0)
             printf("\nTidak ditemukan pasien dengan ID %d!\n", id);
@@ -184,9 +195,10 @@ void cariPasien(ListUser *lu) {
 
 void cariDokter(ListUser *lu) {
     int choice = getIntInput("Cari berdasarkan?\n1. ID\n2. Nama\n>>> Pilihan: ", 1, 2);
-
+    int maxID, minID;
+    minmaxID(*lu, &minID, &maxID);
     if (choice == 1) {
-        int id = getIntInput("\n>>> Masukkan nomor ID dokter: ", 1, lu->jumlahuser);
+        int id = getIntInput("\n>>> Masukkan nomor ID dokter: ", minID, maxID);
         int idx = binarySearchById(lu->users, lu->jumlahuser, id);
         if (idx == -1 || strcasecmp(lu->users[idx].role, "dokter") != 0)
             printf("\nTidak ditemukan dokter dengan ID %d!\n", id);

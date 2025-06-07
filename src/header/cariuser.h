@@ -15,6 +15,8 @@
 #include <ctype.h>
 #include "ADT/user.h"
 
+void minmaxID(ListUser lUser, int *minID, int *maxID);
+
 void toLowerCase(char *dest, const char *src);
 
 void swapUser(User *a, User *b);
