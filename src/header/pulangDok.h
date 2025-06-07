@@ -24,6 +24,7 @@ Jika syarat dipenuhi:
 Jika tidak, akan menampilkan alasan dan saran sesuai spesifikasi.
 */
 
-void bolehPulang(User current_user, Inventory *inv, const ListObat *lObat, const ListFormula *lFormula, const ListPenyakit *lPenyakit, RumahSakit *rs);
+void bolehPulang(User current_user, Inventory *inv, const ListObat *lObat, const ListFormula *lFormula, const ListPenyakit *lPenyakit, RumahSakit *rs, ListUser *lUser);
+
 
 #endif

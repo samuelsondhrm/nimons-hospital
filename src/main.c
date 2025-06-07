@@ -231,7 +231,7 @@ int main(int argc, char *argv[]) {
                     break;
                 case 17: print_case("PULANGDOK", cur_user); 
                     if(!accessCheck("pasien", cur_user)) break;
-                    bolehPulang(cur_user, &inventory, &lObat, &lFormula, &lPenyakit, &rs);
+                    bolehPulang(cur_user, &inventory, &lObat, &lFormula, &lPenyakit, &rs, &accounts);
                     break;
                 case 18: print_case("DAFTAR_CHECKUP", cur_user);
                     if(!accessCheck("pasien", cur_user)) break;
