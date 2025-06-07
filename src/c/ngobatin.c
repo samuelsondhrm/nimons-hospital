@@ -1,8 +1,7 @@
 #include "../header/ngobatin.h"
 
-// cari ruangan dokter berdasarkan ID
-
- extern boolean SudahDiagnosis[CAPACITY_QUEUE];
+extern boolean SudahDiagnosis[CAPACITY_QUEUE];
+boolean SudahNgobatin[CAPACITY_QUEUE] = {false};
 
 static Ruangan* cariRuanganDokter(RumahSakit *rs, int dokterId) {
     for (int i = 0; i < rs->rows; i++) {
@@ -18,66 +17,97 @@ static Ruangan* cariRuanganDokter(RumahSakit *rs, int dokterId) {
 void TambahObatKeInventory(Inventory *inv, int pasienId, int id_obat) {
     for (int i = 0; i < inv->jumlahPasienwObat; i++) {
         if (inv->data[i].id == pasienId) {
+            for (int j = 0; j < inv->data[i].jumlahobat; j++) {
+                if (inv->data[i].obat[j] == id_obat) return;
+            }
             if (inv->data[i].jumlahobat < MAX_OBAT) {
                 inv->data[i].obat[inv->data[i].jumlahobat++] = id_obat;
             }
             return;
         }
     }
-    
-    inv->data[inv->jumlahPasienwObat].id = pasienId;
-    inv->data[inv->jumlahPasienwObat].jumlahobat = 1;
-    inv->data[inv->jumlahPasienwObat].obat[0] = id_obat;
-    inv->jumlahPasienwObat++;
+
+    if (inv->jumlahPasienwObat < CAPACITY) {
+        int idx = inv->jumlahPasienwObat++;
+        inv->data[idx].id = pasienId;
+        inv->data[idx].jumlahobat = 1;
+        inv->data[idx].obat[0] = id_obat;
+        CreateEmptyStack(&inv->data[idx].perut);
+    }
 }
 
-void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lObat, ListFormula *lFormula, ListPenyakit *lPenyakit, Inventory *inv) {
-    if (strcmp(ROLE(current_user), "dokter") != 0) { // cuma dokter yang bisa
+void ngobatin(User current_user, RumahSakit *rs, ListUser *lUser, ListObat *lObat,
+              ListFormula *lFormula, ListPenyakit *lPenyakit, Inventory *inv) {
+    if (strcmp(ROLE(current_user), "dokter") != 0) return;
+
+    Ruangan *ruang = cariRuanganDokter(rs, USER_ID(current_user));
+    if (!ruang || isEmptyQueue(ruang->antrianPasienIds)) return;
+
+    int pasienId = ruang->antrianPasienIds.buffer[ruang->antrianPasienIds.idxHead];
+    if (pasienId == 0) {
+        printf("Pasien tidak valid.\n");
         return;
     }
 
-    // Cari ruangan dokter
-    Ruangan *ruang = cariRuanganDokter(rs, USER_ID(current_user));
-     if (ruang == NULL || isEmptyQueue(ruang->antrianPasienIds)) {
-        return; // tidak ada pasien
-    }
-
-    // Ambil ID pasien paling pertama di ruangan
-    int pasienId =  ruang->antrianPasienIds.buffer[ruang->antrianPasienIds.idxHead];
     User pasien = GetUser(*lUser, pasienId);
 
-    printf("Dokter sedang mengobati pasien!\n");
-
-    // Cek apakah sudah ada diagnosis
-    if ( SudahDiagnosis[pasienId] ==  false) {
-        printf("Kamu belum melakukan proses diagnosis oleh dokter, silahkan melakukan pendaftaran terlebih dahulu!");
+    if (!SudahDiagnosis[pasienId]) {
+        printf("Pasien belum didiagnosis.\n");
         return;
     }
 
-    int count = 1;
+    if (SudahNgobatin[pasienId]) {
+        printf("Pasien sudah pernah diobati!\n");
+        return;
+    }
 
-    // mencari obat sesuai penyakit
+    // Temukan penyakitId dari nama penyakit
+    int penyakitId = -1;
+    for (int i = 0; i < JUMLAH_PENYAKIT(*lPenyakit); i++) {
+        if (strcmp(NAMA_PENYAKIT(PENYAKIT_LIST(*lPenyakit, i)), RIWAYAT_PENYAKIT(pasien)) == 0) {
+            penyakitId = ID_PENYAKIT(PENYAKIT_LIST(*lPenyakit, i));
+            break;
+        }
+    }
+
+    if (penyakitId == -1) {
+        printf("Penyakit tidak ditemukan.\n");
+        return;
+    }
+
+    // Kumpulkan semua obat untuk penyakit ini
+    int ids[MAX_OBAT], urutans[MAX_OBAT];
+    int count = 0;
     for (int i = 0; i < JUMLAH_FORMULA(*lFormula); i++) {
         Formula f = FORMULA_LIST(*lFormula, i);
+        if (f.penyakit_id == penyakitId) {
+            ids[count] = f.obat_id;
+            urutans[count] = f.urutan;
+            count++;
+        }
+    }
 
-        // mencocokkan ID penyakit dan nama 
-        for (int j = 0; j < JUMLAH_PENYAKIT(*lPenyakit); j++) {
-            Penyakit p = PENYAKIT_LIST(*lPenyakit, j);
+    if (count == 0) {
+        printf("Tidak ada obat untuk penyakit ini.\n");
+        return;
+    }
 
-            // tampilkan obat kalau cocok
-            if (ID_PENYAKIT(p) == f.penyakit_id && strcmp(NAMA_PENYAKIT(p), RIWAYAT_PENYAKIT(pasien)) == 0) {
-                printf("-> obat cocok, dan akan ditambahkan ke inventory pasien.\n");
-                Obat o = GetObat(*lObat, f.obat_id);
-
-                printf("%d. %s\n", count++, NAMA_OBAT(o));
-
-                TambahObatKeInventory(inv, pasienId, f.obat_id);
+    // Urutkan berdasarkan urutan_minum (bubble sort)
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            if (urutans[j] > urutans[j + 1]) {
+                int tmp = urutans[j]; urutans[j] = urutans[j + 1]; urutans[j + 1] = tmp;
+                int tmpid = ids[j]; ids[j] = ids[j + 1]; ids[j + 1] = tmpid;
             }
         }
     }
 
-    if (count == 1) {
-    printf("Tidak ada obat yang cocok untuk penyakit %s.\n", RIWAYAT_PENYAKIT(pasien));
-
+    printf("Pasien %s akan menerima obat:\n", USERNAME(pasien));
+    for (int i = 0; i < count; i++) {
+        Obat o = GetObat(*lObat, ids[i]);
+        printf("%d. %s\n", i + 1, NAMA_OBAT(o));
+        TambahObatKeInventory(inv, pasienId, ids[i]);
     }
+
+    SudahNgobatin[pasienId] = true;
 }
