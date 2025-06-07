@@ -8,7 +8,15 @@ void lihatSemuaAntrian(RumahSakit rs, ListUser lUser) {
     for (int i = 0; i < rs.rows; i++) {
         for (int j = 0; j < rs.cols; j++) {
             Ruangan r = rs.data[i][j];
-            if (r.dokterId != 0) {  // Hanya tampilkan jika ada dokter
+            boolean dokterValid = false;
+            for (int u = 0; u < lUser.jumlahuser; u++) {
+                if (lUser.users[u].id == r.dokterId && strcmp(lUser.users[u].role, "dokter") == 0) {
+                    dokterValid = true;
+                    break;
+                }
+            }
+
+            if (dokterValid) {  // Hanya tampilkan jika ada dokter
                 // Cetak header
                 printf("\n============ %c%d ============\n", 'A' + i, j + 1);
                 printf("Kapasitas  : %d\n", rs.kapasitasPerRuangan);

@@ -103,7 +103,7 @@ void assignDokter(RumahSakit *rs, ListUser *lUser) {
         for (int j = 0; j < rs->cols; j++) {
             if (rs->data[i][j].dokterId == dokterId) {
                 if (rs->data[row][col].dokterId == 0) {
-                    printf("Dokter %s sudah diassign ke ruangan %c%d!\n", username, i + 'A', j + 1);
+                    printf("Dokter %s sudah diassign ke ruangan %c%d!\n", username, row + 'A', col + 1);
                 } else {
                     // Ruangan target juga sudah ditempati
                     for (int k = 0; k < lUser->jumlahuser; k++) {
@@ -125,7 +125,7 @@ void assignDokter(RumahSakit *rs, ListUser *lUser) {
         for (int i = 0; i < lUser->jumlahuser; i++) {
             if (lUser->users[i].id == rs->data[row][col].dokterId) {
                 printf("Dokter %s sudah menempati ruangan %c%d!\n", lUser->users[i].username, row + 'A', col + 1);
-                printf("Ruangan %c%d juga sudah ditempati dokter %s!\n", row + 'A', col + 1, lUser->users[i].username);
+                printf("Silakan cari ruangan lain untuk dokter %s.\n", username);
                 while (getchar() != '\n');
                 return;
             }
@@ -135,4 +135,5 @@ void assignDokter(RumahSakit *rs, ListUser *lUser) {
     // Assign dokter ke ruangan
     rs->data[row][col].dokterId = dokterId;
     printf("Dokter %s berhasil diassign ke ruangan %c%d!\n", username, row + 'A', col + 1);
+    while (getchar() != '\n');
 }
