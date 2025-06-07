@@ -1,5 +1,14 @@
 #include "../header/minumPenawar.h"
 
+void strip_newline(char *str) {
+    for (int i = 0; str[i]; i++) {
+        if (str[i] == '\n' || str[i] == '\r') {
+            str[i] = '\0';
+            break;
+        }
+    }
+}
+
 void minumPenawar(User current_user, Inventory *inv, const ListObat *lObat) {
     int pasienId = USER_ID(current_user);
 
@@ -28,9 +37,16 @@ void minumPenawar(User current_user, Inventory *inv, const ListObat *lObat) {
 
     Obat o = GetObat(*lObat, obatId);
 
+    // Copy nama to buffer 
+    char nama[100];
+    strncpy(nama, NAMA_OBAT(o), sizeof(nama) - 1);
+    nama[sizeof(nama) - 1] = '\0';
+
+    // Strip newline and carriage return
+    strip_newline(nama);
+
     if (inv->data[idxInv].jumlahobat < MAX_OBAT) {
         inv->data[idxInv].obat[inv->data[idxInv].jumlahobat++] = obatId;
     }
-
-    printf("Uwekkk!!! %s keluar dan kembali ke inventory\n", NAMA_OBAT(o));
+    printf("Uwekkk!!! %s keluar dan kembali ke inventory\n", nama);
 }
