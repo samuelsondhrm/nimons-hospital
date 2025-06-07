@@ -53,21 +53,47 @@ void bolehPulang(User current_user, Inventory *inv, const ListObat *lObat, const
     ListStatik obatSeharusnya;
     CreateListStatik(&obatSeharusnya);
 
-    for (int i = 0; i < JUMLAH_FORMULA(*lFormula); i++) {
-        Formula f = FORMULA_LIST(*lFormula, i);
+    int penyakitId = -1;
+    for (int i = 0; i < JUMLAH_PENYAKIT(*lPenyakit); i++) {
+        Penyakit p = PENYAKIT_LIST(*lPenyakit, i);
 
-        for (int j = 0; j < JUMLAH_PENYAKIT(*lPenyakit); j++) {
-            Penyakit p = PENYAKIT_LIST(*lPenyakit, j);
+        char nama[100];
+        strncpy(nama, NAMA_PENYAKIT(p), sizeof(nama) - 1);
+        nama[sizeof(nama) - 1] = '\0';
+        strip_newline(nama);
 
-            char nama[100];
-            strncpy(nama, NAMA_PENYAKIT(p), sizeof(nama) - 1);
-            nama[sizeof(nama) - 1] = '\0';
-            strip_newline(nama);
+        if (strcmp(nama, penyakitPasien) == 0) {
+            penyakitId = ID_PENYAKIT(p);
+            break;
+        }
+    }
 
-            if (ID_PENYAKIT(p) == f.penyakit_id && strcmp(nama, penyakitPasien) == 0) {
-                insertLastList(&obatSeharusnya, f.obat_id);
-                break;
+    if (penyakitId != -1) {
+        int ids[MAX_OBAT], urutans[MAX_OBAT];
+        int count = 0;
+
+        for (int i = 0; i < JUMLAH_FORMULA(*lFormula); i++) {
+            Formula f = FORMULA_LIST(*lFormula, i);
+            if (f.penyakit_id == penyakitId) {
+                ids[count] = f.obat_id;
+                urutans[count] = f.urutan;
+                count++;
             }
+        }
+
+        // Bubble sort berdasarkan urutan
+        for (int i = 0; i < count - 1; i++) {
+            for (int j = 0; j < count - i - 1; j++) {
+                if (urutans[j] > urutans[j + 1]) {
+                    int tmp = urutans[j]; urutans[j] = urutans[j + 1]; urutans[j + 1] = tmp;
+                    int tmpid = ids[j]; ids[j] = ids[j + 1]; ids[j + 1] = tmpid;
+                }
+            }
+        }
+
+        // Masukkan ke list obat yang seharusnya
+        for (int i = 0; i < count; i++) {
+            insertLastList(&obatSeharusnya, ids[i]);
         }
     }
 
