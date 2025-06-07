@@ -1,11 +1,28 @@
 #include "../header/pulangDok.h"
 
+// Hilangkan karakter newline atau carriage return
+static void strip_newline(char *str) {
+    for (int i = 0; str[i]; i++) {
+        if (str[i] == '\n' || str[i] == '\r') {
+            str[i] = '\0';
+            break;
+        }
+    }
+}
+
 void bolehPulang(User current_user, Inventory *inv, const ListObat *lObat, const ListFormula *lFormula, const ListPenyakit *lPenyakit, RumahSakit *rs) {
     int pasienId = USER_ID(current_user);
 
     // Kasus 1: Belum menerima diagnosis
     if (!SudahDiagnosis[pasienId]) {
         printf("Kamu belum menerima diagnosis apapun dari dokter, jangan buru-buru pulang!\n");
+        return;
+    }
+
+    // Ambil riwayat penyakit
+    const char *penyakitPasien = RIWAYAT_PENYAKIT(current_user);
+    if (penyakitPasien == NULL || strcmp(penyakitPasien, "-") == 0) {
+        printf("Kamu tidak memiliki penyakit terdeteksi, jadi tidak perlu pengobatan.\n");
         return;
     }
 
@@ -33,7 +50,6 @@ void bolehPulang(User current_user, Inventory *inv, const ListObat *lObat, const
     }
 
     // Kasus 3: Urutan obat tidak sesuai
-    const char *penyakitPasien = RIWAYAT_PENYAKIT(current_user);
     ListStatik obatSeharusnya;
     CreateListStatik(&obatSeharusnya);
 
@@ -42,7 +58,13 @@ void bolehPulang(User current_user, Inventory *inv, const ListObat *lObat, const
 
         for (int j = 0; j < JUMLAH_PENYAKIT(*lPenyakit); j++) {
             Penyakit p = PENYAKIT_LIST(*lPenyakit, j);
-            if (ID_PENYAKIT(p) == f.penyakit_id && strcmp(NAMA_PENYAKIT(p), penyakitPasien) == 0) {
+
+            char nama[100];
+            strncpy(nama, NAMA_PENYAKIT(p), sizeof(nama) - 1);
+            nama[sizeof(nama) - 1] = '\0';
+            strip_newline(nama);
+
+            if (ID_PENYAKIT(p) == f.penyakit_id && strcmp(nama, penyakitPasien) == 0) {
                 insertLastList(&obatSeharusnya, f.obat_id);
                 break;
             }
@@ -52,13 +74,22 @@ void bolehPulang(User current_user, Inventory *inv, const ListObat *lObat, const
     boolean urutanBenar = true;
     Stack salinanPerut = *perut;
 
-    if (listLength(obatSeharusnya) != salinanPerut.TOP + 1) {
+    // Buat array isi stack valid (> 0)
+    int stackValid[CAPACITY_STCK];
+    int countValid = 0;
+    for (int i = 0; i <= salinanPerut.TOP; i++) {
+        if (salinanPerut.T[i] > 0) {
+            stackValid[countValid++] = salinanPerut.T[i];
+        }
+    }
+
+    if (listLength(obatSeharusnya) != countValid) {
         urutanBenar = false;
     } else {
-        for (int i = listLength(obatSeharusnya) - 1; i >= 0; i--) {
-            int top;
-            Pop(&salinanPerut, &top);
-            if (top != ELMT_LIST(obatSeharusnya, i)) {
+        for (int i = 0; i < countValid; i++) {
+            int expected = ELMT_LIST(obatSeharusnya, i);
+            int actual = stackValid[i];  // FIX: tidak dibalik
+            if (expected != actual) {
                 urutanBenar = false;
                 break;
             }
@@ -68,26 +99,31 @@ void bolehPulang(User current_user, Inventory *inv, const ListObat *lObat, const
     if (!urutanBenar) {
         printf("Dokter sedang memeriksa keadaanmu...\n");
         printf("Maaf, tapi kamu masih belum bisa pulang!\n");
+
         printf("Urutan peminuman obat yang diharapkan:\n");
         for (int i = 0; i < listLength(obatSeharusnya); i++) {
             Obat o = GetObat(*lObat, ELMT_LIST(obatSeharusnya, i));
-            printf("%s", NAMA_OBAT(o));
-            if (i != listLength(obatSeharusnya) - 1) printf(" -> ");
+            char nama[100];
+            strncpy(nama, NAMA_OBAT(o), sizeof(nama) - 1);
+            nama[sizeof(nama) - 1] = '\0';
+            strip_newline(nama);
+            if (i > 0) printf(" -> ");
+            printf("%s", nama);
         }
         printf("\n");
 
         printf("Urutan obat yang kamu minum:\n");
-        Stack tampilPerut = *perut;
-        while (!IsEmptyStack(tampilPerut)) {
-            int id;
-            Pop(&tampilPerut, &id);
-            Obat o = GetObat(*lObat, id);
-            printf("%s", NAMA_OBAT(o));
-            if (!IsEmptyStack(tampilPerut)) printf(" -> ");
+        for (int i = countValid - 1; i >= 0; i--) {
+            Obat o = GetObat(*lObat, stackValid[i]);
+            char nama[100];
+            strncpy(nama, NAMA_OBAT(o), sizeof(nama) - 1);
+            nama[sizeof(nama) - 1] = '\0';
+            strip_newline(nama);
+            if (i < countValid - 1) printf(" -> ");
+            printf("%s", nama);
         }
-        printf("\n");
 
-        printf("Silahkan kunjungi dokter untuk meminta penawar yang sesuai!\n");
+        printf("\nSilahkan kunjungi dokter untuk meminta penawar yang sesuai!\n");
         return;
     }
 
