@@ -1,6 +1,6 @@
 #include "../header/minumPenawar.h"
 
-void strip_newline(char *str) {
+static void strip_newline(char *str) {
     for (int i = 0; str[i]; i++) {
         if (str[i] == '\n' || str[i] == '\r') {
             str[i] = '\0';

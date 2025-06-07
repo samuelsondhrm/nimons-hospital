@@ -29,7 +29,7 @@ void minumObat(User current_user, Inventory *inv, RumahSakit *rs, ListObat *lOba
 
     printf("\nPilih obat untuk diminum: ");
     int pilihan;
-    scanf("%d /n", &pilihan);
+    scanf("%d", &pilihan);
 
     if (pilihan < 1 || pilihan > inv->data[idxInv].jumlahobat) {
         printf("Pilihan nomor tidak tersedia!\n");
